@@ -1,3 +1,5 @@
+var fs= require('fs');
+
 exports.get = function (req, res) {
 
     var tmpPath = [];
@@ -30,7 +32,7 @@ exports.get = function (req, res) {
     // prove attribute constraints
 
     // load and execute restlet
-
-
-    res.send(ressource);
+	var restlet = require('./' + ressource.restlet);
+	restlet.send(req, res, ressource);
+    
 };
