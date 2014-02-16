@@ -10,7 +10,7 @@ apirouter.route = function (req, res) {
         "ids": [],
         "path": undefined,
         "restlet": undefined,
-        "method" : req.method
+        "method": req.method
 
     };
 
@@ -26,21 +26,21 @@ apirouter.route = function (req, res) {
 
     (tmpPath.length % 2 == 0) ? resource.type = 'instance' : resource.type = 'collection';
     resource.path = resource.pathResources.join('/') + '/';
-    resource.restlet = resource.pathResources.join('/') + '/_' + req.method + '_' + resource.type + '_' + resource.version + '.js';
+    resource.restlet = resource.pathResources.join('/') + '/_' + req.method.toLowerCase() + '_' + resource.type + '_' + resource.version + '.js';
 
-    // send 404 if no documentation
+    var restlet = require('./' + resource.restlet);
 
     // load restlet documentation file
+
+    // send 404 if no documentation
 
     // prove attribute constraints
 
     // load and execute restlet
-
-    var restlet = require('./' + resource.restlet);
     restlet.send(req, res, resource);
 };
-exports.route = function (req, res) {
 
+exports.route = function (req, res) {
     apirouter.route(req, res);
 
 };
