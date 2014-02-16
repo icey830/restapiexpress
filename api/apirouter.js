@@ -32,8 +32,15 @@ apirouter.route = function (req, res) {
     resource.restlet = resource.pathResources.join('/') + '/_' + req.method.toLowerCase() + '_' + resource.type + '_' + resource.version + '.js';
 
     var restlet = require('./' + resource.restlet);
+    // TBD:: define CORS on a per restlet baisis
     res.header('Access-Control-Allow-Origin', config.CORSAllowOrigin);
 
+    // OPTIONS
+    // TODO:: send only documentation for implemented verbs
+    // @ssNamics
+    // see https://github.com/visionmedia/express/pull/772/files
+    // see https://groups.google.com/forum/#!topic/express-js/0oNFpyH51_k
+    // OPTIONS
 
     // load restlet documentation file
 
@@ -44,8 +51,7 @@ apirouter.route = function (req, res) {
     // load and execute restlet
 
     // find implementations for documented verbs
-    //TODO:: send only implemented verbs
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+
 
     restlet.send(req, res, resource);
 };
