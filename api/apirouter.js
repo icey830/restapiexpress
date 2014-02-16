@@ -3,6 +3,9 @@ var apirouter = {};
 
 apirouter.route = function (req, res) {
     var tmpPath = [];
+    var config = {
+        "CORSAllowOrigin" : "*"
+    };
     var resource = {
         "type": undefined,
         "version": undefined,
@@ -29,6 +32,8 @@ apirouter.route = function (req, res) {
     resource.restlet = resource.pathResources.join('/') + '/_' + req.method.toLowerCase() + '_' + resource.type + '_' + resource.version + '.js';
 
     var restlet = require('./' + resource.restlet);
+    res.header('Access-Control-Allow-Origin', config.CORSAllowOrigin);
+
 
     // load restlet documentation file
 
@@ -37,6 +42,11 @@ apirouter.route = function (req, res) {
     // prove attribute constraints
 
     // load and execute restlet
+
+    // find implementations for documented verbs
+    //TODO:: send only implemented verbs
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+
     restlet.send(req, res, resource);
 };
 
