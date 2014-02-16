@@ -32,12 +32,13 @@ apirouter.route = function (req, res) {
     resource.restlet = resource.pathResources.join('/') + '/_' + req.method.toLowerCase() + '_' + resource.type + '_' + resource.version + '.js';
 
     var restlet = require('./' + resource.restlet);
-    // TBD:: define CORS on a per restlet baisis
+    // TBD:: define CORS on a per restlet basis and how do we handle Access-Control-Allow-Method ?
     res.header('Access-Control-Allow-Origin', config.CORSAllowOrigin);
 
     // OPTIONS
-    // TODO:: send only documentation for implemented verbs
-    // @ssNamics
+    // TODO:: send  documentation for implemented verbs as json  we will not violate RFC2616 http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html
+    //
+    // @ssNamics this is a express problem
     // see https://github.com/visionmedia/express/pull/772/files
     // see https://groups.google.com/forum/#!topic/express-js/0oNFpyH51_k
     // OPTIONS
