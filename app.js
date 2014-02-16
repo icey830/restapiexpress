@@ -3,8 +3,6 @@
  */
 
 var express = require('express');
-var routes = require('./routes');
-var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
 
@@ -36,10 +34,10 @@ app.get('*', function (req, res) {
         "version":undefined,
         "pathRessources":[],
         "ids": [],
-        "path": undefined
+        "path": undefined,
+        "restlet": undefined
+
     };
-
-
 
     req.params[0].match(/(\/(\w+))/g).map(function (e) {
         tmpPath.push(e.substring(1));
@@ -52,7 +50,15 @@ app.get('*', function (req, res) {
     });
 
     (tmpPath.length%2 == 0) ? ressource.type = 'instance' : ressource.type = 'collection';
-    ressource.path = ressource.pathRessources.join('/') + '/_get_' + ressource.type + '_'  + ressource.version + '.js';
+    ressource.path = ressource.pathRessources.join('/') + '/';
+    ressource.restlet = ressource.pathRessources.join('/') + '/_get_' + ressource.type + '_'  + ressource.version + '.js';
+
+    // load restlet documentation file
+
+    // prove attribute constraints
+
+    // load and execute restlet
+
 
     res.send(ressource);
 });
