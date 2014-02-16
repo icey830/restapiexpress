@@ -1,8 +1,8 @@
 var fs= require('fs');
+var apirouter = {};
 
-exports.get = function (req, res) {
-
-    var tmpPath = [];
+apirouter.route = function(req, res, verb) {
+ 	var tmpPath = [];
     var ressource = {
         "type":undefined,
         "version":undefined,
@@ -25,8 +25,10 @@ exports.get = function (req, res) {
 
     (tmpPath.length%2 == 0) ? ressource.type = 'instance' : ressource.type = 'collection';
     ressource.path = ressource.pathRessources.join('/') + '/';
-    ressource.restlet = ressource.pathRessources.join('/') + '/_get_' + ressource.type + '_'  + ressource.version + '.js';
+    ressource.restlet = ressource.pathRessources.join('/') + '/_'+verb+'_' + ressource.type + '_'  + ressource.version + '.js';
 
+	// send 404 if no documentation
+	
     // load restlet documentation file
 
     // prove attribute constraints
@@ -34,5 +36,10 @@ exports.get = function (req, res) {
     // load and execute restlet
 	var restlet = require('./' + ressource.restlet);
 	restlet.send(req, res, ressource);
+};
+exports.get = function (req, res) {
+
+   apirouter.route(req, res, 'get');
     
 };
+
