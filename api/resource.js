@@ -13,7 +13,7 @@ function Resource(req) {
 }
 
 Resource.prototype.resolvePath = function(req) {
-
+	
 	var tmpPath = [];
 	var that = this;
 	req.params[0].match(/(\/(\w+))/g).map(function (e) {

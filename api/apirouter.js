@@ -4,9 +4,8 @@ var Resource = require('./resource');
 
 apirouter.route = function (req, res) {
     
-    var config = {
-        "CORSAllowOrigin" : "*"
-    };
+    var config = require('./config.js');
+
     var resource = new Resource(req);
 	
     var restlet = require('./' + resource.restlet);
