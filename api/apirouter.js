@@ -1,11 +1,10 @@
 var fs = require('fs');
 var apirouter = {};
 var Resource = require('./resource');
+var config = require('./config.js');
 
 apirouter.route = function (req, res) {
-    
-    var config = require('./config.js');
-
+   
     var resource = new Resource(req);
 	
     var restlet = require('./' + resource.restlet);
