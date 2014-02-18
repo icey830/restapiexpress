@@ -29,7 +29,7 @@ apirouter.route = function (req, res) {
 
     // find implementations for documented verbs
 
-
+	console.log(resource);
     restlet.send(req, res, resource);
 };
 
