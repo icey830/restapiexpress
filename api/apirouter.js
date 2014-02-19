@@ -2,7 +2,7 @@ var fs = require('fs');
 var apirouter = {};
 var Resource = require('./resource');
 var config = require('./config.js');
-
+var util = require('util');
 apirouter.route = function (req, res) {
    
     var resource = new Resource(req);
@@ -29,7 +29,7 @@ apirouter.route = function (req, res) {
 
     // find implementations for documented verbs
 
-	console.log(resource);
+	console.log(util.inspect(resource,false,null));
     restlet.send(req, res, resource);
 };
 

@@ -1,4 +1,5 @@
 var Expand = require('./expand');
+var Scope = require('./scope');
 
 function Resource(req) {
 
@@ -43,8 +44,7 @@ Resource.prototype.resolvePath = function(req) {
 Resource.prototype.resolveQueryString = function(req) {
 	
 	this.resolveExpands(req);
-		
-	this.scope = req.query.scope;
+	this.resolveScope(req);
 	this.fields = req.query.fields;
 	this.page = req.query.page;
 	this.limit = req.query.limit;
@@ -53,14 +53,23 @@ Resource.prototype.resolveQueryString = function(req) {
 Resource.prototype.resolveExpands = function(req) {
 	if(req.query.expands) {
 		this.expands = [];
-		var expands = req.query.expands;
-		var expandsArray = expands.split('!),');
-		for (var i = 0; i < expandsArray.length; i++) {
-   			 var expand = new Expand(expandsArray[i] + '!),');
-   			 this.expands.push(expand);
-		}
+        var that = this;
+        req.query.expands.match(/(\w.+?\))/g).map(function(e){
+            that.expands.push(new Expand(e));
+        });
+
+
 	}
-	
+}
+
+Resource.prototype.resolveScope = function(req) {
+    if(req.query.scope) {
+        this.scope = [];
+        var that = this;
+        req.query.scope.match(/\[(.+?)\]/g).map(function(e){
+            that.scope.push(new Scope(e));
+        });
+    }
 }
 
 Resource.prototype.setMethod = function(method) {

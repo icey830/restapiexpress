@@ -1,44 +1,30 @@
-var Util = require('util');
 
-function Expand(querystring, level) {
+function Expand(querystring) {
 
-	var separatorStart = '(';
-	var separatorEnd = '!)'
-	for (var i = 0; i < level; i++) {
-		separatorStart += '(';
-	}
-	
-	var tmpQS = querystring;
-	this.resource = tmpQS.split(separatorStart)[0];
-	
-	this.expands = [];
-	this.scope = [];
+	this.resource = querystring.split('(')[0];
+
+    //No deeper expands, scope, page and limit at the moment
+	//this.expands = [];
+	//this.scope = [];
+    //this.page = undefined;
+    //this.limit = undefined;
 	this.fields = [];
-	this.page = undefined;
-	this.limit = undefined;
 	this.isCollection = true;
-	var tmpPath = [];
-	var array = querystring.match(/\((\w+.+)!\)/);
-	
-	if(Util.isArray(array))
-	{
-		this.resolveFields( array[0]);
-	}
-	
+	this.resolveFields(querystring.match(/\((.*)\)/g));
 
-	
+
 }
 
 Expand.prototype.resolveFields = function(fields) {
 	if(fields) {
 		this.fields = [];
-		
-		var fieldsArray = fields.split(',');
-		for (var i = 0; i < fieldsArray.length; i++) {
-   			// var expand = new Expand(expandsArray[i]);
-   			 this.fields.push(fieldsArray[i]);
-		}
+        var that = this;
+        fields.map(function (e) {
+            e.split(',').map(function(ee){
+                that.fields.push(ee.replace(/(\(|\))/g,''));
+            });
+        });
 	}
-	
 }
+
 module.exports = Expand;
