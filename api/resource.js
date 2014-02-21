@@ -9,6 +9,7 @@ function Resource(req) {
 	this.ids = [];
 	this.path = undefined;
 	this.restlet = undefined;
+    this.documentation = undefined;
 	this.method = req.method;
 	this.expands = [];
 	this.scope = [];
@@ -41,6 +42,7 @@ Resource.prototype.resolvePath = function(req) {
     (tmpPath.length % 2 == 0) ? this.type = 'instance' : this.type = 'collection';
     this.path = this.pathResources.join('/') + '/';
     this.restlet = this.pathResources.join('/') + '/_' + this.method.toLowerCase() + '_' + this.type + '_' + this.version + '.js';
+    this.documentation = this.pathResources.join('/') + '/_' + this.method.toLowerCase() + '_doc_' + this.version + '.json';
 }
 
 Resource.prototype.resolveQueryString = function(req) {

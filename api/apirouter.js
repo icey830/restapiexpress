@@ -8,6 +8,7 @@ apirouter.route = function (req, res) {
     var resource = new Resource(req);
 	
     var restlet = require('./' + resource.restlet);
+    var doc = require('./' + resource.documentation);
     // TBD:: define CORS on a per restlet basis and how do we handle Access-Control-Allow-Method ?
     res.header('Access-Control-Allow-Origin', config.CORSAllowOrigin);
 
@@ -30,6 +31,8 @@ apirouter.route = function (req, res) {
     // find implementations for documented verbs
 
 	console.log(util.inspect(resource,false,null));
+    console.log("Doc:");
+    console.log(util.inspect(doc,false,null));
     restlet.send(req, res, resource);
 };
 
