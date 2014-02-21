@@ -1,0 +1,98 @@
+{
+    "title": "Contacts",
+    "request": "/contacts/",
+    "description": "Contacts",
+    "parameter": {
+        "identifier": {
+            "description": "Identifier field",
+            "name": "identifier",
+            "type": "0",
+            "min":null,
+            "max":null,
+            "mandatory": false,
+            "default_value": "",
+            "regularexpression": ""
+        },
+        "q": {
+            "description": "Suchen",
+            "name": "q",
+            "regularexpression": "",
+            "default_value": "",
+            "type": "string",
+            "mandatory": false
+        },
+        "limit": {
+            "description": "Anzahl der Elemente",
+            "name": "limit",
+            "type": "2",
+            "mandatory": false,
+            "default_value": "10",
+            "regularexpression": ""
+        },
+        "page": {
+            "description": "Seite",
+            "name": "page",
+            "type": 2,
+            "mandatory": false,
+            "default_value": null,
+            "regularexpression": ""
+        },
+        "scope": {
+            "description": "Scope der Suche (active, inactive)",
+            "name": "scope",
+            "regularexpression": "",
+            "default_value": "",
+            "type": "7",
+            "mandatory": false
+        },
+        "sort": {
+            "description": "id,name,-age,-days",
+            "name": "sort",
+            "regularexpression": "",
+            "default_value": "alphabetical",
+            "type": "1",
+            "mandatory": false
+        },
+        "fields": {
+            "description": "Array with requested fieldnames",
+            "name": "fields",
+            "regularexpression": "",
+            "default_value": "",
+            "type": "7",
+            "mandatory": false
+        },
+        "id": {
+            "name": "id",
+            "description": "Contact ID",
+            "mandatory": "1",
+            "type": "string",
+            "default_value": "c.id",
+            "regularexpression": ""
+        }
+    }, "states": {
+    "200": {
+        "code": 200,
+        "message": "OK",
+        "description": "Daten sind im Response Body"
+    },
+    "404": {
+        "code": 404,
+        "message": "Nicht vorhanden",
+        "description": "Objekt mit Identifier nicht gefunden oder nicht vorhanden"
+    }
+}, "permission": [
+    {
+        "role": "User",
+        "description": "Authentifizierte Benutzer k\u00f6nnen..."
+    },
+    {
+        "role": "Public",
+        "description": "Rolle Administrator kann..."
+    }
+], "mimetype": {
+    "json": {
+        "name": "json",
+        "is_default": true,
+        "response": ""
+    }
+}}
