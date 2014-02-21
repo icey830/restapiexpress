@@ -15,6 +15,8 @@ function Resource(req) {
 	this.fields = [];
 	this.page = undefined;
 	this.limit = undefined;
+    this.sort = undefined;
+    this.q = undefined;
 	this.isCollection = undefined;
 	this.resolvePath(req);
 	this.resolveQueryString(req);
@@ -48,7 +50,8 @@ Resource.prototype.resolveQueryString = function(req) {
 	this.fields = req.query.fields;
 	this.page = req.query.page;
 	this.limit = req.query.limit;
-	
+	this.sort = req.query.sort;
+    this.q = req.query.q;
 }
 Resource.prototype.resolveExpands = function(req) {
 	if(req.query.expands) {
