@@ -1,14 +1,17 @@
 {
-    "name": "N216",
-    "version": "0.0.1",
-    "private": true,
-    "scripts": {
-        "start": "node app.js"
-    },
-    "dependencies": {
-        "express": "*",
-        "mongodb": "*",
-        "monk": "*",
-        "jade":"*"
-    }
+  "name": "N216",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "*",
+    "mongodb": "*",
+    "monk": "*",
+    "jade": "*"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2"
+  }
 }
