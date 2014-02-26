@@ -82,12 +82,20 @@
     }
 }, "permission": [
     {
-        "role": "User",
-        "description": "Authentifizierte Benutzer k\u00f6nnen..."
+        "role": "Public",
+        "description": "Rolle Public kann...",
+        "methods" : []
     },
     {
-        "role": "Public",
-        "description": "Rolle Administrator kann..."
+        "role": "User",
+        "description": "Authentifizierte Benutzer können...",
+        "methods" : ["GET", "HEAD", "OPTIONS"]
+
+    },
+    {
+        "role": "Admin",
+        "description": "Rolle Administrator kann...",
+        "methods" : ["GET", "PUT", "POST", "DELETE", "HEAD", "OPTIONS"]
     }
 ], "mimetype": {
     "json": {
