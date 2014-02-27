@@ -16,6 +16,7 @@ It takes all your assiduity work - so the only thing your have to do is to desig
 - the framework handles API-TOKENS
 - the framework serves HYPERMEDIA RESTFul JSON Files
 - the framework creates data base controllers based on predefined templets for every request you have definied in the documentation with grunt. 
+- the framework serves an admin interface to write the documentation
 
 How to write the documentation
 =
