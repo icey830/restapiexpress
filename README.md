@@ -1,6 +1,6 @@
 restapiexpress
 =
-a framework for creating uniform RESTful APIs quickly
+a framework for creating uniform RESTful APIs quickly written in Node.js (ExpressJS and GruntJS)
 
 Goals
 =
