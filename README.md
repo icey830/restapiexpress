@@ -22,6 +22,7 @@ How to write the documentation
 - define model
 - define permissions for every HTTP-Method (GET, POST, PUT, HEAD, OPTIONS, etc.)
 
-How to write data base controller templates
+How to write data base controller 
 =
 - define a template for every HTTP-Method you need.
+- write an extension for every single controller create by grunt if needed to take over the control.
