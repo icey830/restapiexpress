@@ -1,0 +1,42 @@
+{
+    "title": "api",
+    "request": "/",
+    "description": "API",
+    "parameter": {},
+    "states": {
+        "200": {
+            "code": 200,
+            "message": "OK",
+            "description": "Daten sind im Response Body"
+        },
+        "404": {
+            "code": 404,
+            "message": "Nicht vorhanden",
+            "description": "Objekt mit Identifier nicht gefunden oder nicht vorhanden"
+        }
+    },
+    "permission": [
+        {
+            "role": "Public",
+            "description": "Rolle Public kann...",
+            "methods" : ["GET"]
+        },
+        {
+            "role": "User",
+            "description": "Authentifizierte Benutzer können...",
+            "methods" : ["GET", "HEAD", "OPTIONS"]
+        },
+        {
+            "role": "Admin",
+            "description": "Rolle Administrator kann...",
+            "methods" : ["GET", "PUT", "POST", "DELETE", "HEAD", "OPTIONS"]
+        }
+    ],
+    "mimetype": {
+        "json": {
+            "name": "json",
+            "is_default": true,
+            "response": ""
+        }
+    }
+}

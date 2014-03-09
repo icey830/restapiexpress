@@ -1,0 +1,47 @@
+{
+    "data":[
+        {
+            "id": 1,
+            "name": "API",
+            "links": [
+                   {
+                        "type":"application/com.github.restapiexpress.api",
+                        "rel": "self",
+                        "method": "GET",
+                        "href": "http://localhost:3000/v1/"
+                   }
+            ]
+        }
+    ],
+    "links": [
+        {
+            "type":"application/com.github.restapiexpress.api",
+            "rel": "self",
+            "method": "GET",
+            "href": "http://localhost:3000/"
+        },
+        {
+            "type":"application/com.github.restapiexpress.api",
+            "rel": "login to api",
+            "method": "GET",
+            "href": "http://localhost:3000/v1/versions/"
+        },
+        {
+            "type":"application/com.github.restapiexpress.api",
+            "rel": "login to api",
+            "method": "POST",
+            "href": "http://localhost:3000/v1/login/"
+        },
+        {
+            "type":"application/com.github.restapiexpress.api",
+            "rel": "signup to api",
+            "method": "POST",
+            "href": "http://localhost:3000/v1/signup/"
+        },
+        {
+            "type":"application/com.github.restapiexpress.api",
+            "rel": "logout fom api",
+            "method": "POST",
+            "href": "http://localhost:3000/v1/logout/"
+        }]
+}

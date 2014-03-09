@@ -6,8 +6,8 @@ var util = require('util');
 var fs = require('fs');
 
 apirouter.apidescription = function(req, res) {
-
-    res.send(200, { name: 'api' });
+    var apidoc = require("./api_doc.json");
+    res.send(200, apidoc);
 };
 
 exports.apidescription = function (req, res) {
