@@ -23,7 +23,7 @@ app.use(express.methodOverride());
 if ('development' == app.get('env')) {
     app.use(express.errorHandler());
 }
-
+app.get('/', apirouter.apidescription);
 app.all('*', apirouter.route);
 
 http.createServer(app).listen(app.get('port'), function () {

@@ -5,6 +5,15 @@ var config = require('./config.js');
 var util = require('util');
 var fs = require('fs');
 
+apirouter.apidescription = function(req, res) {
+
+    res.send(200, { name: 'api' });
+};
+
+exports.apidescription = function (req, res) {
+    apirouter.apidescription(req, res);
+
+};
 
 apirouter.route = function (req, res) {
 
@@ -26,12 +35,12 @@ apirouter.route = function (req, res) {
         //@veith
         //note that require only reads the file once, following calls return the result from cache
 
-        console.log(util.inspect(resource,false,null));
+        //console.log(util.inspect(resource,false,null));
 
         var sendRestlet = function(doc) {
 
-            console.log("Doc:");
-            console.log(util.inspect(doc,false,null));
+            //console.log("Doc:");
+            //console.log(util.inspect(doc,false,null));
 
             // TODO prove attribute constraints
 
@@ -45,11 +54,6 @@ apirouter.route = function (req, res) {
         apirouter.getFileFromFileSystem(resource.documentation, res, sendRestlet);
     }
     apirouter.getFileFromFileSystem(resource.restlet, res, loadRestlet);
-
-
-
-
-
 };
 apirouter.getFileFromFileSystem = function (filePath, res, callback) {
     if(filePath == undefined) {
@@ -57,7 +61,7 @@ apirouter.getFileFromFileSystem = function (filePath, res, callback) {
         res.status(404).send('Not found');
     } else {
         var path = __dirname + '/'+ filePath;
-        console.log(path);
+        //console.log(path);
         fs.exists(path, function (exists) {
             if(exists) {
                 // load restlet documentation file
@@ -85,4 +89,6 @@ exports.route = function (req, res) {
     apirouter.route(req, res);
 
 };
+
+
 
