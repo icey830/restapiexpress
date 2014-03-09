@@ -4,6 +4,7 @@
 
 npm-debug.log
 node_modules
+test/node_modules
 
 #################
 ## OS generated files
