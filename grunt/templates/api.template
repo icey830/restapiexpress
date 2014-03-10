@@ -1,0 +1,12 @@
+{
+        "title": "api",
+        "links":  {{{links}}}
+        ,
+        "mimetype": {
+            "json": {
+                "name": "json",
+                "is_default": true,
+                "response": ""
+            }
+        }
+}

@@ -30,12 +30,13 @@ Docs.prototype.findDocs = function(grunt) {
 
     for(var i=0;i<this.docs.length;i++) {
         grunt.log.debug("fn:" +this.docs[i].filename);
+        grunt.log.debug("path:"+this.docs[i].abspath);
+        grunt.log.debug("folder:"+this.docs[i].folder);
         grunt.log.debug("v:"+this.docs[i].version);
-        grunt.log.debug("method:"+this.docs[i].method);
-        grunt.log.debug("jSon" + JSON.stringify( this.docs[i].json));
+        grunt.log.debug("filetitle:"+this.docs[i].filetitle);
+       // grunt.log.debug("jSon" + JSON.stringify( this.docs[i].json));
 
     }
-
 
 }
 
