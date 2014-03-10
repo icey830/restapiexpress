@@ -19,7 +19,7 @@
         {
             "role": "Public",
             "description": "Rolle Public kann...",
-            "methods" : ["GET"],
+            "methods" : ["GET", "POST", "HEAD", "OPTIONS"],
             "permanentLinks" : [
                 {
                     "type":"application/com.github.restapiexpress.api",

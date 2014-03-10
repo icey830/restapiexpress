@@ -60,37 +60,44 @@ Doc.prototype.createJsForAPI = function() {
     var grunt = this.grunt;
     var content = grunt.file.read('./grunt/templates/api.template');
     var that = this;
-    //GET
-    this.json.permission.forEach(function(permission) {
-        var permanentLinks = [];
-        permission.permanentLinks.forEach(function(permanentLink) {
-           if(permanentLink.method === "GET") {
-               permanentLinks.push(permanentLink);
 
-           }
+    this.supportedMethods.forEach(function(method) {
+        that.json.permission.forEach(function(permission) {
+            that.createAPIJsForMethod(permission,method,content);
         });
 
-        var modifiedContent =  content.replace('{{{links}}}',JSON.stringify(permanentLinks));
-        grunt.file.write(that.folder + '_api_get_'+permission.role.toLowerCase()+'_v' + that.version + '.js', modifiedContent);
     });
 
-    //POST
-    this.json.permission.forEach(function(permission) {
-        var permanentLinks = [];
-        permission.permanentLinks.forEach(function(permanentLink) {
-            if(permanentLink.method === "POST") {
-                permanentLinks.push(permanentLink);
+}
 
-            }
-        });
+Doc.prototype.createAPIJsForMethod = function(permission,method, content) {
+    var links = [];
+    var that = this;
+    var grunt = this.grunt;
 
-        var modifiedContent =  content.replace('{{{links}}}',JSON.stringify(permanentLinks));
-        grunt.file.write(that.folder + '_api_post_'+permission.role.toLowerCase()+'_v' + that.version + '.js', modifiedContent);
+    if(permission.methods.contains(method.toUpperCase())) {
+
+        var dynLink =
+        {
+            "type":"application/com.github.restapiexpress.api",
+            "rel": "self",
+            "method": method,
+            "href": "http://localhost:3000/v"+that.version+"/"
+        };
+
+        links.push(dynLink);
+    }
+
+    permission.permanentLinks.forEach(function(permanentLink) {
+        if(permanentLink.method === method.toUpperCase()) {
+            links.push(permanentLink);
+
+        }
     });
 
 
-
-
+    var modifiedContent =  content.replace('{{{links}}}',JSON.stringify(links));
+    grunt.file.write(that.folder + '_api_'+method.toLowerCase()+'_'+permission.role.toLowerCase()+'_v' + that.version + '.json', modifiedContent);
 }
 
 Doc.prototype.createJsForMethod = function(method) {
