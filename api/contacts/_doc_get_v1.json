@@ -2,6 +2,7 @@
     "title": "Contacts",
     "request": "/contacts/",
     "description": "Contacts",
+    "version" : "1",
     "parameter": {
         "identifier": {
             "description": "Identifier field",

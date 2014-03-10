@@ -2,6 +2,7 @@
     "title": "api",
     "request": "/",
     "description": "API",
+    "version": "1",
     "parameter": {},
     "states": {
         "200": {
@@ -19,17 +20,53 @@
         {
             "role": "Public",
             "description": "Rolle Public kann...",
-            "methods" : ["GET"]
+            "methods" : ["GET"],
+            "permanentLinks" : [
+                {
+                    "type":"application/com.github.restapiexpress.api",
+                    "rel": "list versions of api",
+                    "method": "GET",
+                    "href": "http://localhost:3000/v1/versions/"
+                },
+                {
+                    "type":"application/com.github.restapiexpress.api",
+                    "rel": "login to api",
+                    "method": "POST",
+                    "href": "http://localhost:3000/v1/login/"
+                },
+                {
+                    "type":"application/com.github.restapiexpress.api",
+                    "rel": "signup to api",
+                    "method": "POST",
+                    "href": "http://localhost:3000/v1/signup/"
+                }
+            ]
         },
         {
             "role": "User",
             "description": "Authentifizierte Benutzer können...",
-            "methods" : ["GET", "HEAD", "OPTIONS"]
+            "methods" : ["GET", "HEAD", "OPTIONS"],
+            "permanentLinks" : [
+                {
+                    "type":"application/com.github.restapiexpress.api",
+                    "rel": "logout from api",
+                    "method": "POST",
+                    "href": "http://localhost:3000/v1/logout/"
+                }
+            ]
         },
         {
             "role": "Admin",
             "description": "Rolle Administrator kann...",
-            "methods" : ["GET", "PUT", "POST", "DELETE", "HEAD", "OPTIONS"]
+            "methods" : ["GET", "PUT", "POST", "DELETE", "HEAD", "OPTIONS"],
+            "permanentLinks" : [
+                {
+                    "type":"application/com.github.restapiexpress.api",
+                    "rel": "logout from api",
+                    "method": "POST",
+                    "href": "http://localhost:3000/v1/logout/"
+                }
+            ]
         }
     ],
     "mimetype": {
