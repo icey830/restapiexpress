@@ -15,6 +15,7 @@ function Doc(filename,abspath, grunt) {
     this.filename = filename;
     this.abspath = abspath;
     this.folder = abspath.substring(0,abspath.length - filename.length);
+    this.testfolder = this.folder.replace("api","test");
     this.version = undefined;
     this.filetitle = undefined;
     this.json = {};
@@ -59,11 +60,13 @@ Doc.prototype.readFile = function(grunt) {
 Doc.prototype.createJsForAPI = function() {
     var grunt = this.grunt;
     var content = grunt.file.read('./grunt/templates/api.template');
+    var test = grunt.file.read('./grunt/templates/test.template');
     var that = this;
 
     this.supportedMethods.forEach(function(method) {
         that.json.permission.forEach(function(permission) {
             that.createAPIJsForMethod(permission,method,content);
+            that.createAPIJTestsForMethod(permission,method,test);
         });
 
     });
@@ -98,6 +101,17 @@ Doc.prototype.createAPIJsForMethod = function(permission,method, content) {
 
     var modifiedContent =  content.replace('{{{links}}}',JSON.stringify(links));
     grunt.file.write(that.folder + '_api_'+method.toLowerCase()+'_'+permission.role.toLowerCase()+'_v' + that.version + '.json', modifiedContent);
+}
+
+Doc.prototype.createAPIJTestsForMethod = function(permission, method, content) {
+
+    var that = this;
+    var grunt = this.grunt;
+
+    var modifiedContent =  content.replace('{{{METHOD}}}',method.toUpperCase());
+    var modifiedContent =  modifiedContent.replace('{{{method}}}','delete' == method.toLowerCase() ? 'del' : method.toLowerCase());
+    var modifiedContent =  modifiedContent.replace('{{{path}}}',"/");
+    grunt.file.write(that.testfolder + '_api_'+method.toLowerCase()+'_'+permission.role.toLowerCase()+'_v' + that.version + '.js', modifiedContent);
 }
 
 Doc.prototype.createJsForMethod = function(method) {
