@@ -7,9 +7,18 @@ var Docs = require('./grunt/docs.js');
 module.exports = function(grunt){
 
     grunt.initConfig({
-        pkg: grunt.file.readJSON('package.json')
+        pkg: grunt.file.readJSON('package.json'),
 
     });
+
+    grunt.test = function() {
+
+        var done = this.async();
+        require('child_process').exec('mocha-phantomjs ./tests/index.html', function (err, stdout) {
+            grunt.log.write(stdout);
+            done(err);
+        });
+    }
 
     grunt.registerTask('default', 'searchDocs', function() {
 
@@ -31,6 +40,21 @@ module.exports = function(grunt){
             }
 
         }
+
+        var done = this.async();
+        require('child_process').exec('make test', function (err, stdout) {
+            grunt.log.write(stdout);
+            done(err);
+        });
+    });
+
+    grunt.registerTask('test', 'test with mocha', function() {
+
+        var done = this.async();
+        require('child_process').exec('make test', function (err, stdout) {
+            grunt.log.write(stdout);
+            done(err);
+        });
     });
 
 
