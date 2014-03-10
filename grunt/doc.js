@@ -58,12 +58,39 @@ Doc.prototype.readFile = function(grunt) {
 
 Doc.prototype.createJsForAPI = function() {
     var grunt = this.grunt;
-
-
-    var links = JSON.stringify(this.json.permission[0].permanentLinks);
     var content = grunt.file.read('./grunt/templates/api.template');
-    content =  content.replace('{{{links}}}',links);
-    grunt.file.write(this.folder + 'api_get_v' + this.version + '.json', content);
+    var that = this;
+    //GET
+    this.json.permission.forEach(function(permission) {
+        var permanentLinks = [];
+        permission.permanentLinks.forEach(function(permanentLink) {
+           if(permanentLink.method === "GET") {
+               permanentLinks.push(permanentLink);
+
+           }
+        });
+
+        var modifiedContent =  content.replace('{{{links}}}',JSON.stringify(permanentLinks));
+        grunt.file.write(that.folder + '_api_get_'+permission.role.toLowerCase()+'_v' + that.version + '.js', modifiedContent);
+    });
+
+    //POST
+    this.json.permission.forEach(function(permission) {
+        var permanentLinks = [];
+        permission.permanentLinks.forEach(function(permanentLink) {
+            if(permanentLink.method === "POST") {
+                permanentLinks.push(permanentLink);
+
+            }
+        });
+
+        var modifiedContent =  content.replace('{{{links}}}',JSON.stringify(permanentLinks));
+        grunt.file.write(that.folder + '_api_post_'+permission.role.toLowerCase()+'_v' + that.version + '.js', modifiedContent);
+    });
+
+
+
+
 }
 
 Doc.prototype.createJsForMethod = function(method) {
