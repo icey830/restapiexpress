@@ -5,7 +5,7 @@
 var express = require('express');
 var http = require('http');
 var path = require('path');
-var apirouter = require('./api/apirouter');
+var apirouter = require('./lib/apirouter');
 var app = express();
 
 // all environments
