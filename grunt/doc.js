@@ -26,7 +26,7 @@ Doc.prototype.parseFilename = function(filename,grunt) {
 
     var that = this;
 
-    filename.match(/_doc_(\w+)_v(\d+).json/).map(function(e, index){
+    filename.match(/(\w+)_v(\d+).json/).map(function(e, index){
 
         if (index === 1) {
             that.filetitle = e;

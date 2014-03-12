@@ -1,7 +1,7 @@
-if (typeof String.prototype.startsWith != 'function') {
+if (typeof String.prototype.endsWith != 'function') {
     // see below for better implementation!
-    String.prototype.startsWith = function (str){
-        return this.indexOf(str) == 0;
+    String.prototype.endsWith = function (str){
+        return this.indexOf(str) == this.length - str.length;
     };
 }
 
@@ -20,7 +20,7 @@ Docs.prototype.findDocs = function(grunt) {
     var that = this;
     grunt.file.recurse("./apidoc/", function (abspath, rootdir, subdir, filename) {
 
-        if(filename.startsWith("_doc_")) {
+        if(filename.endsWith(".json")) {
             var doc = new Doc(filename,abspath,grunt);
             that.docs.push(doc);
         }
