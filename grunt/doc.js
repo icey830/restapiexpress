@@ -18,11 +18,10 @@ function Doc(filename,abspath, grunt) {
     this.filetitle = undefined;
     this.json = {};
     this.supportedMethods = [];
-    this.parseFilename(filename,grunt);
     this.readFile(grunt);
 }
 
-Doc.prototype.parseFilename = function(filename,grunt) {
+/*Doc.prototype.parseFilename = function(filename,grunt) {
 
     var that = this;
 
@@ -35,12 +34,14 @@ Doc.prototype.parseFilename = function(filename,grunt) {
         }
 
     });
-}
+}*/
 
 Doc.prototype.readFile = function(grunt) {
 
     this.json=grunt.file.readJSON(this.abspath);
 
+    this.version = this.json.version;
+    this.filetitle = this.json.title.toLowerCase();
     //Iterate over permissions and get all supported methods
     var that = this;
     this.json.permission.forEach(function(permission) {
@@ -98,7 +99,7 @@ Doc.prototype.createAPIJsForMethod = function(permission,method, content) {
 
 
     var modifiedContent =  content.replace('{{{links}}}',JSON.stringify(links));
-    grunt.file.write(that.folder + '/v'+that.version + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase()+'/instance.json', modifiedContent);
+    grunt.file.write(that.folder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase()+'/instance.json', modifiedContent);
 }
 
 Doc.prototype.createAPIJTestsForMethod = function(permission, method, content) {
@@ -109,7 +110,7 @@ Doc.prototype.createAPIJTestsForMethod = function(permission, method, content) {
     var modifiedContent =  content.replace('{{{METHOD}}}',method.toUpperCase());
     var modifiedContent =  modifiedContent.replace('{{{method}}}','delete' == method.toLowerCase() ? 'del' : method.toLowerCase());
     var modifiedContent =  modifiedContent.replace('{{{path}}}',"/");
-    grunt.file.write(that.testfolder + '/v' + that.version + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase() + '/instance.js', modifiedContent);
+    grunt.file.write(that.testfolder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase() + '/instance.js', modifiedContent);
 }
 
 Doc.prototype.createJsForMethod = function(method) {

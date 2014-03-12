@@ -5,7 +5,7 @@ var request = require('supertest')
     , app     = require('../app.js')
     , assert  = require("assert");
 
-describe('GET /contacts', function(){
+describe('GET /v1/contacts', function(){
     it('respond with json', function(done){
         request(app)
             .get('/v1/contacts')

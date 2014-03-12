@@ -23,6 +23,10 @@ Docs.prototype.findDocs = function(grunt) {
         if(filename.endsWith(".json")) {
             var doc = new Doc(filename,abspath,grunt);
             that.docs.push(doc);
+        } else {
+            //Must be a directory
+            //TODO check if isDirectory
+
         }
 
     });
