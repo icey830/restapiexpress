@@ -76,7 +76,7 @@ Doc.prototype.createAPIJsForMethod = function(permission,method, content) {
     var links = [];
     var that = this;
     var grunt = this.grunt;
-
+    var isAllowed = false;
     if(permission.methods.contains(method.toUpperCase())) {
 
         var dynLink =
@@ -88,29 +88,36 @@ Doc.prototype.createAPIJsForMethod = function(permission,method, content) {
         };
 
         links.push(dynLink);
+
+        isAllowed = true;
     }
 
-    permission.permanentLinks.forEach(function(permanentLink) {
-        if(permanentLink.method === method.toUpperCase()) {
+    if(isAllowed) {
+        permission.permanentLinks.forEach(function(permanentLink) {
+            //if(permanentLink.method === method.toUpperCase()) {
             links.push(permanentLink);
 
-        }
-    });
+            //}
+        });
 
+        var modifiedContent =  content.replace('{{{links}}}',JSON.stringify(links));
+        grunt.file.write(that.folder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase()+'/instance.json', modifiedContent);
+    }
 
-    var modifiedContent =  content.replace('{{{links}}}',JSON.stringify(links));
-    grunt.file.write(that.folder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase()+'/instance.json', modifiedContent);
 }
 
 Doc.prototype.createAPIJTestsForMethod = function(permission, method, content) {
 
     var that = this;
     var grunt = this.grunt;
+    if(permission.methods.contains(method.toUpperCase())) {
 
-    var modifiedContent =  content.replace('{{{METHOD}}}',method.toUpperCase());
-    var modifiedContent =  modifiedContent.replace('{{{method}}}','delete' == method.toLowerCase() ? 'del' : method.toLowerCase());
-    var modifiedContent =  modifiedContent.replace('{{{path}}}',"/");
-    grunt.file.write(that.testfolder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase() + '/instance.js', modifiedContent);
+        var modifiedContent =  content.replace('{{{METHOD}}}',method.toUpperCase());
+        var modifiedContent =  modifiedContent.replace('{{{method}}}','delete' == method.toLowerCase() ? 'del' : method.toLowerCase());
+        var modifiedContent =  modifiedContent.replace('{{{path}}}',"/");
+        grunt.file.write(that.testfolder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase() + '/instance.js', modifiedContent);
+    }
+
 }
 
 Doc.prototype.createJsForMethod = function(method) {

@@ -1,6 +1,7 @@
 /**
  * Created by samschmid on 09.03.14.
  */
+/*
 var request = require('supertest')
     , app     = require('../app.js')
     , assert  = require("assert");
@@ -17,4 +18,4 @@ describe('GET /v1/contacts', function(){
                 done()
             });
     })
-})
+})*/
