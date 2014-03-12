@@ -7,7 +7,6 @@ if (typeof String.prototype.startsWith != 'function') {
 
 var Doc = require('./doc');
 
-
 function Docs(grunt) {
 
     this.grunt = grunt;
@@ -19,7 +18,7 @@ function Docs(grunt) {
 Docs.prototype.findDocs = function(grunt) {
 
     var that = this;
-    grunt.file.recurse("./api/", function (abspath, rootdir, subdir, filename) {
+    grunt.file.recurse("./apidoc/", function (abspath, rootdir, subdir, filename) {
 
         if(filename.startsWith("_doc_")) {
             var doc = new Doc(filename,abspath,grunt);
@@ -39,7 +38,5 @@ Docs.prototype.findDocs = function(grunt) {
     }
 
 }
-
-
 
 module.exports = Docs;

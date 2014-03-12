@@ -8,14 +8,12 @@ Array.prototype.contains = function(obj) {
     return false;
 }
 
-
-
 function Doc(filename,abspath, grunt) {
     this.grunt = grunt;
     this.filename = filename;
     this.abspath = abspath;
-    this.folder = abspath.substring(0,abspath.length - filename.length);
-    this.testfolder = this.folder.replace("api","test");
+    this.folder = abspath.substring(0,abspath.length - filename.length).replace("apidoc/","api/");
+    this.testfolder = this.folder.replace("api/","test/");
     this.version = undefined;
     this.filetitle = undefined;
     this.json = {};
