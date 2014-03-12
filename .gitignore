@@ -7,7 +7,9 @@ node_modules
 test/node_modules
 
 api/_api_*
+api/v*
 test/_api_*
+test/v*
 #################
 ## OS generated files
 #################

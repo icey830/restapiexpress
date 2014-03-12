@@ -100,7 +100,7 @@ Doc.prototype.createAPIJsForMethod = function(permission,method, content) {
 
 
     var modifiedContent =  content.replace('{{{links}}}',JSON.stringify(links));
-    grunt.file.write(that.folder + '_api_'+method.toLowerCase()+'_'+permission.role.toLowerCase()+'_v' + that.version + '.json', modifiedContent);
+    grunt.file.write(that.folder + '/v'+that.version + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase()+'/instance.json', modifiedContent);
 }
 
 Doc.prototype.createAPIJTestsForMethod = function(permission, method, content) {
@@ -111,7 +111,7 @@ Doc.prototype.createAPIJTestsForMethod = function(permission, method, content) {
     var modifiedContent =  content.replace('{{{METHOD}}}',method.toUpperCase());
     var modifiedContent =  modifiedContent.replace('{{{method}}}','delete' == method.toLowerCase() ? 'del' : method.toLowerCase());
     var modifiedContent =  modifiedContent.replace('{{{path}}}',"/");
-    grunt.file.write(that.testfolder + '_api_'+method.toLowerCase()+'_'+permission.role.toLowerCase()+'_v' + that.version + '.js', modifiedContent);
+    grunt.file.write(that.testfolder + '/v' + that.version + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase() + '/instance.js', modifiedContent);
 }
 
 Doc.prototype.createJsForMethod = function(method) {

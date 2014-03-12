@@ -1,5 +1,5 @@
 var request = require('supertest')
-    , app     = require('../app.js')
+    , app     = require('../../../../app.js')
     , assert  = require("assert");
 
 describe('{{{METHOD}}} /contacts', function(){

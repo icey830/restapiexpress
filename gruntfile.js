@@ -41,11 +41,11 @@ module.exports = function(grunt){
 
         }
 
-        var done = this.async();
+       /* var done = this.async();
         require('child_process').exec('make test', function (err, stdout) {
             grunt.log.write(stdout);
             done(err);
-        });
+        });*/
     });
 
     grunt.registerTask('test', 'test with mocha', function() {
