@@ -85,7 +85,7 @@
     {
         "role": "Public",
         "description": "Rolle Public kann...",
-        "methods" : ["GET"]
+        "methods" : ["GET", "HEAD", "OPTIONS", "PUT", "POST", "DELETE"]
     },
     {
         "role": "User",
