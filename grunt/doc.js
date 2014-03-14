@@ -120,9 +120,78 @@ Doc.prototype.createAPIJTestsForMethod = function(permission, method, content) {
 
 }
 
-Doc.prototype.createJsForMethod = function(method) {
+Doc.prototype.createJsForInstanceAndCollection = function() {
     var grunt = this.grunt;
-    grunt.file.copy('./grunt/templates/instance.template', this.folder + '_'+method+'_instance_v' + this.version + '.js');
+    var instanceContent = grunt.file.read('./grunt/templates/instance.template');
+    var collectionContent = grunt.file.read('./grunt/templates/collection.template');
+    //var test = grunt.file.read('./grunt/templates/test.template');
+    var that = this;
+
+    this.supportedMethods.forEach(function(method) {
+        that.json.permission.forEach(function(permission) {
+
+            that.createInstanceJsForMethod(permission,method,instanceContent);
+            that.createCollectionJsForMethod(permission,method,collectionContent);
+            //that.createAPIJTestsForMethod(permission,method,test);
+        });
+
+    });
+
 }
 
+Doc.prototype.createInstanceJsForMethod = function(permission,method, content) {
+    var links = [];
+    var that = this;
+    var grunt = this.grunt;
+    var isAllowed = false;
+    if(permission.methods.contains(method.toUpperCase())) {
+
+        var dynLink =
+        {
+            "type":"application/com.github.restapiexpress.api",
+            "rel": "self",
+            "method": method,
+            "href": "http://localhost:3000/v"+that.version+"/"
+        };
+
+        links.push(dynLink);
+
+        isAllowed = true;
+    }
+
+    if(isAllowed) {
+
+
+        var modifiedContent =  content.replace('{{{links}}}',JSON.stringify(links));
+        grunt.file.write(that.folder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase()+'/instance.js', modifiedContent);
+    }
+
+}
+
+Doc.prototype.createCollectionJsForMethod = function(permission,method, content) {
+    var links = [];
+    var that = this;
+    var grunt = this.grunt;
+    var isAllowed = false;
+    if(permission.methods.contains(method.toUpperCase())) {
+
+        var dynLink =
+        {
+            "type":"application/com.github.restapiexpress.api",
+            "rel": "self",
+            "method": method,
+            "href": "http://localhost:3000/v"+that.version+"/"
+        };
+
+        links.push(dynLink);
+
+        isAllowed = true;
+    }
+
+    if(isAllowed) {
+        var modifiedContent =  content.replace('{{{links}}}',JSON.stringify(links));
+        grunt.file.write(that.folder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase()+'/collection.js', modifiedContent);
+    }
+
+}
 module.exports = Doc;

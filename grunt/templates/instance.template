@@ -1,4 +1,6 @@
 exports.send = function(req, res, ressource) {
-    var json = {};
-    res.json(json);
+    var links = {
+        "links": {{{links}}}
+    };
+    res.json(links);
 };

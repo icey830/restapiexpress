@@ -32,6 +32,9 @@ module.exports = function(grunt){
                 doc.createJsForAPI();
 
             } else {
+
+                grunt.log.debug("start createing doc");
+                doc.createJsForInstanceAndCollection();
                 /*var instanceTargetPath = doc.folder + '_get_instance_v' + doc.version;
                 var collectionTargetPath = doc.folder + '_get_collection_v' + doc.version;
                 grunt.log.debug("targetI:"+instanceTargetPath);
