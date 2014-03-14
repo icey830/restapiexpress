@@ -112,9 +112,7 @@ Doc.prototype.createJsForInstanceAndCollection = function() {
     var grunt = this.grunt;
     var instanceContent = grunt.file.read('./grunt/templates/instance.template');
     var collectionContent = grunt.file.read('./grunt/templates/collection.template');
-    var test = grunt.file.read('./grunt/templates/test.template');
-    var http200 = grunt.file.read('./grunt/templates/tests/http200.template');
-    test = test + '\n' + http200;
+
     var that = this;
 
     this.supportedMethods.forEach(function(method) {
@@ -122,8 +120,8 @@ Doc.prototype.createJsForInstanceAndCollection = function() {
 
             that.createInstanceJsForMethod(permission,method,instanceContent);
             that.createCollectionJsForMethod(permission,method,collectionContent);
-            that.createInstanceTestsForMethod(permission,method,test);
-            that.createCollectionTestsForMethod(permission,method,test);
+            that.createInstanceTestsForMethod(permission,method);
+            that.createCollectionTestsForMethod(permission,method);
         });
 
     });
@@ -205,13 +203,31 @@ Doc.prototype.createAPIJTestsForMethod = function(permission, method, content) {
 
 }
 
-Doc.prototype.createInstanceTestsForMethod = function(permission, method, content) {
+Doc.prototype.createInstanceTestsForMethod = function(permission, method) {
 
     var that = this;
     var grunt = this.grunt;
     if(permission.methods.contains(method.toUpperCase())) {
 
-        var modifiedContent =  content.replace('{{{METHOD}}}',method.toUpperCase());
+        var test = grunt.file.read('./grunt/templates/test.template');
+        var http200 = grunt.file.read('./grunt/templates/tests/http200.template');
+        test = test + '\n' + http200;
+
+        var modifiedContent =  test.replace('{{{METHOD}}}',method.toUpperCase());
+        modifiedContent =  modifiedContent.replace('{{{method}}}','delete' == method.toLowerCase() ? 'del' : method.toLowerCase());
+        var path = '/v'+that.version + '/' + that.filetitle + '/123.json';
+        modifiedContent =  modifiedContent.replace('{{{path}}}',path);
+        modifiedContent =  modifiedContent.replace('{{{path}}}',path);
+        modifiedContent =  modifiedContent.replace('{{{role}}}',permission.role.toLowerCase());
+        modifiedContent =  modifiedContent.replace('{{{role}}}',permission.role.toLowerCase());
+        modifiedContent =  modifiedContent.replace('{{{appjs}}}',that.pathToAppJsFromFolder(that.testfolder));
+        grunt.file.write(that.testfolder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase() + '/instance.js', modifiedContent);
+    } else {
+        var test = grunt.file.read('./grunt/templates/test.template');
+        var http302 = grunt.file.read('./grunt/templates/tests/http302.template');
+        test = test + '\n' + http302;
+
+        var modifiedContent =  test.replace('{{{METHOD}}}',method.toUpperCase());
         modifiedContent =  modifiedContent.replace('{{{method}}}','delete' == method.toLowerCase() ? 'del' : method.toLowerCase());
         var path = '/v'+that.version + '/' + that.filetitle + '/123.json';
         modifiedContent =  modifiedContent.replace('{{{path}}}',path);
@@ -224,13 +240,32 @@ Doc.prototype.createInstanceTestsForMethod = function(permission, method, conten
 
 }
 
-Doc.prototype.createCollectionTestsForMethod = function(permission, method, content) {
+Doc.prototype.createCollectionTestsForMethod = function(permission, method) {
 
     var that = this;
     var grunt = this.grunt;
     if(permission.methods.contains(method.toUpperCase())) {
 
-        var modifiedContent =  content.replace('{{{METHOD}}}',method.toUpperCase());
+        var test = grunt.file.read('./grunt/templates/test.template');
+        var http200 = grunt.file.read('./grunt/templates/tests/http200.template');
+        test = test + '\n' + http200;
+
+        var modifiedContent =  test.replace('{{{METHOD}}}',method.toUpperCase());
+        modifiedContent =  modifiedContent.replace('{{{method}}}','delete' == method.toLowerCase() ? 'del' : method.toLowerCase());
+        var path = '/v'+that.version + '/' + that.filetitle + '/';
+        modifiedContent =  modifiedContent.replace('{{{path}}}',path);
+        modifiedContent =  modifiedContent.replace('{{{path}}}',path);
+        modifiedContent =  modifiedContent.replace('{{{role}}}',permission.role.toLowerCase());
+        modifiedContent =  modifiedContent.replace('{{{role}}}',permission.role.toLowerCase());
+        modifiedContent =  modifiedContent.replace('{{{appjs}}}',that.pathToAppJsFromFolder(that.testfolder));
+        grunt.file.write(that.testfolder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase() + '/collection.js', modifiedContent);
+    } else {
+
+        var test = grunt.file.read('./grunt/templates/test.template');
+        var http302 = grunt.file.read('./grunt/templates/tests/http302.template');
+        test = test + '\n' + http302;
+
+        var modifiedContent =  test.replace('{{{METHOD}}}',method.toUpperCase());
         modifiedContent =  modifiedContent.replace('{{{method}}}','delete' == method.toLowerCase() ? 'del' : method.toLowerCase());
         var path = '/v'+that.version + '/' + that.filetitle + '/';
         modifiedContent =  modifiedContent.replace('{{{path}}}',path);
