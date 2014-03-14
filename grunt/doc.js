@@ -106,25 +106,11 @@ Doc.prototype.createAPIJsForMethod = function(permission,method, content) {
 
 }
 
-Doc.prototype.createAPIJTestsForMethod = function(permission, method, content) {
-
-    var that = this;
-    var grunt = this.grunt;
-    if(permission.methods.contains(method.toUpperCase())) {
-
-        var modifiedContent =  content.replace('{{{METHOD}}}',method.toUpperCase());
-        var modifiedContent =  modifiedContent.replace('{{{method}}}','delete' == method.toLowerCase() ? 'del' : method.toLowerCase());
-        var modifiedContent =  modifiedContent.replace('{{{path}}}',"/");
-        grunt.file.write(that.testfolder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase() + '/instance.js', modifiedContent);
-    }
-
-}
-
 Doc.prototype.createJsForInstanceAndCollection = function() {
     var grunt = this.grunt;
     var instanceContent = grunt.file.read('./grunt/templates/instance.template');
     var collectionContent = grunt.file.read('./grunt/templates/collection.template');
-    //var test = grunt.file.read('./grunt/templates/test.template');
+    var test = grunt.file.read('./grunt/templates/test.template');
     var that = this;
 
     this.supportedMethods.forEach(function(method) {
@@ -132,7 +118,8 @@ Doc.prototype.createJsForInstanceAndCollection = function() {
 
             that.createInstanceJsForMethod(permission,method,instanceContent);
             that.createCollectionJsForMethod(permission,method,collectionContent);
-            //that.createAPIJTestsForMethod(permission,method,test);
+            that.createInstanceTestsForMethod(permission,method,test);
+            that.createCollectionTestsForMethod(permission,method,test);
         });
 
     });
@@ -168,6 +155,7 @@ Doc.prototype.createInstanceJsForMethod = function(permission,method, content) {
 
 }
 
+
 Doc.prototype.createCollectionJsForMethod = function(permission,method, content) {
     var links = [];
     var that = this;
@@ -193,5 +181,62 @@ Doc.prototype.createCollectionJsForMethod = function(permission,method, content)
         grunt.file.write(that.folder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase()+'/collection.js', modifiedContent);
     }
 
+}
+
+Doc.prototype.createAPIJTestsForMethod = function(permission, method, content) {
+
+    var that = this;
+    var grunt = this.grunt;
+    if(permission.methods.contains(method.toUpperCase())) {
+
+        var modifiedContent =  content.replace('{{{METHOD}}}',method.toUpperCase());
+        modifiedContent =  modifiedContent.replace('{{{method}}}','delete' == method.toLowerCase() ? 'del' : method.toLowerCase());
+        modifiedContent =  modifiedContent.replace('{{{path}}}','/');
+        modifiedContent =  modifiedContent.replace('{{{path}}}','/');
+        modifiedContent =  modifiedContent.replace('{{{appjs}}}',that.pathToAppJsFromFolder(that.testfolder));
+        grunt.file.write(that.testfolder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase() + '/instance.js', modifiedContent);
+    }
+
+}
+
+Doc.prototype.createInstanceTestsForMethod = function(permission, method, content) {
+
+    var that = this;
+    var grunt = this.grunt;
+    if(permission.methods.contains(method.toUpperCase())) {
+
+        var modifiedContent =  content.replace('{{{METHOD}}}',method.toUpperCase());
+        var modifiedContent =  modifiedContent.replace('{{{method}}}','delete' == method.toLowerCase() ? 'del' : method.toLowerCase());
+        var path = '/v'+that.version + '/' + that.filetitle + '/123.json';
+        var modifiedContent =  modifiedContent.replace('{{{path}}}',path);
+        var modifiedContent =  modifiedContent.replace('{{{path}}}',path);
+        var modifiedContent =  modifiedContent.replace('{{{appjs}}}',that.pathToAppJsFromFolder(that.testfolder));
+        grunt.file.write(that.testfolder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase() + '/instance.js', modifiedContent);
+    }
+
+}
+
+Doc.prototype.createCollectionTestsForMethod = function(permission, method, content) {
+
+    var that = this;
+    var grunt = this.grunt;
+    if(permission.methods.contains(method.toUpperCase())) {
+
+        var modifiedContent =  content.replace('{{{METHOD}}}',method.toUpperCase());
+        var modifiedContent =  modifiedContent.replace('{{{method}}}','delete' == method.toLowerCase() ? 'del' : method.toLowerCase());
+        var path = '/v'+that.version + '/' + that.filetitle + '/';
+        var modifiedContent =  modifiedContent.replace('{{{path}}}',path);
+        var modifiedContent =  modifiedContent.replace('{{{path}}}',path);
+        var modifiedContent =  modifiedContent.replace('{{{appjs}}}',that.pathToAppJsFromFolder(that.testfolder));
+        grunt.file.write(that.testfolder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase() + '/collection.js', modifiedContent);
+    }
+
+}
+Doc.prototype.pathToAppJsFromFolder = function(folder) {
+
+    var level = folder.split('/').length ;
+    var pathToAppJS = "app.js";
+    for(var i=0;i<=level;i++) pathToAppJS = "../" + pathToAppJS;
+    return pathToAppJS;
 }
 module.exports = Doc;

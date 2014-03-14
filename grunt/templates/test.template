@@ -1,8 +1,8 @@
 var request = require('supertest')
-    , app     = require('../../../../app.js')
+    , app     = require('{{{appjs}}}')
     , assert  = require("assert");
 
-describe('{{{METHOD}}} /contacts', function(){
+describe('{{{METHOD}}} /{{{path}}}', function(){
     it('respond with json', function(done){
         request(app)
             .{{{method}}}('{{{path}}}')
