@@ -4,13 +4,23 @@ if (typeof String.prototype.endsWith != 'function') {
         return this.indexOf(str) == this.length - str.length;
     };
 }
-
+Array.prototype.contains = function(obj) {
+    var i = this.length;
+    while (i--) {
+        if (this[i] === obj) {
+            return true;
+        }
+    }
+    return false;
+}
+var fs = require('fs');
 var Doc = require('./doc');
 
 function Docs(grunt) {
 
     this.grunt = grunt;
     this.docs = [];
+    this.versions = [];
     this.findDocs(grunt);
 
 }
@@ -18,28 +28,29 @@ function Docs(grunt) {
 Docs.prototype.findDocs = function(grunt) {
 
     var that = this;
+
     grunt.file.recurse("./apidoc/", function (abspath, rootdir, subdir, filename) {
 
         if(filename.endsWith(".json")) {
+            if(subdir.indexOf('v') === 0) {
+                var version = subdir.substr(1,subdir.indexOf('/') > 0 ? subdir.indexOf('/')-1 : subdir.length);
+                if(!that.versions.contains(version)) {
+                    that.versions.push(version);
+                }
+            }
+
             var doc = new Doc(filename,abspath,grunt);
             that.docs.push(doc);
         } else {
             //Must be a directory
             //TODO check if isDirectory
 
+
         }
 
     });
 
-    for(var i=0;i<this.docs.length;i++) {
-       /* grunt.log.debug("fn:" +this.docs[i].filename);
-        grunt.log.debug("path:"+this.docs[i].abspath);
-        grunt.log.debug("folder:"+this.docs[i].folder);
-        grunt.log.debug("v:"+this.docs[i].version);
-        grunt.log.debug("filetitle:"+this.docs[i].filetitle);
-        grunt.log.debug("jSon" + JSON.stringify( this.docs[i].json));*/
 
-    }
 
 }
 

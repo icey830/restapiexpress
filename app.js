@@ -31,7 +31,8 @@ app.configure('development', function(){
     app.use(express.errorHandler());
 })
 
-app.all('/', apirouter.apidescription);
+app.all('/', apirouter.versions);
+app.all(/\/v(\d+)[\/\Z]?$/,apirouter.apidescription);
 app.all('*', apirouter.route);
 
 http.createServer(app).listen(app.get('port'), function () {

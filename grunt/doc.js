@@ -86,7 +86,7 @@ Doc.prototype.createAPIJsForMethod = function(permission,method, content) {
             "type":"application/com.github.restapiexpress.api",
             "rel": "self",
             "method": method,
-            "href": "http://localhost:3000/"
+            "href": "http://localhost:3000/v" + that.version + "/"
         };
 
         links.push(dynLink);
