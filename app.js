@@ -12,6 +12,12 @@ var app = express();
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+
+// development only
+app.configure('development', function(){
+    //app.set('db', db);
+})
+
 app.use(express.bodyParser());
 app.use(express.favicon());
 app.use(express.logger('dev'));
@@ -20,9 +26,10 @@ app.use(express.urlencoded());
 app.use(express.methodOverride());
 
 // development only
-if ('development' == app.get('env')) {
+app.configure('development', function(){
+    app.set('db uri', 'localhost/dev');
     app.use(express.errorHandler());
-}
+})
 
 app.all('/', apirouter.apidescription);
 app.all('*', apirouter.route);
@@ -32,3 +39,6 @@ http.createServer(app).listen(app.get('port'), function () {
 });
 
 module.exports = app;
+
+//TODO refactor for dependencies injection?
+//http://stackoverflow.com/questions/10306185/nodejs-best-way-to-pass-common-variables-into-separate-modules
