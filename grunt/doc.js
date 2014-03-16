@@ -86,7 +86,7 @@ Doc.prototype.createAPIJsForMethod = function(permission,method, content) {
             "type":"application/com.github.restapiexpress.api",
             "rel": "self",
             "method": method,
-            "href": "http://localhost:3000/v"+that.version+"/"
+            "href": "http://localhost:3000/"
         };
 
         links.push(dynLink);
@@ -135,15 +135,15 @@ Doc.prototype.createInstanceJsForMethod = function(permission,method, content) {
     var isAllowed = false;
     if(permission.methods.contains(method.toUpperCase())) {
 
-        var dynLink =
+/*        var dynLink =
         {
             "type":"application/com.github.restapiexpress.api",
             "rel": "self",
             "method": method,
-            "href": "http://localhost:3000/v"+that.version+"/"
+            "href": "http://localhost:3000/v"+that.version+"/" + that.filetitle
         };
 
-        links.push(dynLink);
+        links.push(dynLink);*/
 
         isAllowed = true;
     }
@@ -165,15 +165,15 @@ Doc.prototype.createCollectionJsForMethod = function(permission,method, content)
     var isAllowed = false;
     if(permission.methods.contains(method.toUpperCase())) {
 
-        var dynLink =
+/*        var dynLink =
         {
             "type":"application/com.github.restapiexpress.api",
             "rel": "self",
             "method": method,
-            "href": "http://localhost:3000/v"+that.version+"/"
+            "href": "http://localhost:3000/v"+that.version+"/" + that.filetitle
         };
 
-        links.push(dynLink);
+        links.push(dynLink);*/
 
         isAllowed = true;
     }

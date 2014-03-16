@@ -1,6 +1,16 @@
 exports.send = function(req, res, ressource) {
+
+    var selfref =
+    {
+        "type":"application/com.github.restapiexpress.api",
+        "rel": "self",
+        "method": req.method,
+        "href": req.protocol + '://' + req.host + ':' + req.app.get('port') + req.path
+    };
+    var linkarray = {{{links}}};
+    linkarray.unshift(selfref);
     var links = {
-        "links": {{{links}}}
+        "links":linkarray
     };
     res.json(links);
 };
