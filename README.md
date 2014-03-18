@@ -59,3 +59,7 @@ Next Steps
 - connect database (for example MongoDb)
 - create single sign on tables (Username, password, API-Token)
 - generete sessions based on user
+
+Become a contributer
+=
+We are looking for contributers. Please contact samuelschmid75@gmail.com.
