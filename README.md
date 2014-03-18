@@ -43,7 +43,7 @@ Tasks implemented
 Server response:
 - returns a json representation of versions when accessing api.yourdomain.com/
 - returns all documented functions of version1 of api when accessing api.yourdomain.com/v1/
-
+- handles permissions in dev-mode via. header-field (DEV-ROLE)
 Grunt tasks:
 - creates json-files based on api.json (documentation, example: apidoc/v1/api.json) for every described VERB and permission-role
 - creates js-files based on resource.json (example: apidoc/v1/contacts/contacts.json) for every described VERB and permission-role
@@ -51,3 +51,15 @@ Grunt tasks:
 
 Automated Test cases:
 - responding with http-code 200 or 302 where no access was granted for every collection or resource
+
+Next Steps
+=
+- improve hypermedia for serving more links
+- improve hypermedia to suppress links if not needed
+- connect database (for example MongoDb)
+- create single sign on tables (Username, password, API-Token)
+- generete sessions based on user
+
+Become a contributer
+=
+We are looking for contributers. Please contact samuelschmid75@gmail.com.
