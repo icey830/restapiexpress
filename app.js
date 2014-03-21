@@ -32,7 +32,9 @@ app.configure('development', function(){
 })
 
 app.all('/', apirouter.versions);
-app.all(/\/v(\d+)[\/\Z]?$/,apirouter.apidescription);
+app.all(/\/v\d+[\/\Z]?$/,apirouter.apidescription);
+app.get(/\/doc\/v(\d+)\/(\w+)[\/\Z]?$/, apirouter.docs);
+app.post(/\/doc\/v(\d+)\/(\w+)[\/\Z]?$/, apirouter.docs);
 app.all('*', apirouter.route);
 
 http.createServer(app).listen(app.get('port'), function () {

@@ -103,11 +103,9 @@
     "cache-control": {
         "client" : {
             "max-age": 3600
-            //"expires": "tomorrow"
         },
         "server" : {
             "use":"etag"
-            //"use": "last-modified"
         }
     },
     "states": {
