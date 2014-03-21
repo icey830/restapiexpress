@@ -3,6 +3,7 @@
     "version" : "1",
     "request": "/",
     "description": "API",
+    "deprecated" : false,
     "parameter": {},
     "states": {
         "200": {

@@ -4,104 +4,147 @@
     "description": "Contacts",
     "version" : "1",
     "parameter": {
-        "identifier": {
-            "description": "Identifier field",
-            "name": "identifier",
-            "type": "0",
-            "min":null,
-            "max":null,
-            "mandatory": false,
-            "default_value": "",
-            "regularexpression": ""
-        },
         "q": {
             "description": "Suchen",
             "name": "q",
-            "regularexpression": "",
-            "default_value": "",
+            "regex": "",
+            "default": "",
             "type": "string",
             "mandatory": false
         },
         "limit": {
             "description": "Anzahl der Elemente",
             "name": "limit",
-            "type": "2",
+            "type": "int",
             "mandatory": false,
-            "default_value": "10",
-            "regularexpression": ""
+            "default": "10",
+            "regex": ""
         },
         "page": {
             "description": "Seite",
             "name": "page",
-            "type": 2,
+            "type": "int",
             "mandatory": false,
-            "default_value": null,
-            "regularexpression": ""
+            "default": 0,
+            "regex": ""
         },
         "scope": {
             "description": "Scope der Suche (active, inactive)",
             "name": "scope",
-            "regularexpression": "",
-            "default_value": "",
-            "type": "7",
+            "regex": "",
+            "default": "",
+            "type": "string",
             "mandatory": false
         },
         "sort": {
             "description": "id,name,-age,-days",
             "name": "sort",
-            "regularexpression": "",
-            "default_value": "alphabetical",
-            "type": "1",
+            "regex": "",
+            "default": "descending",
+            "type": "string",
             "mandatory": false
         },
         "fields": {
             "description": "Array with requested fieldnames",
             "name": "fields",
-            "regularexpression": "",
-            "default_value": "",
-            "type": "7",
+            "regex": "",
+            "default": "",
+            "type": "string",
             "mandatory": false
+        }
+    },
+    "model": {
+        "identifier": {
+            "description": "Identifier field",
+            "name": "identifier",
+            "type": "id",
+            "min":null,
+            "max":null,
+            "mandatory": false,
+            "default": "",
+            "regex": ""
         },
         "id": {
             "name": "id",
             "description": "Contact ID",
-            "mandatory": "1",
+            "mandatory": true,
             "type": "string",
-            "default_value": "c.id",
-            "regularexpression": ""
+            "default": "c.id",
+            "regex": ""
+        },
+        "name": {
+            "name": "name",
+            "description": "Contact Name",
+            "mandatory": true,
+            "type": "string",
+            "default": "c.name",
+            "regex": ""
+        },
+        "email": {
+            "name": "email",
+            "description": "Contact E-Mail",
+            "mandatory": true,
+            "type": "email",
+            "default": "c.email",
+            "regex": "",
+            "multiple": true
+        },
+        "importance": {
+            "name": "importance",
+            "description": "Contact Importance",
+            "mandatory": true,
+            "type": "int",
+            "default": 5,
+            "regex": "",
+            "min": 1,
+            "max":10
         }
-    }, "states": {
-    "200": {
-        "code": 200,
-        "message": "OK",
-        "description": "Daten sind im Response Body"
     },
-    "404": {
-        "code": 404,
-        "message": "Nicht vorhanden",
-        "description": "Objekt mit Identifier nicht gefunden oder nicht vorhanden"
-    }
-}, "permission": [
-    {
-        "role": "Public",
-        "description": "Rolle Public kann...",
-        "methods" : ["GET"]
+    "cache-control": {
+        "client" : {
+            "max-age": 3600
+            //"expires": "tomorrow"
+        },
+        "server" : {
+            "use":"etag"
+            //"use": "last-modified"
+        }
     },
-    {
-        "role": "User",
-        "description": "Authentifizierte Benutzer können...",
-        "methods" : ["GET", "HEAD", "OPTIONS"]
+    "states": {
+        "200": {
+            "code": 200,
+            "message": "OK",
+            "description": "Daten sind im Response Body"
+        },
+        "404": {
+            "code": 404,
+            "message": "Nicht vorhanden",
+            "description": "Objekt mit Identifier nicht gefunden oder nicht vorhanden"
+        }
+    },
+    "permission": [
+        {
+            "role": "Public",
+            "description": "Rolle Public kann...",
+            "methods" : ["GET"]
+        },
+        {
+            "role": "User",
+            "description": "Authentifizierte Benutzer können...",
+            "methods" : ["GET", "HEAD", "OPTIONS"]
 
-    },
-    {
-        "role": "Admin",
-        "description": "Rolle Administrator kann...",
-        "methods" : ["GET", "PUT", "POST", "DELETE", "HEAD", "OPTIONS"]
+        },
+        {
+            "role": "Admin",
+            "description": "Rolle Administrator kann...",
+            "methods" : ["GET", "PUT", "POST", "DELETE", "HEAD", "OPTIONS"]
+        }
+    ],
+    "mimetype": {
+        "json": {
+            "name": "json",
+            "is_default": true,
+            "response": ""
+        }
     }
-], "mimetype": {
-    "json": {
-        "name": "json",
-        "is_default": true,
-        "response": ""
-    }
-}}
+}
