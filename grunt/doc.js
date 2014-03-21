@@ -156,6 +156,7 @@ Doc.prototype.createInstanceJsForMethod = function(permission,method, content) {
 
 
         var modifiedContent =  content.replace('{{{links}}}',JSON.stringify(links));
+        modifiedContent =  modifiedContent.replace('{{{TYPE}}}',JSON.stringify(this.json.type));
         grunt.file.write(that.folder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase()+'/instance.js', modifiedContent);
     }
 
@@ -184,6 +185,7 @@ Doc.prototype.createCollectionJsForMethod = function(permission,method, content)
 
     if(isAllowed) {
         var modifiedContent =  content.replace('{{{links}}}',JSON.stringify(links));
+        modifiedContent =  modifiedContent.replace('{{{TYPE}}}',JSON.stringify(this.json.type));
         grunt.file.write(that.folder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase()+'/collection.js', modifiedContent);
     }
 

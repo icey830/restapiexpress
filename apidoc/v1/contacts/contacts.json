@@ -3,6 +3,7 @@
     "request": "/contacts/",
     "description": "Contacts",
     "version" : "1",
+    "type": "application/com.github.restapiexpress.contact",
     "parameter": {
         "q": {
             "description": "Suchen",

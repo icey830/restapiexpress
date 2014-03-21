@@ -7,10 +7,19 @@ exports.send = function(req, res, ressource) {
         "method": req.method,
         "href": req.protocol + '://' + req.host + ':' + req.app.get('port') + req.path
     };
+
     var linkarray = {{{links}}};
     linkarray.unshift(selfref);
+
+    var doc = {
+        "type": {{{TYPE}}},
+        "rel": "show documentation",
+        "method": "GET",
+         "href": req.protocol + '://' + req.host + ':' + req.app.get('port') + req.path.replace("/","/doc/")
+    };
     var links = {
-        "links":linkarray
+        "links":linkarray,
+        "doc":doc
     };
     res.json(links);
 };
