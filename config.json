@@ -1,0 +1,21 @@
+{
+    "name": "restapiexpress",
+    "version": "0.0.1",
+    "private": true,
+    "author" : "Samuel Schmid <samuelschmid75@gmail.com>",
+    "description": "config for restapiexpress",
+    "db" : {
+        "name" : "mongodb",
+        "location" : "localhost:27017/restapiexpress",
+        "dependencies": {
+            "mongodb": "*",
+            "mongoose": "*"
+        },
+        "license": "MIT",
+        "engines": {
+            "node": ">=0.10.21"
+        }
+
+    }
+
+}

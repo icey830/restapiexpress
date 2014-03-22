@@ -1,21 +1,44 @@
 {
-  "name": "N216",
-  "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "start": "node app.js"
-  },
-  "dependencies": {
-    "express": "*",
-    "mongodb": "*",
-    "monk": "*",
-    "jade": "*"
-  },
-  "devDependencies": {
-    "grunt": "~0.4.2",
-    "supertest" : "*",
-    "mocha" :"*",
-    "should" :"*",
-    "assert" :"*"
-  }
+    "name": "restapiexpress",
+    "version": "0.0.1",
+    "private": true,
+    "author" : "Samuel Schmid <samuelschmid75@gmail.com>",
+    "description": "a framework for creating uniform RESTful API quickly",
+    "contributors": [
+        {
+            "name": "Veith Zaech"
+        },
+        {
+            "name": "Samuel Schmid"
+        }
+    ],
+    "scripts": {
+        "start": "node app.js",
+        "test":"grunt test"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/veith/restapiexpress.git"
+    },
+    "keywords": [
+        "rest",
+        "api",
+        "server",
+        "express",
+        "HYPERMEDIA"
+    ],
+    "dependencies": {
+        "express": "*"
+    },
+    "devDependencies": {
+        "grunt": "~0.4.2",
+        "supertest" : "*",
+        "mocha" :"*",
+        "should" :"*",
+        "assert" :"*"
+    },
+    "license": "MIT",
+    "engines": {
+        "node": ">=0.10.21"
+    }
 }
