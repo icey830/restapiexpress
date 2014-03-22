@@ -6,6 +6,7 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 var apirouter = require('./lib/apirouter');
+var Database = require('./lib/database');
 var app = express();
 
 // all environments
@@ -25,10 +26,15 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
 
+var database = new Database();
 // development only
 app.configure('development', function(){
-    app.set('db uri', 'localhost/dev');
+    app.set('db', database);
     app.use(express.errorHandler());
+})
+// production only
+app.configure('production', function(){
+    app.set('db', database);
 })
 
 app.all('/', apirouter.versions);

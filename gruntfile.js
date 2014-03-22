@@ -109,9 +109,6 @@ module.exports = function(grunt){
         var appconfig = grunt.config().appconfig;
         //
         //  grunt.log.debug(JSON.stringify(appconfig));
-
-
-
         var asyncTasks=[];
         for (var key in appconfig.db.dependencies) {
             if ( appconfig.db.dependencies.hasOwnProperty(key)) {
