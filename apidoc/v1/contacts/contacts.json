@@ -1,5 +1,6 @@
 {
     "title": "Contacts",
+    "singular": "Contact",
     "request": "/contacts/",
     "description": "Contacts",
     "version" : "1",
@@ -58,7 +59,7 @@
         "identifier": {
             "description": "Identifier field",
             "name": "identifier",
-            "type": "id",
+            "type": "ObjectId",
             "min":null,
             "max":null,
             "mandatory": false,
@@ -85,7 +86,7 @@
             "name": "email",
             "description": "Contact E-Mail",
             "mandatory": true,
-            "type": "email",
+            "type": "string",
             "default": "c.email",
             "regex": "",
             "multiple": true
@@ -94,7 +95,7 @@
             "name": "importance",
             "description": "Contact Importance",
             "mandatory": true,
-            "type": "int",
+            "type": "number",
             "default": 5,
             "regex": "",
             "min": 1,

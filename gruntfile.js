@@ -4,6 +4,7 @@
 
 var Docs = require('./grunt/docs.js');
 var Setup = require('./grunt/setup.js');
+var Database = require('./grunt/database/database.js');
 
 module.exports = function(grunt){
 
@@ -77,6 +78,13 @@ module.exports = function(grunt){
 
         var setup = new Setup(grunt);
         setup.downloadDependencies(this);
+    });
+
+    grunt.registerTask('database', 'install database features', function() {
+
+        var db = new Database(grunt);
+        var docs = new Docs(grunt);
+        db.createSchemes(docs);
     });
 
 };

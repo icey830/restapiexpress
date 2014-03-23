@@ -6,6 +6,7 @@
     "description": "config for restapiexpress",
     "db" : {
         "name" : "mongodb",
+        "provider" : "mongoose",
         "location" : "localhost:27017/restapiexpress",
         "dependencies": {
             "mongodb": "*",

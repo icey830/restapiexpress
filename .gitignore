@@ -6,10 +6,15 @@ npm-debug.log
 node_modules
 test/node_modules
 
+#################
+## Grunt generated files
+#################
 api/_api_*
 api/v*
 test/_api_*
 test/v*
+database/*
+
 #################
 ## OS generated files
 #################
