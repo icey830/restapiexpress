@@ -3,6 +3,7 @@
  */
 
 var Docs = require('./grunt/docs.js');
+var Setup = require('./grunt/setup.js');
 
 module.exports = function(grunt){
 
@@ -10,8 +11,6 @@ module.exports = function(grunt){
         pkg: grunt.file.readJSON('package.json'),
         appconfig: grunt.file.readJSON('config.json'),
     });
-
-
 
     grunt.registerTask('default', 'searchDocs', function() {
 
@@ -105,65 +104,8 @@ module.exports = function(grunt){
 
     grunt.registerTask('setup', 'install extensions', function() {
 
-        var dependencies = grunt.config().pkg.dependencies;
-        var appconfig = grunt.config().appconfig;
-        //
-        //  grunt.log.debug(JSON.stringify(appconfig));
-        var asyncTasks=[];
-        for (var key in appconfig.db.dependencies) {
-            if ( appconfig.db.dependencies.hasOwnProperty(key)) {
-
-                if(dependencies.hasOwnProperty(key)) {
-                    grunt.log.debug("extension " +key +":" + JSON.stringify(appconfig.db.dependencies[key]));
-                    grunt.log.debug("package * " + key +":"+ JSON.stringify(dependencies[key]));
-                    //TODO install dependencies of db if newer version in config
-                } else {
-
-                    var version = appconfig.db.dependencies[key];
-                    if(version === "*") {
-                        version = "latest";
-                    }
-                    asyncTasks.push(
-                        {
-                            cmd:'npm',
-                            args: ['install', key + "@" + version]
-                        }
-                    );
-
-                }
-
-            }
-        }
-
-        var done = this.async();
-        var next = function(index){
-            var task = asyncTasks[index];
-            grunt.log.write("\ninstall extension \n" + asyncTasks[index].args[1] );
-            grunt.util.spawn(task, function(error,result) {
-                grunt.log.write(result);
-
-                if(error) {
-
-                    done(error)
-                } else {
-                    if(asyncTasks.length > ++index) {
-
-                        next(index);
-                    } else {
-
-                        done(error);
-                    }
-                }
-
-            });
-        }
-        if(asyncTasks.length > 0) {
-            var index = 0;
-            next(index);
-
-        }
-
-
+        var setup = new Setup(grunt);
+        setup.downloadDependencies(this);
     });
 
 };
