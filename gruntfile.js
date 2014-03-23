@@ -14,27 +14,6 @@ module.exports = function(grunt){
 
     grunt.registerTask('default', 'searchDocs', function() {
 
-        var dependencies = grunt.config().pkg.dependencies;
-        var appconfig = grunt.config().appconfig;
-        //
-      //  grunt.log.debug(JSON.stringify(appconfig));
-
-
-        for (var key in appconfig.db.dependencies) {
-            if ( appconfig.db.dependencies.hasOwnProperty(key)) {
-
-                if(dependencies.hasOwnProperty(key)) {
-                    grunt.log.debug("extension " +key +":" + JSON.stringify(appconfig.db.dependencies[key]));
-                    grunt.log.debug("package * " + key +":"+ JSON.stringify(dependencies[key]));
-                    //TODO install dependencies of db if newer version in config
-                } else {
-                    //TODO install dependencies
-                    grunt.log.debug("install extension " +key +":" + JSON.stringify(appconfig.db.dependencies[key]));
-                }
-
-            }
-        }
-
         var allDocuments = new Docs(grunt);
 
         for(var i=0;i<allDocuments.docs.length;i++) {
@@ -48,10 +27,6 @@ module.exports = function(grunt){
 
                 grunt.log.debug("start createing doc");
                 doc.createJsForInstanceAndCollection();
-                /*var instanceTargetPath = doc.folder + '_get_instance_v' + doc.version;
-                var collectionTargetPath = doc.folder + '_get_collection_v' + doc.version;
-                grunt.log.debug("targetI:"+instanceTargetPath);
-                grunt.log.debug("targetC:"+collectionTargetPath);*/
 
             }
 
@@ -86,11 +61,7 @@ module.exports = function(grunt){
         modifiedContent =  modifiedContent.replace('{{{role}}}',"public");
         modifiedContent =  modifiedContent.replace('{{{appjs}}}',__dirname + '/app.js');
         grunt.file.write(__dirname + '/test/versions.js', modifiedContent);
-       /* var done = this.async();
-        require('child_process').exec('make test', function (err, stdout) {
-            grunt.log.write(stdout);
-            done(err);
-        });*/
+
     });
 
     grunt.registerTask('test', 'test with mocha', function() {
