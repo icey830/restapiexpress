@@ -1,0 +1,16 @@
+String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
+
+exports.send = function(req, res, resource) {
+
+    var rootdir = req.app.get("rootdir");
+    var documentation = resource.documentationJson;
+
+    var Scheme = require(rootdir + "/database/schemes/v" + documentation.version + "/" + documentation.title.toLowerCase() + "/" + documentation.singular.capitalize()+".js");
+    var scheme = new Scheme();
+    var links = {
+        "location":scheme
+    };
+    res.status(201).json(links);
+};

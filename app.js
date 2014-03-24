@@ -29,14 +29,15 @@ app.use(express.methodOverride());
 var database = new Database();
 // development only
 app.configure('development', function(){
-    app.set('db', database);
+
     app.use(express.errorHandler());
 })
 // production only
 app.configure('production', function(){
-    app.set('db', database);
-})
 
+})
+app.set('db', database);
+app.set('rootdir', __dirname);
 app.all('/', apirouter.versions);
 app.all(/\/v\d+[\/\Z]?$/,apirouter.apidescription);
 app.get(/\/doc\/v(\d+)\/(\w+)[\/\Z]?$/, apirouter.docs);

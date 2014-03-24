@@ -111,18 +111,25 @@ Doc.prototype.createAPIJsForMethod = function(permission,method, content) {
 
 Doc.prototype.createJsForInstanceAndCollection = function() {
     var grunt = this.grunt;
-    var instanceContent = grunt.file.read('./grunt/templates/instance.template');
-    var collectionContent = grunt.file.read('./grunt/templates/collection.template');
+    var instanceContent = grunt.file.read('./grunt/templates/get-instance.template');
+    var collectionContent = grunt.file.read('./grunt/templates/get-collection.template');
+    var post_collectionContent = grunt.file.read('./grunt/templates/post-collection.template');
 
     var that = this;
 
     this.supportedMethods.forEach(function(method) {
         that.json.permission.forEach(function(permission) {
 
-            that.createInstanceJsForMethod(permission,method,instanceContent);
-            that.createCollectionJsForMethod(permission,method,collectionContent);
+            if(method.toUpperCase() == "POST") {
+                that.createPOSTCollectionJsForMethod(permission,method,post_collectionContent);
+            } else {
+                that.createInstanceJsForMethod(permission,method,instanceContent);
+                that.createCollectionJsForMethod(permission,method,collectionContent);
+
+            }
             that.createInstanceTestsForMethod(permission,method);
             that.createCollectionTestsForMethod(permission,method);
+
         });
 
     });
@@ -163,7 +170,6 @@ Doc.prototype.createInstanceJsForMethod = function(permission,method, content) {
 
 }
 
-
 Doc.prototype.createCollectionJsForMethod = function(permission,method, content) {
     var links = [];
     var that = this;
@@ -191,6 +197,22 @@ Doc.prototype.createCollectionJsForMethod = function(permission,method, content)
     }
 
 }
+
+Doc.prototype.createPOSTCollectionJsForMethod = function(permission,method, content) {
+    var links = [];
+    var that = this;
+    var grunt = this.grunt;
+    var isAllowed = false;
+    if(permission.methods.contains(method.toUpperCase())) {
+        isAllowed = true;
+    }
+
+    if(isAllowed) {
+        grunt.file.write(that.folder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase()+'/collection.js', content);
+    }
+
+}
+
 
 Doc.prototype.createAPITestsForMethod = function(permission, method, content) {
 
@@ -282,8 +304,15 @@ Doc.prototype.createCollectionTestsForMethod = function(permission, method) {
     if(permission.methods.contains(method.toUpperCase())) {
 
         var test = grunt.file.read('./grunt/templates/test.template');
-        var http200 = grunt.file.read('./grunt/templates/tests/http200.template');
-        test = test + '\n' + http200;
+        if(method.toUpperCase() === "POST") {
+            grunt.log.debug("POST");
+            var http201 = grunt.file.read('./grunt/templates/tests/http201.template');
+            test = test + '\n' + http201;
+        } else {
+            var http200 = grunt.file.read('./grunt/templates/tests/http200.template');
+            test = test + '\n' + http200;
+        }
+
 
         var modifiedContent =  test.replace('{{{METHOD}}}',method.toUpperCase());
         modifiedContent =  modifiedContent.replace('{{{method}}}','delete' == method.toLowerCase() ? 'del' : method.toLowerCase());
