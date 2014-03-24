@@ -6,7 +6,7 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 var apirouter = require('./lib/apirouter');
-var Database = require('./lib/database');
+var Database = require('./lib/database/database');
 var app = express();
 
 // all environments
