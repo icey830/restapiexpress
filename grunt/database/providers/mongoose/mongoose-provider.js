@@ -12,7 +12,7 @@ function MongooseProvider(grunt) {
     this.grunt = grunt;
 }
 
-MongooseProvider.prototype.createScheme = function(doc)  {
+MongooseProvider.prototype.createSchemeAndGetLibFile = function(doc)  {
     this.grunt.log.debug("create Scheme for: " + doc.json.title);
 
     var template = this.grunt.file.read('./grunt/database/providers/mongoose/scheme.template');
@@ -22,12 +22,12 @@ MongooseProvider.prototype.createScheme = function(doc)  {
     var scheme = {};
     for (var key in model) {
         scheme[key] = model[key].type.capitalize();
-
-
     }
     template = template.replaceAll("{{{SCHEME}}}",JSON.stringify(scheme));
 
-    this.grunt.file.write(doc.schemefolder+ '/'+doc.json.singular+'.js', template);
+    this.grunt.file.write(doc.schemefolder+ doc.json.singular+'.js', template);
+
+    return {"path": "./"+doc.schemefolder+ doc.json.singular+'.js', "scheme" : doc.json.singular, "version":doc.json.version};
 }
 
 module.exports = MongooseProvider;
