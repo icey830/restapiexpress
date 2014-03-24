@@ -1,10 +1,18 @@
 describe('{{{METHOD}}} {{{path}}} --{{{role}}}', function(){
     it('respond with json', function(done){
+        var post = {
+            id: 'Barrack',
+            name: 'Obama',
+            email: 'Bob@bob.com',
+            importance: 5,
+            testify:"3e2"
+        };
         request(app)
             .{{{method}}}('{{{path}}}')
             .set('Accept', 'application/*')
             .set('DEV-ROLE', '{{{role}}}')
             .expect('Content-Type', /json/)
+            .send(post)
             .expect(201)
             .end(function(err, res){
                 if (err) return done(err);
