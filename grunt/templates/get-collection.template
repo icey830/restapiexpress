@@ -41,7 +41,7 @@ exports.send = function(req, res, resource) {
 
 
     };
-    dbprovider.find(documentation.singular.toLowerCase(),data, callback);
+    dbprovider.find(documentation.singular.toLowerCase(),resource, callback);
 
 
 };
