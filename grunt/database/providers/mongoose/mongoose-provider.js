@@ -23,6 +23,7 @@ MongooseProvider.prototype.createSchemeAndGetLibFile = function(doc)  {
     for (var key in model) {
         scheme[key] = model[key].type.capitalize();
     }
+    scheme["type"] = "String";
     template = template.replaceAll("{{{SCHEME}}}",JSON.stringify(scheme));
 
     this.grunt.file.write(doc.schemefolder+ doc.json.singular+'.js', template);

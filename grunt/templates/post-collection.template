@@ -8,7 +8,7 @@ exports.send = function(req, res, resource) {
     var dbprovider = req.app.get("db").provider;
     var documentation = resource.documentationJson;
 
-    dbprovider.createEntity(documentation.singular.toLowerCase(),req.body, function(err) {
+    dbprovider.createEntity(documentation.singular.toLowerCase(),req.body, resource, function(err) {
         console.log(err);
 
         var links = {
