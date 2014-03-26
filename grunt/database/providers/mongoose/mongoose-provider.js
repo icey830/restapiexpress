@@ -27,7 +27,7 @@ MongooseProvider.prototype.createSchemeAndGetLibFile = function(doc)  {
 
     this.grunt.file.write(doc.schemefolder+ doc.json.singular+'.js', template);
 
-    return {"path": "./"+doc.schemefolder+ doc.json.singular+'.js', "scheme" : doc.json.singular, "version":doc.json.version};
+    return {"path": "./"+doc.json.title.toLowerCase() + "/" + doc.json.singular+'.js', "scheme" : doc.json.singular, "version":doc.json.version};
 }
 
 module.exports = MongooseProvider;

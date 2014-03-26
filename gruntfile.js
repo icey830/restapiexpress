@@ -63,6 +63,9 @@ module.exports = function(grunt){
         modifiedContent =  modifiedContent.replace('{{{appjs}}}',__dirname + '/app.js');
         grunt.file.write(__dirname + '/test/versions.js', modifiedContent);
 
+        var db = new Database(grunt);
+        db.createSchemes(allDocuments);
+
     });
 
     grunt.registerTask('test', 'test with mocha', function() {

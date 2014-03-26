@@ -1,2 +1,3 @@
 
-var {{{SCHEME}}} = require('{{{PATH}}}');
+    var {{{SCHEME}}} = require('{{{PATH}}}');
+    mongoose.model('{{{scheme}}}',new {{{SCHEME}}}());
