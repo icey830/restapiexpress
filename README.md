@@ -98,26 +98,34 @@ Work in PROGRESS
 
 Tasks implemented
 -
-Server response:
+### Server response:
 * returns a json representation of versions when accessing api.yourdomain.com/
 * returns all documented functions of version1 of api when accessing api.yourdomain.com/v1/
 * handles permissions in dev-mode via. header-field (DEV-ROLE)
 * connect database mongodb with mongoose
 * handles page, limit, sort, fields and scope
-Grunt tasks:
+
+### Grunt tasks:
 * creates json-files based on api.json (documentation, example: apidoc/v1/api.json) for every described VERB and permission-role
 * creates js-files based on resource.json (example: apidoc/v1/contacts/contacts.json) for every described VERB and permission-role
 * creates automated test cases based on resource.json or api.json.
 * creates mongoose schemes for database
 * downloads database dependencies
+* extends schemes for serverside validation
+* create correct route for GET on instance and collection
+* create correct route for POST on collection
 
-Automated Test cases:
+### Automated Test cases:
 * responding with http-code 200 if access granted or 302 where no access was granted for every collection or resource
 * responding with http-code 201 a resource was created
 
 Next Steps
 -
-* extends schemes for serverside validation
+* create template for POST on instance
+* create template for PATCH on instance and collection
+* create template for PUT on instance and collection
+* create template for HEAD on instance and collection
+* create template for OPTIONS on instance and collection
 * create single sign on tables (Username, password, API-Token)
 * generete sessions based on user
 * handle expands for mongodb
