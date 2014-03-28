@@ -78,7 +78,7 @@
             "mandatory": true,
             "type": "string",
             "default": "c.email",
-            "regex": "",
+            "regex": "/\\.com$/",
             "multiple": true
         },
         "foo": {
@@ -87,7 +87,6 @@
             "mandatory": false,
             "type": "number",
             "default": 10,
-            "regex": "",
             "multiple": false
         },
         "importance": {

@@ -12,7 +12,8 @@ exports.send = function(req, res, resource) {
         console.log(err);
 
         var links = {
-            "error":documentation.title.toLowerCase()
+            "resourec":documentation.title.toLowerCase(),
+            "error":err
         };
         res.status(400).json(links);
     }, function(object) {

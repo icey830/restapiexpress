@@ -47,6 +47,10 @@ MongooseProvider.prototype.createSchemeAndGetLibFile = function(doc)  {
 
             type += ", max: " + JSON.stringify(field.max);
         }
+        if(field.regex) {
+
+            type += ', match: [' +field.regex+ ',"That file doesn\'t match '+ field.regex+ ' ({VALUE})"' + ']';
+        }
         type += "}";
         scheme[key] = type;
     }
