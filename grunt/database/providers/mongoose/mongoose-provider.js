@@ -32,12 +32,20 @@ MongooseProvider.prototype.createSchemeAndGetLibFile = function(doc)  {
     var model = doc.json.model;
     var scheme = {};
     for (var key in model) {
-
+        var field = model[key];
         var type= "{type: ";
-        type +=  model[key].type.capitalize();
-        if(model[key].default) {
+        type +=  field.type.capitalize();
+        if(field.default) {
 
-            type += ", default: " + JSON.stringify(model[key].default);
+            type += ", default: " + JSON.stringify(field.default);
+        }
+        if(field.min) {
+
+            type += ", min: " + JSON.stringify(field.min);
+        }
+        if(field.max) {
+
+            type += ", max: " + JSON.stringify(field.max);
         }
         type += "}";
         scheme[key] = type;
