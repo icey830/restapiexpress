@@ -17,15 +17,14 @@ ApiDescriptionWriter.prototype.write = function(doc)  {
     var self = this;
     doc.supportedMethods.forEach(function(method) {
         doc.json.permission.forEach(function(permission) {
-            self.createAPIJsForMethod(doc,permission,method,content);
-            self.createAPITestsForMethod(doc,permission,method,test);
+            self.writeJSON(doc,permission,method,content);
         });
 
     });
 
 }
 
-ApiDescriptionWriter.prototype.createAPIJsForMethod = function(doc,permission,method, content) {
+ApiDescriptionWriter.prototype.writeJSON = function(doc,permission,method, content) {
     var links = [];
 
     var grunt = this.grunt;
@@ -59,30 +58,5 @@ ApiDescriptionWriter.prototype.createAPIJsForMethod = function(doc,permission,me
 
 }
 
-ApiDescriptionWriter.prototype.createAPITestsForMethod = function(doc,permission, method, content) {
-
-    var grunt = this.grunt;
-    if(permission.methods.contains(method.toUpperCase())) {
-
-        var modifiedContent =  content.replace('{{{METHOD}}}',method.toUpperCase());
-        modifiedContent =  modifiedContent.replace('{{{method}}}','delete' == method.toLowerCase() ? 'del' : method.toLowerCase());
-        modifiedContent =  modifiedContent.replaceAll('{{{path}}}','/');
-        modifiedContent =  modifiedContent.replaceAll('{{{role}}}',permission.role.toLowerCase());
-        modifiedContent =  modifiedContent.replace('{{{appjs}}}',this.pathToAppJsFromFolder(doc.testfolder));
-        grunt.file.write(doc.testfolder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase() + '/instance.js', modifiedContent);
-    }
-
-}
-
-ApiDescriptionWriter.prototype.pathToAppJsFromFolder = function(folder,minus) {
-
-    if(!minus) {
-        minus = 0;
-    }
-    var level = folder.split('/').length ;
-    var pathToAppJS = "app.js";
-    for(var i=0;i<=level-minus;i++) pathToAppJS = "../" + pathToAppJS;
-    return pathToAppJS;
-}
 
 module.exports = ApiDescriptionWriter;

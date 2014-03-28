@@ -19,11 +19,10 @@ module.exports = function(grunt){
         var allDocuments = new Docs(grunt);
 
         var apiWriter = new ApiWriter(grunt, __dirname);
-        apiWriter.writeAPI(allDocuments);
-        apiWriter.writeVersions(allDocuments);
+        apiWriter.write(allDocuments);
 
         var testWriter = new TestWriter(grunt, __dirname);
-        testWriter.writeVersionsTest();
+        testWriter.write(allDocuments);
 
         var db = new Database(grunt);
         db.createSchemes(allDocuments);

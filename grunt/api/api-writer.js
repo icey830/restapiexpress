@@ -11,9 +11,10 @@ function ApiWriter(grunt, rootdir) {
     this.apiRouteWriter = new ApiRouteWriter(grunt, rootdir);
 }
 
-ApiWriter.prototype.writeAPI = function(docs)  {
+ApiWriter.prototype.write = function(docs)  {
 
     var grunt = this.grunt;
+    grunt.log.debug("start ");
     for(var i=0;i<docs.docs.length;i++) {
         var doc = docs.docs[i];
 
@@ -29,7 +30,8 @@ ApiWriter.prototype.writeAPI = function(docs)  {
         }
 
     }
-
+    grunt.log.debug("ver ");
+    this.writeVersions(docs)
 }
 
 ApiWriter.prototype.writeVersions = function(docs)  {

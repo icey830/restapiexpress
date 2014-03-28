@@ -1,6 +1,9 @@
 /**
  * Created by samschmid on 28.03.14.
  */
+var TestApiDescriptionWriter = require('./test-api-description-writer.js');
+var TestApiRouteWriter = require('./test-api-route-writer.js');
+
 String.prototype.replaceAll = function(target, replacement) {
     return this.split(target).join(replacement);
 };
@@ -8,6 +11,31 @@ String.prototype.replaceAll = function(target, replacement) {
 function TestWriter(grunt, rootdir) {
     this.grunt = grunt;
     this.rootdir = rootdir;
+    this.testApiDescWriter = new TestApiDescriptionWriter(grunt, rootdir);
+    this.testApiRouteWriter = new TestApiRouteWriter(grunt, rootdir);
+}
+
+TestWriter.prototype.write = function(docs)  {
+
+    var grunt = this.grunt;
+    for(var i=0;i<docs.docs.length;i++) {
+        var doc = docs.docs[i];
+
+        if(doc.json.title === 'api') {
+
+            this.testApiDescWriter.write(doc);
+
+        } else {
+
+            grunt.log.debug("start createing test doc");
+            this.testApiRouteWriter.write(doc);
+
+        }
+
+    }
+
+    this.writeVersionsTest();
+
 }
 
 TestWriter.prototype.writeVersionsTest = function()  {
