@@ -5,63 +5,25 @@
 var Docs = require('./grunt/docs.js');
 var Setup = require('./grunt/setup.js');
 var Database = require('./grunt/database/database.js');
-
+var ApiWriter = require('./grunt/api/api-writer.js');
+var TestWriter = require('./grunt/api/test-writer.js');
 module.exports = function(grunt){
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        appconfig: grunt.file.readJSON('config.json'),
+        appconfig: grunt.file.readJSON('config.json')
     });
 
     grunt.registerTask('default', 'searchDocs', function() {
 
         var allDocuments = new Docs(grunt);
 
-        for(var i=0;i<allDocuments.docs.length;i++) {
-            var doc = allDocuments.docs[i];
+        var apiWriter = new ApiWriter(grunt, __dirname);
+        apiWriter.writeAPI(allDocuments);
+        apiWriter.writeVersions(allDocuments);
 
-            if(doc.json.title === 'api') {
-
-                doc.createJsForAPI();
-
-            } else {
-
-                grunt.log.debug("start createing doc");
-                doc.createJsForInstanceAndCollection();
-
-            }
-
-        }
-
-        var versionArray = [];
-        allDocuments.versions.forEach(function(version) {
-            var selfref =
-            {
-                "type":"application/com.github.restapiexpress.api",
-                "rel": "Version " + version,
-                "method": "GET",
-                "href": "http://localhost:3000/v"+version+"/"
-            };
-            versionArray.push(selfref);
-        });
-
-        var versionJson = {"versions" : versionArray};
-
-        grunt.file.write(__dirname + '/api/versions.json', JSON.stringify(versionJson));
-
-        var test = grunt.file.read('./grunt/templates/test.template');
-        var http200 = grunt.file.read('./grunt/templates/tests/http200.template');
-        test = test + '\n' + http200;
-
-        var modifiedContent =  test.replace('{{{METHOD}}}',"GET");
-        modifiedContent =  modifiedContent.replace('{{{method}}}',"get");
-        var path = '/';
-        modifiedContent =  modifiedContent.replace('{{{path}}}',path);
-        modifiedContent =  modifiedContent.replace('{{{path}}}',path);
-        modifiedContent =  modifiedContent.replace('{{{role}}}',"public");
-        modifiedContent =  modifiedContent.replace('{{{role}}}',"public");
-        modifiedContent =  modifiedContent.replace('{{{appjs}}}',__dirname + '/app.js');
-        grunt.file.write(__dirname + '/test/versions.js', modifiedContent);
+        var testWriter = new TestWriter(grunt, __dirname);
+        testWriter.writeVersionsTest();
 
         var db = new Database(grunt);
         db.createSchemes(allDocuments);
