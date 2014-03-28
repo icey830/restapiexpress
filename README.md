@@ -34,6 +34,10 @@ Installation
 > ```bash 
 curl -X POST -H "Content-Type: application/json" -H "DEV-ROLE: admin" -d '{"id": "Barrack","name": "Obama","email": "Bob@bob.com","importance": "5"}' http://localhost:3000/v1/contacts
 ```
+> GET all entries
+> ```bash 
+> curl -X GET -H "DEV-ROLE: admin" http://localhost:3000/v1/contacts
+> ```
 
 Then you can make the following steps
 
