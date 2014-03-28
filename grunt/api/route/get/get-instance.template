@@ -25,10 +25,10 @@ exports.send = function(req, res, resource) {
                 "type": documentation.type,
                 "rel": "show documentation",
                 "method": "GET",
-                "href": req.protocol + '://' + req.host + ':' + req.app.get('port') + req.path.replace("/","/doc/")
+                "href": req.protocol + '://' + req.host + ':' + req.app.get('port') + req.path.replace("/","/doc/").replace(req.path.substr(req.path.lastIndexOf('/') + 1), '')
             };
             var links = {
-                "items":result,
+                "item":result[0],
                 "links":linkarray,
                 "doc":doc
             };
