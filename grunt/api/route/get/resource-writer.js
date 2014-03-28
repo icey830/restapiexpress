@@ -14,35 +14,26 @@ function GetCollectionWriter(grunt, rootdir) {
 GetCollectionWriter.prototype.write = function(doc, permission, method)  {
 
     var grunt = this.grunt;
-    var instanceContent = grunt.file.read('./grunt/templates/get-instance.template');
-    var collectionContent = grunt.file.read('./grunt/templates/get-collection.template');
+    var instanceContent = grunt.file.read(__dirname +'/get-instance.template');
+    var collectionContent = grunt.file.read(__dirname +'/get-collection.template');
 
-    this.createInstanceJsForMethod(doc,permission,method,instanceContent);
-    this.createCollectionJsForMethod(doc,permission,method,collectionContent);
+    this.writeInstance(doc,permission,method,instanceContent);
+    this.writeCollection(doc,permission,method,collectionContent);
 
 }
 
-GetCollectionWriter.prototype.createInstanceJsForMethod = function(doc,permission,method, content) {
-    var links = [];
-    var grunt = this.grunt;
+GetCollectionWriter.prototype.writeInstance = function(doc,permission,method, content) {
 
     if(permission.methods.contains(method.toUpperCase())) {
-
-        var modifiedContent =  content.replace('{{{links}}}',JSON.stringify(links));
-        modifiedContent =  modifiedContent.replace('{{{TYPE}}}',JSON.stringify(doc.json.type));
-        grunt.file.write(doc.folder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase()+'/instance.js', modifiedContent);
+        this.grunt.file.write(doc.folder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase()+'/instance.js', content);
     }
 
 }
 
-GetCollectionWriter.prototype.createCollectionJsForMethod = function(doc,permission,method, content) {
-    var links = [];
-    var grunt = this.grunt;
-    if(permission.methods.contains(method.toUpperCase())) {
+GetCollectionWriter.prototype.writeCollection = function(doc,permission,method, content) {
 
-        var modifiedContent =  content.replace('{{{links}}}',JSON.stringify(links));
-        modifiedContent =  modifiedContent.replace('{{{TYPE}}}',JSON.stringify(doc.json.type));
-        grunt.file.write(doc.folder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase()+'/collection.js', modifiedContent);
+    if(permission.methods.contains(method.toUpperCase())) {
+        this.grunt.file.write(doc.folder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase()+'/collection.js', content);
     }
 
 }

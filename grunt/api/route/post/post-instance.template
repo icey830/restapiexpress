@@ -1,0 +1,24 @@
+exports.send = function(req, res, resource) {
+    var documentation = resource.documentationJson;
+    var selfref =
+    {
+        "type": documentation.type,
+        "rel": "self",
+        "method": req.method,
+        "href": req.protocol + '://' + req.host + ':' + req.app.get('port') + req.path
+    };
+    var linkarray = [];
+    linkarray.unshift(selfref);
+
+    var doc = {
+        "type": documentation.type,
+        "rel": "show documentation",
+        "method": "GET",
+        "href": req.protocol + '://' + req.host + ':' + req.app.get('port') + req.path.replace("/","/doc/")
+    };
+    var links = {
+        "links":linkarray,
+        "doc":doc
+    };
+    res.json(links);
+};

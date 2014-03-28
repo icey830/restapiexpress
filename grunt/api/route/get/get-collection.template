@@ -4,12 +4,8 @@ exports.send = function(req, res, resource) {
     var dbprovider = req.app.get("db").provider;
     var documentation = resource.documentationJson;
 
-
-    var data = req.query;
     var callback = function(err, result) {
-
         if(err) {
-
             console.log(err);
             res.status(500).json(err);
         } else {
@@ -22,7 +18,7 @@ exports.send = function(req, res, resource) {
                 "href": req.protocol + '://' + req.host + ':' + req.app.get('port') + req.path
             };
 
-            var linkarray = {{{links}}};
+            var linkarray = [];
             linkarray.unshift(selfref);
 
             var doc = {
@@ -38,8 +34,6 @@ exports.send = function(req, res, resource) {
             };
             res.json(links);
         }
-
-
     };
     dbprovider.find(documentation.singular.toLowerCase(),resource, callback);
 

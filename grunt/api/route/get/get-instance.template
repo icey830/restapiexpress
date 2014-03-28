@@ -1,17 +1,17 @@
-exports.send = function(req, res, ressource) {
-
+exports.send = function(req, res, resource) {
+    var documentation = resource.documentationJson;
     var selfref =
     {
-        "type":"application/com.github.restapiexpress.api",
+        "type": documentation.type,
         "rel": "self",
         "method": req.method,
         "href": req.protocol + '://' + req.host + ':' + req.app.get('port') + req.path
     };
-    var linkarray = {{{links}}};
+    var linkarray = [];
     linkarray.unshift(selfref);
 
     var doc = {
-        "type": {{{TYPE}}},
+        "type": documentation.type,
         "rel": "show documentation",
         "method": "GET",
         "href": req.protocol + '://' + req.host + ':' + req.app.get('port') + req.path.replace("/","/doc/")
