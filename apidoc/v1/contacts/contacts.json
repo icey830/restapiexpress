@@ -69,7 +69,6 @@
             "description": "Contact Name",
             "mandatory": true,
             "type": "string",
-            "default": "c.name",
             "regex": ""
         },
         "email": {

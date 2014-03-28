@@ -51,6 +51,11 @@ MongooseProvider.prototype.createSchemeAndGetLibFile = function(doc)  {
 
             type += ', match: [' +field.regex+ ',"That file doesn\'t match '+ field.regex+ ' ({VALUE})"' + ']';
         }
+        if(field.mandatory) {
+            if(field.mandatory === true) {
+                type += ", required: true";
+            }
+        }
         type += "}";
         scheme[key] = type;
     }
