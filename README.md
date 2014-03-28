@@ -26,7 +26,7 @@ Installation
 > * http://localhost:3000/v1/
 > * http://localhost:3000/v1/contacts
 > * http://localhost:3000/v1/contacts/123.json
-
+> * Documentation of resource: http://localhost:3000/doc/v1/contacts
 > If you want to write some data then you have to set a Header "DEV-ROLE" = "admin"
 > POST to http://localhost:3000/v1/contacts
 > Example
