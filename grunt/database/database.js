@@ -39,37 +39,20 @@ Database.prototype.createSchemes = function(docs)  {
 
                 if(doc.json.title !== 'api') {
                     //TODO create Scheme for Doc
-                    var scheme = provider.createSchemeAndGetLibFile(doc);
+                    var scheme = provider.writeScheme(doc);
                     lib.push(scheme);
 
                 }
 
             }
+
+            provider.writeLib(lib);
         } else {
 
             grunt.log.write("cannot create schemes for database " + this.db.name + ", because there we can't use the provider "+this.db.provider+" for it.");
         }
 
-        var template = this.grunt.file.read('./grunt/database/providers/mongoose/lib.template');
-        var templateA = this.grunt.file.read('./grunt/database/providers/mongoose/lib-start.template');
-        var templateB = this.grunt.file.read('./grunt/database/providers/mongoose/lib-end.template');
-        var libfiles = new Array();
-        libfiles[0] = undefined;
-        lib.forEach(function(scheme) {
-            if(libfiles[scheme.version]===undefined) {
-                libfiles[scheme.version] = "";
-            }
 
-            libfiles[scheme.version] += template.replaceAll("{{{SCHEME}}}", scheme.scheme).replace("{{{PATH}}}", scheme.path).replaceAll("{{{scheme}}}",scheme.scheme.toLowerCase());
-
-        })
-        libfiles.forEach(function(libfile,index) {
-            if(libfile!==undefined) {
-                grunt.log.debug("libs: " +index + " " +libfile);
-                grunt.file.write("./database/schemes/v"+index+"/schemes.js", templateA+libfile+templateB);
-            }
-
-        })
 
         //
     } else {
