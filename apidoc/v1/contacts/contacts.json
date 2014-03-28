@@ -56,16 +56,6 @@
         }
     },
     "model": {
-        "identifier": {
-            "description": "Identifier field",
-            "name": "identifier",
-            "type": "ObjectId",
-            "min":null,
-            "max":null,
-            "mandatory": false,
-            "default": "",
-            "regex": ""
-        },
         "id": {
             "name": "id",
             "description": "Contact ID",
@@ -90,6 +80,15 @@
             "default": "c.email",
             "regex": "",
             "multiple": true
+        },
+        "foo": {
+            "name": "foo",
+            "description": "Contact Foo",
+            "mandatory": false,
+            "type": "number",
+            "default": 10,
+            "regex": "",
+            "multiple": false
         },
         "importance": {
             "name": "importance",
