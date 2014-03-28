@@ -20,7 +20,20 @@ It takes all your assiduity work - so the only thing your have to do is to desig
 
 Installation
 =
-For the moment there is only mongo db supported. So you have to install mongo db first. (no Username an Password)
+> For the moment there is only database supported is mongodb. So you have to install mongo db first. (no Username an Password). Work is very in progress. What you can do now: Install it and run it. thats basically all. The documentation is prepared for the API Version 1 with one resource (contacts).
+> You can call following routes which should work:
+> * http://localhost:3000/
+> * http://localhost:3000/v1/
+> * http://localhost:3000/v1/contacts
+> * http://localhost:3000/v1/contacts/123.json
+
+> If you want to write some data then you have to set a Header "DEV-ROLE" = "admin"
+> POST to http://localhost:3000/v1/contacts
+> Example
+> post: 
+> ```bash 
+curl -X POST -H "Content-Type: application/json" -H "DEV-ROLE: admin" -d '{"id": "Barrack","name": "Obama","email": "Bob@bob.com","importance": "5"}' http://localhost:3000/v1/contacts
+```
 
 Then you can make the following steps
 
