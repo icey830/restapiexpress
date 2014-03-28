@@ -1,8 +1,8 @@
 /**
  * Created by samschmid on 28.03.14.
  */
-var ApiDescriptionWriter = require('./api-description-writer.js');
-var ApiRouteWriter = require('./api-route-writer.js');
+var ApiDescriptionWriter = require('./description/api-description-writer.js');
+var ApiRouteWriter = require('./route/api-route-writer.js');
 
 function ApiWriter(grunt, rootdir) {
     this.grunt = grunt;

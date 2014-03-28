@@ -23,6 +23,7 @@ ApiRouteWriter.prototype.write = function(doc)  {
         doc.json.permission.forEach(function(permission) {
 
             if(method.toUpperCase() == "POST") {
+                that.createInstanceJsForMethod(doc,permission,method,instanceContent);
                 that.createPOSTCollectionJsForMethod(doc,permission,method,post_collectionContent);
             } else {
                 that.createInstanceJsForMethod(doc,permission,method,instanceContent);

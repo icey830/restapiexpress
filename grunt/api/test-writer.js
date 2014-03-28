@@ -1,8 +1,8 @@
 /**
  * Created by samschmid on 28.03.14.
  */
-var TestApiDescriptionWriter = require('./test-api-description-writer.js');
-var TestApiRouteWriter = require('./test-api-route-writer.js');
+var TestApiDescriptionWriter = require('./description/test-api-description-writer.js');
+var TestApiRouteWriter = require('./route/test-api-route-writer.js');
 
 String.prototype.replaceAll = function(target, replacement) {
     return this.split(target).join(replacement);
