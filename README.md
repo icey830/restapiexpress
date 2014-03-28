@@ -117,7 +117,7 @@ Automated Test cases:
 
 Next Steps
 -
-
+* extends schemes for serverside validation
 * create single sign on tables (Username, password, API-Token)
 * generete sessions based on user
 * handle expands for mongodb
