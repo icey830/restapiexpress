@@ -1,6 +1,6 @@
 restapiexpress
 =
-**a framework for creating uniform RESTful APIs quickly written in Node.js (ExpressJS and GruntJS)**
+**A framework for creating uniform RESTful APIs quickly written in Node.js on top of ExpressJS and GruntJS**
 
 Goals
 -
@@ -18,8 +18,49 @@ It takes all your assiduity work - so the only thing your have to do is to desig
 * the framework creates data base controllers based on predefined templates for every request you have defined in the documentation with grunt.
 * the framework serves an admin interface to write the documentation
 
+Installation
+=
+For the moment there is only mongo db supported. So you have to install mongo db first. (no Username an Password)
+
+Then you can make the following steps
+
+1. Fork this project 
+2. Download it on your Computer
+3. Move In your Project Folder
+4. Edit config.json and set you database location (example)
+   ```json
+"db" : {
+        ...
+        "location" : "localhost:27017/restapiexpress",
+        ...
+    }
+        
+   ```
+4. Install Node Dependencies
+
+   ```javascript
+   npm install
+   ```
+5. Install Database Dependencies
+
+   ```javascript
+   grunt setup
+   ```
+6. Create Routes based on Documentation 
+
+   ```javascript
+   grunt 
+   ```
+7. Test Routes based on Documentation 
+
+   ```javascript
+   grunt test
+   ```
+
 How to write the documentation
 -
+* TBD
+* doc are based in folder apidoc/*
 * define model
 * define permissions for every HTTP-Method (GET, POST, PUT, HEAD, OPTIONS, etc.)
 
