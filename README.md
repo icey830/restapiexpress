@@ -87,7 +87,7 @@ How to write data base controller
 * write an extension for every single controller create by grunt if needed to take over the control.
 
 Work in PROGRESS
--
+=
 * the frameworks takes control over routing
 * the framework handles permissions
 * the framework handles sessions
@@ -102,21 +102,26 @@ Server response:
 * returns a json representation of versions when accessing api.yourdomain.com/
 * returns all documented functions of version1 of api when accessing api.yourdomain.com/v1/
 * handles permissions in dev-mode via. header-field (DEV-ROLE)
+* connect database mongodb with mongoose
+* handles page, limit, sort, fields and scope
 Grunt tasks:
 * creates json-files based on api.json (documentation, example: apidoc/v1/api.json) for every described VERB and permission-role
 * creates js-files based on resource.json (example: apidoc/v1/contacts/contacts.json) for every described VERB and permission-role
 * creates automated test cases based on resource.json or api.json.
+* creates mongoose schemes for database
+* downloads database dependencies
 
 Automated Test cases:
-* responding with http-code 200 or 302 where no access was granted for every collection or resource
+* responding with http-code 200 if access granted or 302 where no access was granted for every collection or resource
+* responding with http-code 201 a resource was created
 
 Next Steps
 -
-* improve hypermedia for serving more links
-* improve hypermedia to suppress links if not needed
-* connect database (for example MongoDb)
+
 * create single sign on tables (Username, password, API-Token)
 * generete sessions based on user
+* handle expands for mongodb
+* improve hypermedia to suppress links if not needed
 
 Become a contributer
 =
