@@ -23,12 +23,9 @@ function Database(grunt) {
 
 Database.prototype.createSchemes = function(docs)  {
 
-    var appconfig = this.appconfig;
     var grunt = this.grunt;
 
     if(this.db.name === "mongodb") {
-
-        var lib  = [];
 
         if(this.db.provider === "mongoose") {
             grunt.log.write("start writing schemes for database " + this.db.name + " and provider "+this.db.provider + ".");
@@ -38,23 +35,19 @@ Database.prototype.createSchemes = function(docs)  {
                 var doc = docs.docs[i];
 
                 if(doc.json.title !== 'api') {
-                    //TODO create Scheme for Doc
-                    var scheme = provider.writeScheme(doc);
-                    lib.push(scheme);
+
+                    provider.writeScheme(doc);
 
                 }
 
             }
 
-            provider.writeLib(lib);
+            provider.writeLib();
         } else {
 
             grunt.log.write("cannot create schemes for database " + this.db.name + ", because there we can't use the provider "+this.db.provider+" for it.");
         }
 
-
-
-        //
     } else {
         grunt.log.write("cannot create schemes for database " + this.db.name + ", because there is no provider for it.");
 

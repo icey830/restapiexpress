@@ -7,15 +7,17 @@ function MongooseProvider(grunt) {
     this.grunt = grunt;
     this.scheme = new MongooseScheme(grunt);
     this.libWriter = new MongooseLibWriter(grunt);
+    this.lib  = [];
 }
 
 MongooseProvider.prototype.writeScheme = function(doc)  {
-    return this.scheme.writeScheme(doc);
+    var scheme = this.scheme.writeScheme(doc);
+    this.lib.push(scheme);
 }
 
-MongooseProvider.prototype.writeLib = function(lib)  {
+MongooseProvider.prototype.writeLib = function()  {
 
-    this.libWriter.writeLib(lib);
+    this.libWriter.writeLib(this.lib);
 
 }
 
