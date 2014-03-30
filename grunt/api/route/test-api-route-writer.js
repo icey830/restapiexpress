@@ -6,11 +6,12 @@ String.prototype.replaceAll = function(target, replacement) {
 };
 
 var TestGetResourceWriter = require('./get/test-resource-writer.js');
-
+var TestPostResourceWriter = require('./post/test-resource-writer.js');
 function TestApiRouteWriter(grunt, rootdir) {
     this.grunt = grunt;
     this.rootdir = rootdir;
     this.testGetResourceWriter = new TestGetResourceWriter(grunt, rootdir);
+    this.testPostResourceWriter = new TestPostResourceWriter(grunt, rootdir);
 }
 
 TestApiRouteWriter.prototype.write = function(doc)  {
@@ -30,6 +31,8 @@ TestApiRouteWriter.prototype.write = function(doc)  {
             } else {
                 if(method.toUpperCase() == "GET") {
                     that.testGetResourceWriter.write(doc, permission, method);
+                } else if(method.toUpperCase() == "POST") {
+                    that.testPostResourceWriter.write(doc, permission, method);
                 } else {
 
                     that.createInstanceTestsForMethod(doc,permission,method);
