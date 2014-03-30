@@ -51,7 +51,6 @@ ApiRouteWriter.prototype.write = function(doc)  {
                 that.grunt.log.write("\nyou can see an example for it in folder /grunt/api/route/get/\n");
                 that.grunt.log.write("\ndont'forget to write a test case ;-)\n");
                 that.grunt.log.write("=====\n\n");
-                that.getResourceWriter.write(doc, permission, method);
             }
 
         });

@@ -35,7 +35,7 @@ TestApiRouteWriter.prototype.write = function(doc)  {
                 that.createNoAccessCollection(doc,permission,method);
 
             } else {
-                if(method.toUpperCase() == "GET") {
+                if(method.toUpperCase() == "GET" || method.toUpperCase() == "HEAD") {
                     that.testGetResourceWriter.write(doc, permission, method);
                 } else if(method.toUpperCase() == "POST") {
                     that.testPostResourceWriter.write(doc, permission, method);
@@ -47,8 +47,14 @@ TestApiRouteWriter.prototype.write = function(doc)  {
                     that.testOptionsResourceWriter.write(doc, permission, method);
                 } else {
 
-                    that.createInstanceTestsForMethod(doc,permission,method);
-                    that.createCollectionTestsForMethod(doc,permission,method);
+                    that.grunt.log.write("\n=====");
+                    that.grunt.log.write("\nNO Resource-Writer TESTS for method " + method.toUpperCase());
+                    that.grunt.log.write("\nplease create one in folder /grunt/api/route/ " + method.toLowerCase() + "/");
+                    that.grunt.log.write("\nand add it to the api-writer /grunt/api/route/test-api-route-writer.js");
+                    that.grunt.log.write("\nyou can see an example for it in folder /grunt/api/route/get/\n");
+                    that.grunt.log.write("\nnever forget to write a test case ;-)\n");
+                    that.grunt.log.write("=====\n\n");
+
                 }
             }
 
