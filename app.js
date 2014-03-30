@@ -18,13 +18,14 @@ app.set('view engine', 'jade');
 app.configure('development', function(){
     //app.set('db', db);
 })
-
-app.use(express.bodyParser());
-app.use(express.favicon());
 app.use(express.logger('dev'));
+app.use(express.bodyParser());
+app.use(express.compress());
+app.use(express.favicon());
 app.use(express.json());
-app.use(express.urlencoded());
 app.use(express.methodOverride());
+app.use(express.urlencoded());
+
 
 var database = new Database();
 // development only

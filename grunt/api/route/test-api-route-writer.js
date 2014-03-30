@@ -37,8 +37,14 @@ TestApiRouteWriter.prototype.createInstanceTestsForMethod = function(doc,permiss
     if(permission.methods.contains(method.toUpperCase())) {
 
         var test = grunt.file.read('./grunt/templates/test.template');
-        var http200 = grunt.file.read('./grunt/templates/tests/http200.template');
-        test = test + '\n' + http200;
+        if(method.toUpperCase() === "POST" || method.toUpperCase() == "PUT") {
+            var http200 = grunt.file.read('./grunt/templates/tests/http200.template');
+            test = test + '\n' + http200;
+        } else {
+            var http400 = grunt.file.read('./grunt/templates/tests/http400.template');
+            test = test + '\n' + http400;
+        }
+
 
         var modifiedContent =  test.replace('{{{METHOD}}}',method.toUpperCase());
         modifiedContent =  modifiedContent.replace('{{{method}}}','delete' == method.toLowerCase() ? 'del' : method.toLowerCase());
@@ -73,6 +79,9 @@ TestApiRouteWriter.prototype.createCollectionTestsForMethod = function(doc,permi
             grunt.log.debug("POST");
             var http201 = grunt.file.read('./grunt/templates/tests/http201.template');
             test = test + '\n' + http201;
+        }else  if(method.toUpperCase() == "PUT") {
+            var http400 = grunt.file.read('./grunt/templates/tests/http400.template');
+            test = test + '\n' + http400;
         } else {
             var http200 = grunt.file.read('./grunt/templates/tests/http200.template');
             test = test + '\n' + http200;

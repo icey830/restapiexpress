@@ -1,0 +1,27 @@
+String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
+
+exports.send = function(req, res, resource) {
+    //TODO PUT On collection not allowed
+    var rootdir = req.app.get("rootdir");
+    var dbprovider = req.app.get("db").provider;
+    var documentation = resource.documentationJson;
+
+    dbprovider.createEntity(documentation.singular.toLowerCase(),req.body, resource, function(err) {
+        console.log(err);
+
+        var links = {
+            "resource":documentation.title.toLowerCase(),
+            "error":err
+        };
+        res.status(400).json(links);
+    }, function(object) {
+
+        var links = {
+            "location":documentation.title.toLowerCase()+"/"+object.id
+        };
+        res.status(201).json(links);
+    })
+
+};
