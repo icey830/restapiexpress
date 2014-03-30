@@ -9,6 +9,7 @@ var TestGetResourceWriter = require('./get/test-resource-writer.js');
 var TestPostResourceWriter = require('./post/test-resource-writer.js');
 var TestPutResourceWriter = require('./put/test-resource-writer.js');
 var TestDeleteResourceWriter = require('./delete/test-resource-writer.js');
+var TestOptionsResourceWriter = require('./options/test-resource-writer.js');
 function TestApiRouteWriter(grunt, rootdir) {
     this.grunt = grunt;
     this.rootdir = rootdir;
@@ -16,6 +17,7 @@ function TestApiRouteWriter(grunt, rootdir) {
     this.testPostResourceWriter = new TestPostResourceWriter(grunt, rootdir);
     this.testPutResourceWriter = new TestPutResourceWriter(grunt, rootdir);
     this.testDeleteResourceWriter = new TestDeleteResourceWriter(grunt, rootdir);
+    this.testOptionsResourceWriter = new TestOptionsResourceWriter(grunt, rootdir);
 }
 
 TestApiRouteWriter.prototype.write = function(doc)  {
@@ -41,6 +43,8 @@ TestApiRouteWriter.prototype.write = function(doc)  {
                     that.testPutResourceWriter.write(doc, permission, method);
                 } else if(method.toUpperCase() == "DELETE") {
                     that.testDeleteResourceWriter.write(doc, permission, method);
+                } else if(method.toUpperCase() == "OPTIONS") {
+                    that.testOptionsResourceWriter.write(doc, permission, method);
                 } else {
 
                     that.createInstanceTestsForMethod(doc,permission,method);
