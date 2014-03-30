@@ -7,11 +7,13 @@ String.prototype.replaceAll = function(target, replacement) {
 
 var TestGetResourceWriter = require('./get/test-resource-writer.js');
 var TestPostResourceWriter = require('./post/test-resource-writer.js');
+var TestPutResourceWriter = require('./put/test-resource-writer.js');
 function TestApiRouteWriter(grunt, rootdir) {
     this.grunt = grunt;
     this.rootdir = rootdir;
     this.testGetResourceWriter = new TestGetResourceWriter(grunt, rootdir);
     this.testPostResourceWriter = new TestPostResourceWriter(grunt, rootdir);
+    this.testPutResourceWriter = new TestPutResourceWriter(grunt, rootdir);
 }
 
 TestApiRouteWriter.prototype.write = function(doc)  {
@@ -33,6 +35,8 @@ TestApiRouteWriter.prototype.write = function(doc)  {
                     that.testGetResourceWriter.write(doc, permission, method);
                 } else if(method.toUpperCase() == "POST") {
                     that.testPostResourceWriter.write(doc, permission, method);
+                } else if(method.toUpperCase() == "PUT") {
+                    that.testPutResourceWriter.write(doc, permission, method);
                 } else {
 
                     that.createInstanceTestsForMethod(doc,permission,method);
