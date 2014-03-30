@@ -5,9 +5,12 @@ String.prototype.replaceAll = function(target, replacement) {
     return this.split(target).join(replacement);
 };
 
+var TestGetResourceWriter = require('./get/test-resource-writer.js');
+
 function TestApiRouteWriter(grunt, rootdir) {
     this.grunt = grunt;
     this.rootdir = rootdir;
+    this.testGetResourceWriter = new TestGetResourceWriter(grunt, rootdir);
 }
 
 TestApiRouteWriter.prototype.write = function(doc)  {
@@ -18,8 +21,23 @@ TestApiRouteWriter.prototype.write = function(doc)  {
     doc.supportedMethods.forEach(function(method) {
         doc.json.permission.forEach(function(permission) {
 
-            that.createInstanceTestsForMethod(doc,permission,method);
-            that.createCollectionTestsForMethod(doc,permission,method);
+            if(!permission.methods.contains(method.toUpperCase())) {
+
+                //No Access tests
+                that.createNoAccessInstance(doc,permission,method);
+                that.createNoAccessCollection(doc,permission,method);
+
+            } else {
+                if(method.toUpperCase() == "GET") {
+                    that.testGetResourceWriter.write(doc, permission, method);
+                } else {
+
+                    that.createInstanceTestsForMethod(doc,permission,method);
+                    that.createCollectionTestsForMethod(doc,permission,method);
+                }
+            }
+
+
 
         });
 
@@ -109,6 +127,38 @@ TestApiRouteWriter.prototype.createCollectionTestsForMethod = function(doc,permi
         modifiedContent =  modifiedContent.replace('{{{appjs}}}',doc.pathToAppJsFromFolder(doc.testfolder));
         grunt.file.write(doc.testfolder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase() + '/collection.js', modifiedContent);
     }
+
+}
+TestApiRouteWriter.prototype.createNoAccessInstance = function(doc,permission, method) {
+    var grunt = this.grunt;
+    var test = grunt.file.read('./grunt/templates/test.template');
+    var http302 = grunt.file.read('./grunt/templates/tests/http302.template');
+    test = test + '\n' + http302;
+
+    var modifiedContent =  test.replace('{{{METHOD}}}',method.toUpperCase());
+    modifiedContent =  modifiedContent.replace('{{{method}}}','delete' == method.toLowerCase() ? 'del' : method.toLowerCase());
+    var path = '/v'+doc.version + '/' + doc.filetitle + '/123.json';
+    modifiedContent =  modifiedContent.replaceAll('{{{path}}}',path);
+    modifiedContent =  modifiedContent.replaceAll('{{{role}}}',permission.role.toLowerCase());
+    modifiedContent =  modifiedContent.replace('{{{appjs}}}',doc.pathToAppJsFromFolder(doc.testfolder));
+    grunt.file.write(doc.testfolder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase() + '/instance.js', modifiedContent);
+
+}
+TestApiRouteWriter.prototype.createNoAccessCollection = function(doc,permission, method) {
+
+    var grunt = this.grunt;
+
+    var test = grunt.file.read('./grunt/templates/test.template');
+    var http302 = grunt.file.read('./grunt/templates/tests/http302.template');
+    test = test + '\n' + http302;
+
+    var modifiedContent =  test.replace('{{{METHOD}}}',method.toUpperCase());
+    modifiedContent =  modifiedContent.replace('{{{method}}}','delete' == method.toLowerCase() ? 'del' : method.toLowerCase());
+    var path = '/v'+doc.version + '/' + doc.filetitle + '/';
+    modifiedContent =  modifiedContent.replaceAll('{{{path}}}',path);
+    modifiedContent =  modifiedContent.replaceAll('{{{role}}}',permission.role.toLowerCase());
+    modifiedContent =  modifiedContent.replace('{{{appjs}}}',doc.pathToAppJsFromFolder(doc.testfolder));
+    grunt.file.write(doc.testfolder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase() + '/collection.js', modifiedContent);
 
 }
 
