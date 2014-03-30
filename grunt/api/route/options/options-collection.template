@@ -1,0 +1,41 @@
+exports.send = function(req, res, resource) {
+
+    var rootdir = req.app.get("rootdir");
+    var dbprovider = req.app.get("db").provider;
+    var documentation = resource.documentationJson;
+
+    var callback = function(err, result) {
+        if(err) {
+            console.log(err);
+            res.status(500).json(err);
+        } else {
+            console.log(result);
+            var selfref =
+            {
+                "type":documentation.type,
+                "rel": "self",
+                "method": req.method,
+                "href": req.protocol + '://' + req.host + ':' + req.app.get('port') + req.path
+            };
+
+            var linkarray = [];
+            linkarray.unshift(selfref);
+
+            var doc = {
+                "type": documentation.type,
+                "rel": "show documentation",
+                "method": "GET",
+                "href": req.protocol + '://' + req.host + ':' + req.app.get('port') + req.path.replace("/","/doc/")
+            };
+            var links = {
+                "items":result,
+                "links":linkarray,
+                "doc":doc
+            };
+            res.json(links);
+        }
+    };
+    dbprovider.find(documentation.singular.toLowerCase(),resource, callback);
+
+
+};
