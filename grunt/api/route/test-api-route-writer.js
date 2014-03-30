@@ -37,7 +37,7 @@ TestApiRouteWriter.prototype.createInstanceTestsForMethod = function(doc,permiss
     if(permission.methods.contains(method.toUpperCase())) {
 
         var test = grunt.file.read('./grunt/templates/test.template');
-        if(method.toUpperCase() === "POST" || method.toUpperCase() == "PUT") {
+        if(method.toUpperCase() === "POST" || method.toUpperCase() == "PUT" || method.toUpperCase() == "DELETE") {
             var http200 = grunt.file.read('./grunt/templates/tests/http200.template');
             test = test + '\n' + http200;
         } else {

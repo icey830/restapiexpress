@@ -5,6 +5,7 @@
 var PostResourceWriter = require('./post/resource-writer.js');
 var PutResourceWriter = require('./put/resource-writer.js');
 var GetResourceWriter = require('./get/resource-writer.js');
+var DeleteResourceWriter = require('./delete/resource-writer.js');
 String.prototype.replaceAll = function(target, replacement) {
     return this.split(target).join(replacement);
 };
@@ -15,6 +16,7 @@ function ApiRouteWriter(grunt, rootdir) {
     this.getResourceWriter = new GetResourceWriter(grunt, rootdir);
     this.postResourceWriter = new PostResourceWriter(grunt, rootdir);
     this.putResourceWriter = new PutResourceWriter(grunt, rootdir);
+    this.deleteResourceWriter = new DeleteResourceWriter(grunt, rootdir);
 }
 
 ApiRouteWriter.prototype.write = function(doc)  {
@@ -25,14 +27,17 @@ ApiRouteWriter.prototype.write = function(doc)  {
         doc.json.permission.forEach(function(permission) {
 
             if(method.toUpperCase() == "POST") {
-
                 that.postResourceWriter.write(doc, permission, method);
+
             } else if(method.toUpperCase() == "PUT") {
-
                 that.putResourceWriter.write(doc, permission, method);
-            } else if(method.toUpperCase() == "GET" || method.toUpperCase() == "HEAD") {
 
+            } else if(method.toUpperCase() == "DELETE" || method.toUpperCase() == "DEL") {
+                that.deleteResourceWriter.write(doc, permission, method);
+
+            } else if(method.toUpperCase() == "GET" || method.toUpperCase() == "HEAD") {
                 that.getResourceWriter.write(doc, permission, method);
+
             } else {
                 that.grunt.log.write("\n=====");
                 that.grunt.log.write("\nNO Resource-Writer for method " + method.toUpperCase());
@@ -41,8 +46,6 @@ ApiRouteWriter.prototype.write = function(doc)  {
                 that.grunt.log.write("\nyou can see an example for it in folder /grunt/api/route/get/\n");
                 that.grunt.log.write("\ndont'forget to write a test case ;-)\n");
                 that.grunt.log.write("=====\n\n");
-
-
                 that.getResourceWriter.write(doc, permission, method);
             }
 
