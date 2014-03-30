@@ -114,6 +114,7 @@ Tasks implemented
 * extends schemes for serverside validation
 * create correct route for GET on instance and collection
 * create correct route for POST on collection
+* create correct route for PUT on collection
 
 ### Automated Test cases:
 * responding with http-code 200 if access granted or 302 where no access was granted for every collection or resource
@@ -123,8 +124,8 @@ Next Steps
 -
 * create template for POST on instance
 * create template for PATCH on instance and collection
-* create template for PUT on instance and collection
-* create template for HEAD on instance and collection
+* create template for PUT on instance
+* verify HEAD on instance and collection is really the same as GET
 * create template for OPTIONS on instance and collection
 * create single sign on tables (Username, password, API-Token)
 * generete sessions based on user
