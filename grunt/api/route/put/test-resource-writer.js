@@ -38,8 +38,8 @@ TestPutResourceWriter.prototype.writeCollection = function(doc,permission,method
 
     var grunt = this.grunt;
     var test = grunt.file.read('./grunt/templates/test.template');
-    var http400 = grunt.file.read('./grunt/templates/tests/http400.template');
-    test = test + '\n' + http400;
+    var http403 = grunt.file.read('./grunt/templates/tests/http403.template');
+    test = test + '\n' + http403;
 
     var modifiedContent =  test.replace('{{{METHOD}}}',method.toUpperCase());
     modifiedContent =  modifiedContent.replace('{{{method}}}',method.toLowerCase());

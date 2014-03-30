@@ -3,25 +3,10 @@ String.prototype.capitalize = function() {
 }
 
 exports.send = function(req, res, resource) {
-    //TODO PUT On collection not allowed
-    var rootdir = req.app.get("rootdir");
-    var dbprovider = req.app.get("db").provider;
-    var documentation = resource.documentationJson;
 
-    dbprovider.createEntity(documentation.singular.toLowerCase(),req.body, resource, function(err) {
-        console.log(err);
-
-        var links = {
-            "resource":documentation.title.toLowerCase(),
-            "error":err
-        };
-        res.status(400).json(links);
-    }, function(object) {
-
-        var links = {
-            "location":documentation.title.toLowerCase()+"/"+object.id
-        };
-        res.status(201).json(links);
-    })
+    res.status(403).json({
+        "error" : 403,
+        "message" : "PUT ist forbidden for this request, you can try POST instead."}
+    );
 
 };
