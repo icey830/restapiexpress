@@ -6,12 +6,12 @@ String.prototype.replaceAll = function(target, replacement) {
     return this.split(target).join(replacement);
 };
 
-function GetCollectionWriter(grunt, rootdir) {
+function GetResourceWriter(grunt, rootdir) {
     this.grunt = grunt;
     this.rootdir = rootdir;
 }
 
-GetCollectionWriter.prototype.write = function(doc, permission, method)  {
+GetResourceWriter.prototype.write = function(doc, permission, method)  {
 
     var grunt = this.grunt;
     var instanceContent = grunt.file.read(__dirname +'/get-instance.template');
@@ -22,7 +22,7 @@ GetCollectionWriter.prototype.write = function(doc, permission, method)  {
 
 }
 
-GetCollectionWriter.prototype.writeInstance = function(doc,permission,method, content) {
+GetResourceWriter.prototype.writeInstance = function(doc,permission,method, content) {
 
     if(permission.methods.contains(method.toUpperCase())) {
         this.grunt.file.write(doc.folder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase()+'/instance.js', content);
@@ -30,7 +30,7 @@ GetCollectionWriter.prototype.writeInstance = function(doc,permission,method, co
 
 }
 
-GetCollectionWriter.prototype.writeCollection = function(doc,permission,method, content) {
+GetResourceWriter.prototype.writeCollection = function(doc,permission,method, content) {
 
     if(permission.methods.contains(method.toUpperCase())) {
         this.grunt.file.write(doc.folder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase()+'/collection.js', content);
@@ -38,4 +38,4 @@ GetCollectionWriter.prototype.writeCollection = function(doc,permission,method, 
 
 }
 
-module.exports = GetCollectionWriter;
+module.exports = GetResourceWriter;

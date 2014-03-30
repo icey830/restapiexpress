@@ -6,12 +6,12 @@ String.prototype.replaceAll = function(target, replacement) {
     return this.split(target).join(replacement);
 };
 
-function OptionsCollectionWriter(grunt, rootdir) {
+function OptionsResourceWriter(grunt, rootdir) {
     this.grunt = grunt;
     this.rootdir = rootdir;
 }
 
-OptionsCollectionWriter.prototype.write = function(doc, permission, method)  {
+OptionsResourceWriter.prototype.write = function(doc, permission, method)  {
 
     var grunt = this.grunt;
     var instanceContent = grunt.file.read(__dirname +'/options-instance.template');
@@ -22,7 +22,7 @@ OptionsCollectionWriter.prototype.write = function(doc, permission, method)  {
 
 }
 
-OptionsCollectionWriter.prototype.writeInstance = function(doc,permission,method, content) {
+OptionsResourceWriter.prototype.writeInstance = function(doc,permission,method, content) {
 
     if(permission.methods.contains(method.toUpperCase())) {
         this.grunt.file.write(doc.folder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase()+'/instance.js', content);
@@ -30,7 +30,7 @@ OptionsCollectionWriter.prototype.writeInstance = function(doc,permission,method
 
 }
 
-OptionsCollectionWriter.prototype.writeCollection = function(doc,permission,method, content) {
+OptionsResourceWriter.prototype.writeCollection = function(doc,permission,method, content) {
 
     if(permission.methods.contains(method.toUpperCase())) {
         this.grunt.file.write(doc.folder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase()+'/collection.js', content);
@@ -38,4 +38,4 @@ OptionsCollectionWriter.prototype.writeCollection = function(doc,permission,meth
 
 }
 
-module.exports = OptionsCollectionWriter;
+module.exports = OptionsResourceWriter;

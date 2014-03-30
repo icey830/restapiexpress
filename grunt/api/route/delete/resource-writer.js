@@ -6,12 +6,12 @@ String.prototype.replaceAll = function(target, replacement) {
     return this.split(target).join(replacement);
 };
 
-function DeleteCollectionWriter(grunt, rootdir) {
+function DeleteResourceWriter(grunt, rootdir) {
     this.grunt = grunt;
     this.rootdir = rootdir;
 }
 
-DeleteCollectionWriter.prototype.write = function(doc, permission, method)  {
+DeleteResourceWriter.prototype.write = function(doc, permission, method)  {
 
     var instanceContent = this.grunt.file.read(__dirname +'/delete-instance.template');
     var collectionContent = this.grunt.file.read(__dirname + '/delete-collection.template');
@@ -20,7 +20,7 @@ DeleteCollectionWriter.prototype.write = function(doc, permission, method)  {
 
 }
 
-DeleteCollectionWriter.prototype.writeCollection = function(doc,permission,method, content) {
+DeleteResourceWriter.prototype.writeCollection = function(doc,permission,method, content) {
 
     if(permission.methods.contains(method.toUpperCase())) {
         this.grunt.file.write(doc.folder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase()+'/collection.js', content);
@@ -28,7 +28,7 @@ DeleteCollectionWriter.prototype.writeCollection = function(doc,permission,metho
 
 }
 
-DeleteCollectionWriter.prototype.writeInstance = function(doc,permission,method, content) {
+DeleteResourceWriter.prototype.writeInstance = function(doc,permission,method, content) {
 
     if(permission.methods.contains(method.toUpperCase())) {
         this.grunt.file.write(doc.folder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase()+'/instance.js', content);
@@ -36,4 +36,4 @@ DeleteCollectionWriter.prototype.writeInstance = function(doc,permission,method,
 
 }
 
-module.exports = DeleteCollectionWriter;
+module.exports = DeleteResourceWriter;
