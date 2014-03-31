@@ -126,7 +126,7 @@
         {
             "role": "Admin",
             "description": "Rolle Administrator kann...",
-            "methods" : ["GET", "PUT", "POST", "DELETE", "HEAD", "OPTIONS"]
+            "methods" : ["GET", "PUT", "PATCH", "POST", "DELETE", "HEAD", "OPTIONS"]
         }
     ],
     "mimetype": {

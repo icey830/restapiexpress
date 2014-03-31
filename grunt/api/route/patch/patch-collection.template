@@ -1,0 +1,9 @@
+
+exports.send = function(req, res, resource) {
+
+    res.status(405).json({
+        "error" : 405,
+        "message" : "PUT ist forbidden for this request, you can try POST instead."}
+    );
+
+};

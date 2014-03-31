@@ -8,6 +8,7 @@ String.prototype.replaceAll = function(target, replacement) {
 var TestGetResourceWriter = require('./get/test-resource-writer.js');
 var TestPostResourceWriter = require('./post/test-resource-writer.js');
 var TestPutResourceWriter = require('./put/test-resource-writer.js');
+var TestPatchResourceWriter = require('./patch/test-resource-writer.js');
 var TestDeleteResourceWriter = require('./delete/test-resource-writer.js');
 var TestOptionsResourceWriter = require('./options/test-resource-writer.js');
 function TestApiRouteWriter(grunt, rootdir) {
@@ -16,6 +17,7 @@ function TestApiRouteWriter(grunt, rootdir) {
     this.testGetResourceWriter = new TestGetResourceWriter(grunt, rootdir);
     this.testPostResourceWriter = new TestPostResourceWriter(grunt, rootdir);
     this.testPutResourceWriter = new TestPutResourceWriter(grunt, rootdir);
+    this.testPatchResourceWriter = new TestPutResourceWriter(grunt, rootdir);
     this.testDeleteResourceWriter = new TestDeleteResourceWriter(grunt, rootdir);
     this.testOptionsResourceWriter = new TestOptionsResourceWriter(grunt, rootdir);
 }
@@ -41,6 +43,8 @@ TestApiRouteWriter.prototype.write = function(doc)  {
                     that.testPostResourceWriter.write(doc, permission, method);
                 } else if(method.toUpperCase() == "PUT") {
                     that.testPutResourceWriter.write(doc, permission, method);
+                } else if(method.toUpperCase() == "PATCH") {
+                    that.testPatchResourceWriter.write(doc, permission, method);
                 } else if(method.toUpperCase() == "DELETE") {
                     that.testDeleteResourceWriter.write(doc, permission, method);
                 } else if(method.toUpperCase() == "OPTIONS") {

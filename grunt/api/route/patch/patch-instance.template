@@ -1,0 +1,32 @@
+exports.send = function(req, res, resource) {
+
+
+    //Update or create instance
+    var dbprovider = req.app.get("db").provider;
+    var documentation = resource.documentationJson;
+
+    var callback = function(err, object) {
+
+        if(err) {
+
+            console.log(err);
+
+            var links = {
+                "resource":documentation.title.toLowerCase(),
+                "error":err
+            };
+            res.status(400).json(links);
+        } else {
+
+            var links = {
+                "location":documentation.title.toLowerCase()+"/"+object._id,
+                "message": "document was updated",
+                "item": object
+            };
+            res.status(200).json(links);
+        }
+
+    };
+
+    dbprovider.updateOrInsert(req.body, resource, callback );
+};

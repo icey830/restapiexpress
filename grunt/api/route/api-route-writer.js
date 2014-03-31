@@ -4,6 +4,7 @@
 
 var PostResourceWriter = require('./post/resource-writer.js');
 var PutResourceWriter = require('./put/resource-writer.js');
+var PatchResourceWriter = require('./patch/resource-writer.js');
 var GetResourceWriter = require('./get/resource-writer.js');
 var DeleteResourceWriter = require('./delete/resource-writer.js');
 var OptionsResourceWriter = require('./options/resource-writer.js');
@@ -17,6 +18,7 @@ function ApiRouteWriter(grunt, rootdir) {
     this.getResourceWriter = new GetResourceWriter(grunt, rootdir);
     this.postResourceWriter = new PostResourceWriter(grunt, rootdir);
     this.putResourceWriter = new PutResourceWriter(grunt, rootdir);
+    this.patchResourceWriter = new PatchResourceWriter(grunt, rootdir);
     this.deleteResourceWriter = new DeleteResourceWriter(grunt, rootdir);
     this.optionsResourceWriter = new OptionsResourceWriter(grunt, rootdir);
 }
@@ -33,6 +35,9 @@ ApiRouteWriter.prototype.write = function(doc)  {
 
             } else if(method.toUpperCase() == "PUT") {
                 that.putResourceWriter.write(doc, permission, method);
+
+            } else if(method.toUpperCase() == "PATCH") {
+                that.patchResourceWriter.write(doc, permission, method);
 
             }   else if(method.toUpperCase() == "OPTIONS") {
                 that.optionsResourceWriter.write(doc, permission, method);
