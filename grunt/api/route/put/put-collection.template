@@ -4,8 +4,8 @@ String.prototype.capitalize = function() {
 
 exports.send = function(req, res, resource) {
 
-    res.status(403).json({
-        "error" : 403,
+    res.status(405).json({
+        "error" : 405,
         "message" : "PUT ist forbidden for this request, you can try POST instead."}
     );
 
