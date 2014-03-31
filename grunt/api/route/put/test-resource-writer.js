@@ -21,12 +21,20 @@ TestPutResourceWriter.prototype.writeInstance = function(doc,permission,method) 
 
     var grunt = this.grunt;
     var test = grunt.file.read('./grunt/templates/test.template');
-    var http200 = grunt.file.read('./grunt/templates/tests/http200.template');
+    var http200 = grunt.file.read('./grunt/templates/tests/http200sendsJson.template');
     test = test + '\n' + http200;
+
+    var json = {
+        "email" : "angy.merkel@facebook.com",
+        "id" : "Angela",
+        "importance" : 1,
+        "name" : "Merkel"
+    };
 
     var modifiedContent =  test.replace('{{{METHOD}}}',method.toUpperCase());
     modifiedContent =  modifiedContent.replace('{{{method}}}',method.toLowerCase());
-    var path = '/v'+doc.version + '/' + doc.filetitle + '/123.json';
+    modifiedContent =  modifiedContent.replace('{{{JSON}}}',JSON.stringify(json));
+    var path = '/v'+doc.version + '/' + doc.filetitle + '/5339a146d46d35ebe95303ad';
     modifiedContent =  modifiedContent.replaceAll('{{{path}}}',path);
     modifiedContent =  modifiedContent.replaceAll('{{{role}}}',permission.role.toLowerCase());
     modifiedContent =  modifiedContent.replace('{{{appjs}}}',doc.pathToAppJsFromFolder(doc.testfolder));
@@ -38,8 +46,8 @@ TestPutResourceWriter.prototype.writeCollection = function(doc,permission,method
 
     var grunt = this.grunt;
     var test = grunt.file.read('./grunt/templates/test.template');
-    var http403 = grunt.file.read('./grunt/templates/tests/http403.template');
-    test = test + '\n' + http403;
+    var http405 = grunt.file.read('./grunt/templates/tests/http405.template');
+    test = test + '\n' + http405;
 
     var modifiedContent =  test.replace('{{{METHOD}}}',method.toUpperCase());
     modifiedContent =  modifiedContent.replace('{{{method}}}',method.toLowerCase());

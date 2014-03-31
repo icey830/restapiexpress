@@ -19,7 +19,9 @@ exports.send = function(req, res, resource) {
     }, function(object) {
 
         var links = {
-            "location":documentation.title.toLowerCase()+"/"+object.id
+            "location":documentation.title.toLowerCase()+"/"+object._id,
+            "message" : "document was created",
+            "item" : object
         };
         res.status(201).json(links);
     })

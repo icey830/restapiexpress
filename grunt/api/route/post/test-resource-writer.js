@@ -25,13 +25,13 @@ TestPostResourceWriter.prototype.writeInstance = function(doc,permission,method)
     test = test + '\n' + http200;
 
     var json = {
-        email: 'Bobby@bob.com'
+        "email": 'Bobby@bob.com'
     };
 
     var modifiedContent =  test.replace('{{{METHOD}}}',method.toUpperCase());
     modifiedContent =  modifiedContent.replace('{{{method}}}',method.toLowerCase());
     modifiedContent =  modifiedContent.replace('{{{JSON}}}',JSON.stringify(json));
-    var path = '/v'+doc.version + '/' + doc.filetitle + '/123.json';
+    var path = '/v'+doc.version + '/' + doc.filetitle + '/5339a146d46d35ebe95303ad';
     modifiedContent =  modifiedContent.replaceAll('{{{path}}}',path);
     modifiedContent =  modifiedContent.replaceAll('{{{role}}}',permission.role.toLowerCase());
     modifiedContent =  modifiedContent.replace('{{{appjs}}}',doc.pathToAppJsFromFolder(doc.testfolder));

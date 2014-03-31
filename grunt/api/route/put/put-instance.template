@@ -18,10 +18,10 @@ exports.send = function(req, res, resource) {
             res.status(400).json(links);
         } else {
 
-            console.log(object);
             var links = {
-                "location":documentation.title.toLowerCase()+"/"+object.id,
-                "message": "document was updated"
+                "location":documentation.title.toLowerCase()+"/"+object._id,
+                "message": "document was updated",
+                "item": object
             };
             res.status(200).json(links);
         }

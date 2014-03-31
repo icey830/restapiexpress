@@ -18,7 +18,7 @@ exports.send = function(req, res, resource) {
         } else {
 
             var links = {
-                "location":documentation.title.toLowerCase()+"/"+object.id,
+                "location":documentation.title.toLowerCase()+"/"+object._id,
                 "message": "document was updated"
             };
             res.status(200).json(links);

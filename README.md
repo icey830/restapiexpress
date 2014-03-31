@@ -123,6 +123,7 @@ Tasks implemented
 * responding with http-code 405 if method not supported on put
 
 ## Next Steps
+* create template for DELETE on instance and collection
 * create template for PATCH on instance and collection
 * create template for OPTIONS on instance and collection
 * verify HEAD on instance and collection is really the same as GET
