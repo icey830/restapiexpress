@@ -1,43 +1,60 @@
 exports.send = function(req, res, resource) {
 
     //TODO send options
-    var rootdir = req.app.get("rootdir");
-    var dbprovider = req.app.get("db").provider;
     var documentation = resource.documentationJson;
+    var options = [];
 
-    var callback = function(err, result) {
-        if(err) {
-            console.log(err);
-            res.status(400).json(err);
-        } else {
-            console.log(result);
-            var selfref =
-            {
-                "type":documentation.type,
-                "rel": "self",
-                "method": req.method,
-                "href": req.protocol + '://' + req.host + ':' + req.app.get('port') + req.path
-            };
+    documentation.permission.forEach(function(permission) {
 
-            var linkarray = [];
-            linkarray.unshift(selfref);
+        if(permission.role.toLowerCase() === resource.role.toLowerCase())
+            permission.methods.forEach(function(method) {
 
-            var doc = {
-                "type": documentation.type,
-                "rel": "show documentation",
-                "method": "GET",
-                "href": req.protocol + '://' + req.host + ':' + req.app.get('port') + req.path.replace("/","/doc/").replace(req.path.substr(req.path.lastIndexOf('/') + 1), '')
-            };
-            var links = {
-                "item":result[0],
-                "links":linkarray,
-                "doc":doc
-            };
-            res.json(links);
-        }
-    };
-    dbprovider.find(resource, callback);
+                if(method.toUpperCase() === "GET") {
+                    var option = {
+                        "GET" : {
+                            "description": "read " + documentation.title,
+                            "parameters" : documentation.parameters
 
+                        }
+                    }
+                    options.push(option);
+                } else if(method.toUpperCase() === "POST" ) {
+                    var option = {
+
+                    }
+                    option[method.toUpperCase()]=  {
+                        "description": "update existing instance of " + documentation.title,
+                        "parameters" : documentation.model
+
+                    }
+                    options.push(option);
+                } else if(method.toUpperCase() === "PUT" ) {
+                    var option = {
+
+                    }
+                    option[method.toUpperCase()]=  {
+                        "description": "update or create instance of " + documentation.title,
+                        "parameters" : documentation.model
+
+                    }
+                    options.push(option);
+                } else if(method.toUpperCase() === "PATCH" ) {
+                    var option = {
+
+                    }
+                    option[method.toUpperCase()]=  {
+                        "description": "update deltas or create instance of " + documentation.title,
+                        "parameters" : documentation.model
+
+                    }
+                    options.push(option);
+                }
+            });
+
+    });
+
+
+    res.status(200).json({"options" : options});
 
 };
 

@@ -21,8 +21,8 @@ TestOptionsResourceWriter.prototype.writeInstance = function(doc,permission,meth
 
     var grunt = this.grunt;
     var test = grunt.file.read('./grunt/templates/test.template');
-    var http400 = grunt.file.read('./grunt/templates/tests/http400.template');
-    test = test + '\n' + http400;
+    var http200 = grunt.file.read('./grunt/templates/tests/http200.template');
+    test = test + '\n' + http200;
 
     var modifiedContent =  test.replace('{{{METHOD}}}',method.toUpperCase());
     modifiedContent =  modifiedContent.replace('{{{method}}}',method.toLowerCase());

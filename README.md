@@ -117,7 +117,7 @@ Tasks implemented
 * create correct route for PUT on instance and collection
 * create correct route for DELETE on instance and collection
 * create correct route for PATCH on instance and collection
-
+* create correct route for OPTIONS on instance and collection
 ### Automated Test cases:
 * responding with http-code 200 if access granted or 302 where no access was granted for every collection or resource
 * responding with http-code 201 a resource was created
@@ -125,8 +125,6 @@ Tasks implemented
 * responding with http-code 405 if method not supported on put
 
 ## Next Steps
-* create template for OPTIONS on instance and collection
-* verify HEAD on instance and collection is really the same as GET
 * create single sign on tables (Username, password, API-Token)
 * generete sessions based on user
 * handle expands for mongodb
