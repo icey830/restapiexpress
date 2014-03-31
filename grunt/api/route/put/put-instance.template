@@ -28,5 +28,5 @@ exports.send = function(req, res, resource) {
 
     };
 
-    dbprovider.updateOrInsert(req.body, resource, callback );
+    dbprovider.updateAndNullifyEmptyFields(req.body, resource, callback );
 };

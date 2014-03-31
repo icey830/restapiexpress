@@ -77,7 +77,6 @@
             "description": "Contact Foo",
             "mandatory": false,
             "type": "number",
-            "default": 10,
             "multiple": false
         },
         "importance": {

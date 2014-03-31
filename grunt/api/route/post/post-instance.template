@@ -17,11 +17,20 @@ exports.send = function(req, res, resource) {
             res.status(400).json(links);
         } else {
 
-            var links = {
-                "location":documentation.title.toLowerCase()+"/"+object._id,
-                "message": "document was updated"
-            };
-            res.status(200).json(links);
+            if(object) {
+                var links = {
+                    "location":documentation.title.toLowerCase()+"/"+object._id,
+                    "message": "document was updated"
+                };
+                res.status(200).json(links);
+            } else {
+                var links = {
+                    "location":documentation.title.toLowerCase()+"/"+resource.ids[0],
+                    "message": "document does not exist"
+                };
+                res.status(400).json(links);
+            }
+
         }
 
     };
