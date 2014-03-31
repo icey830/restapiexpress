@@ -113,18 +113,18 @@ Tasks implemented
 * downloads database dependencies
 * extends schemes for serverside validation
 * create correct route for GET on instance and collection
-* create correct route for POST on collection
-* create correct route for PUT on collection
+* create correct route for POST on instance and collection
+* create correct route for PUT on instance and collection
 
 ### Automated Test cases:
 * responding with http-code 200 if access granted or 302 where no access was granted for every collection or resource
 * responding with http-code 201 a resource was created
+* responding with http-code 400 if bad access
+* responding with http-code 405 if method not supported on put
 
-Next Steps
--
-* create template for POST on instance
+## Next Steps
 * create template for PATCH on instance and collection
-* create template for PUT on instance
+* create template for OPTIONS on instance and collection
 * verify HEAD on instance and collection is really the same as GET
 * create template for OPTIONS on instance and collection
 * create single sign on tables (Username, password, API-Token)
@@ -132,6 +132,5 @@ Next Steps
 * handle expands for mongodb
 * improve hypermedia to suppress links if not needed
 
-Become a contributer
-=
+# Become a contributer
 We are looking for contributers. Please contact samuelschmid75@gmail.com.
