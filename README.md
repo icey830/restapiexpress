@@ -128,6 +128,7 @@ Tasks implemented
 * create single sign on tables (Username, password, API-Token)
 * generete sessions based on user
 * handle expands for mongodb
+* create custom types for mongodb schemes
 * improve hypermedia to suppress links if not needed
 
 # Become a contributer
