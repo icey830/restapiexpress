@@ -1,26 +1,30 @@
 exports.send = function(req, res, resource) {
 
-    //TODO Update instance
+    //Update instance
+    var dbprovider = req.app.get("db").provider;
     var documentation = resource.documentationJson;
-    var selfref =
-    {
-        "type": documentation.type,
-        "rel": "self",
-        "method": req.method,
-        "href": req.protocol + '://' + req.host + ':' + req.app.get('port') + req.path
-    };
-    var linkarray = [];
-    linkarray.unshift(selfref);
 
-    var doc = {
-        "type": documentation.type,
-        "rel": "show documentation",
-        "method": "GET",
-        "href": req.protocol + '://' + req.host + ':' + req.app.get('port') + req.path.replace("/","/doc/")
+    var callback = function(err, object) {
+
+        if(err) {
+
+            console.log(err);
+
+            var links = {
+                "resource":documentation.title.toLowerCase(),
+                "error":err
+            };
+            res.status(400).json(links);
+        } else {
+
+            var links = {
+                "location":documentation.title.toLowerCase()+"/"+object.id,
+                "message": "document was updated"
+            };
+            res.status(200).json(links);
+        }
+
     };
-    var links = {
-        "links":linkarray,
-        "doc":doc
-    };
-    res.json(links);
+
+    dbprovider.update(req.body, resource, callback );
 };
