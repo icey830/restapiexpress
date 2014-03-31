@@ -24,17 +24,24 @@ TestPatchResourceWriter.prototype.writeInstance = function(doc,permission,method
     var http200 = grunt.file.read('./grunt/templates/tests/http200sendsJson.template');
     test = test + '\n' + http200;
 
-    var json = {
-        "email" : "angy.merkel@facebook.com",
-        "id" : "Angela",
-        "importance" : 1,
-        "name" : "Merkel"
-    };
+    var json = {};
+    for (var property in doc.json.model) {
+
+        var path = doc.json.model[property];
+        if(path.mandatory) {
+            if(path.hasOwnProperty("test")) {
+                json[property] = path.test;
+            } else {
+                this.grunt.log.write("no testvalue for propert " + property + " in doument " + doc.title);
+            }
+
+        }
+    }
 
     var modifiedContent =  test.replace('{{{METHOD}}}',method.toUpperCase());
     modifiedContent =  modifiedContent.replace('{{{method}}}',method.toLowerCase());
     modifiedContent =  modifiedContent.replace('{{{JSON}}}',JSON.stringify(json));
-    var path = '/v'+doc.version + '/' + doc.filetitle + '/5339a146d46d35ebe95303ad';
+    var path = '/v'+doc.version + '/' + doc.filetitle + '/'  + doc.json._testId;
     modifiedContent =  modifiedContent.replaceAll('{{{path}}}',path);
     modifiedContent =  modifiedContent.replaceAll('{{{role}}}',permission.role.toLowerCase());
     modifiedContent =  modifiedContent.replace('{{{appjs}}}',doc.pathToAppJsFromFolder(doc.testfolder));
