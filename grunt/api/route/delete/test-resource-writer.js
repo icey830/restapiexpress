@@ -38,8 +38,8 @@ TestDeleteResourceWriter.prototype.writeCollection = function(doc,permission,met
 
     var grunt = this.grunt;
     var test = grunt.file.read('./grunt/templates/test.template');
-    var http200 = grunt.file.read('./grunt/templates/tests/http200.template');
-    test = test + '\n' + http200;
+    var http405 = grunt.file.read('./grunt/templates/tests/http405.template');
+    test = test + '\n' + http405;
 
     var modifiedContent =  test.replace('{{{METHOD}}}',method.toUpperCase());
     modifiedContent =  modifiedContent.replace('{{{method}}}',"del");

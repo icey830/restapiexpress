@@ -1,16 +1,8 @@
-String.prototype.capitalize = function() {
-    return this.charAt(0).toUpperCase() + this.slice(1);
-}
-
 exports.send = function(req, res, resource) {
-    //TODO DELETE collection or not allowed
-    var rootdir = req.app.get("rootdir");
-    var dbprovider = req.app.get("db").provider;
-    var documentation = resource.documentationJson;
 
-    var links = {
-        "location":documentation.title.toLowerCase()+"/"
-    };
-    res.status(200).json(links);
+    res.status(405).json({
+            "error" : 405,
+            "message" : "DELETE ist forbidden for this request, you can try POST or GET instead."}
+    );
 
 };
