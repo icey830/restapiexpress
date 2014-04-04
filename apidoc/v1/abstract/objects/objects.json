@@ -53,15 +53,9 @@
             "name": "timestamp",
             "description": "time of creation",
             "mandatory": true,
+            "default" :  "Date.now",
             "type": "date",
             "test" : "2011-07-14T19:43:37+0100"
-        },
-        "type": {
-            "name": "type",
-            "description": "Object Type",
-            "mandatory": true,
-            "test" : "application/com.github.restapiexpress.object.abstract",
-            "type": "string"
         }
     },
     "cache-control": {

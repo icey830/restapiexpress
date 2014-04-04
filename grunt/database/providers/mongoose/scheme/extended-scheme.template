@@ -1,10 +1,12 @@
 var mongoose = require('mongoose'), extend = require('mongoose-schema-extend');
 var Schema = mongoose.Schema;
 
+{{{REFERENCE}}}
+
 {{{TYPES}}}
 
 function {{{NAME}}}() {
-    return new Schema(
+    return new {{{EXTEND}}}().extend(
 
         {{{SCHEME}}}
 

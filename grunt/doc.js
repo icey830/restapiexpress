@@ -12,6 +12,8 @@ function Doc(filename,abspath, grunt) {
     this.grunt = grunt;
     this.filename = filename;
     this.abspath = abspath;
+    this.base = undefined;
+    this.baseDoc = undefined;
     this.folder = abspath.substring(0,abspath.length - filename.length).replace("apidoc/","api/");
     this.schemefolder = abspath.substring(0,abspath.length - filename.length).replace("apidoc/","database/schemes/");
     this.testfolder = this.folder.replace("api/","test/");
@@ -40,6 +42,8 @@ Doc.prototype.readFile = function(grunt) {
         });
 
     });
+
+    this.base = this.json.base;
 }
 
 Doc.prototype.pathToAppJsFromFolder = function(folder,minus) {

@@ -18,6 +18,12 @@ ApiWriter.prototype.write = function(docs)  {
     for(var i=0;i<docs.docs.length;i++) {
         var doc = docs.docs[i];
 
+        if(doc.base && doc.base != "none") {
+
+            doc.baseDoc = docs.docMap[doc.base.split("/")[1]];
+            grunt.log.debug("basedoc:" + doc.baseDoc.folder);
+        }
+
         grunt.log.debug(doc.json.type);
         if(doc.json.type.endsWith('.apidescription')) {
 

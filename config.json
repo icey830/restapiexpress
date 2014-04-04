@@ -10,7 +10,8 @@
         "location" : "localhost:27017/restapiexpress",
         "dependencies": {
             "mongodb": "*",
-            "mongoose": "*"
+            "mongoose": "*",
+            "mongoose-schema-extend": "*"
         },
         "license": "MIT",
         "engines": {

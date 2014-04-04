@@ -20,6 +20,7 @@ function Docs(grunt) {
 
     this.grunt = grunt;
     this.docs = [];
+    this.docMap = {};
     this.versions = [];
     this.findDocs(grunt);
 
@@ -43,7 +44,12 @@ Docs.prototype.findDocs = function(grunt) {
             }
 
             var doc = new Doc(filename,abspath,grunt);
+            var key = doc.json.type.split("/")[1];
+            that.docMap[key] = doc;
+
             that.docs.push(doc);
+
+
         } else {
             //Must be a directory
             //TODO check if isDirectory

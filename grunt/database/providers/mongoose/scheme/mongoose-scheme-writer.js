@@ -21,14 +21,38 @@ function objToString (obj) {
 function MongooseScheme(grunt) {
     this.grunt = grunt;
 }
+MongooseScheme.prototype.getExtendPath = function(doc) {
+    var base = doc.baseDoc;
+    var baseJson = doc.baseDoc.json;
+    var referenzefolderPathComponents = base.schemefolder.split("/");
+    var thisfolderPathComponents = doc.schemefolder.split("/");
+    referenzefolderPathComponents.shift();
+    referenzefolderPathComponents.shift();
+    referenzefolderPathComponents.shift();
+    thisfolderPathComponents.shift();
+    thisfolderPathComponents.shift();
+    thisfolderPathComponents.shift();
+    thisfolderPathComponents.shift();
+    thisfolderPathComponents.forEach(function(c,index) { thisfolderPathComponents[index]=".."});
+    return "var " + baseJson.title.capitalize() + " = require('"+thisfolderPathComponents.join("/")+"/"+referenzefolderPathComponents.join("/")+baseJson.singular.capitalize()+".js');"
 
+}
 MongooseScheme.prototype.writeScheme = function(doc)  {
     this.grunt.log.debug("create Scheme for: " + doc.json.title);
 
-    var template = this.grunt.file.read('./grunt/database/providers/mongoose/scheme/scheme.template');
+    var template = "";
+    if(doc.base && doc.base !== "none") {
+        template = this.grunt.file.read('./grunt/database/providers/mongoose/scheme/extended-scheme.template');
+    } else {
+        template = this.grunt.file.read('./grunt/database/providers/mongoose/scheme/scheme.template');
+    }
     var types = this.grunt.file.read('./grunt/database/providers/mongoose/scheme/types.template');
     template = template.replaceAll("{{{NAME}}}",doc.json.singular);
     template = template.replace("{{{TYPES}}}",types);
+    if(doc.base && doc.base !== "none") {
+        template = template.replace("{{{REFERENCE}}}",this.getExtendPath(doc));
+        template = template.replace("{{{EXTEND}}}",doc.baseDoc.json.title.capitalize());
+    }
     var model = doc.json.model;
     var scheme = {};
     for (var key in model) {
@@ -59,7 +83,6 @@ MongooseScheme.prototype.writeScheme = function(doc)  {
         type += "}";
         scheme[key] = type;
     }
-    scheme["type"] = "{type: String}";
 
     template = template.replaceAll("{{{SCHEME}}}",objToString(scheme));
 
@@ -77,10 +100,20 @@ MongooseScheme.prototype.writeScheme = function(doc)  {
 MongooseScheme.prototype.writeAbstractScheme = function(doc)  {
     this.grunt.log.debug("create Scheme for: " + doc.json.title);
 
-    var template = this.grunt.file.read('./grunt/database/providers/mongoose/scheme/scheme.template');
+    var template = "";
+    if(doc.base && doc.base !== "none") {
+        template = this.grunt.file.read('./grunt/database/providers/mongoose/scheme/extended-scheme.template');
+    } else {
+        template = this.grunt.file.read('./grunt/database/providers/mongoose/scheme/scheme.template');
+    }
     var types = this.grunt.file.read('./grunt/database/providers/mongoose/scheme/types.template');
     template = template.replaceAll("{{{NAME}}}",doc.json.singular);
     template = template.replace("{{{TYPES}}}",types);
+    if(doc.base && doc.base !== "none") {
+        template = template.replace("{{{REFERENCE}}}",this.getExtendPath(doc));
+        template = template.replace("{{{EXTEND}}}",doc.baseDoc.json.title.capitalize());
+    }
+
     var model = doc.json.model;
     var scheme = {};
     for (var key in model) {
@@ -89,7 +122,7 @@ MongooseScheme.prototype.writeAbstractScheme = function(doc)  {
         type +=  field.type.capitalize();
         if(field.default) {
 
-            type += ", default: " + JSON.stringify(field.default);
+            type += ", default: " + field.default;
         }
         if(field.min) {
 
@@ -111,7 +144,6 @@ MongooseScheme.prototype.writeAbstractScheme = function(doc)  {
         type += "}";
         scheme[key] = type;
     }
-    scheme["type"] = "{type: String}";
 
     template = template.replaceAll("{{{SCHEME}}}",objToString(scheme));
     this.grunt.log.debug(doc.schemefolder);
