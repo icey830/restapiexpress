@@ -4,6 +4,8 @@
     "request": "/",
     "description": "API",
     "deprecated" : false,
+    "type": "application/com.github.restapiexpress.apidescription",
+    "base": "none",
     "parameter": {},
     "states": {
         "200": {

@@ -21,10 +21,11 @@ TestWriter.prototype.write = function(docs)  {
     for(var i=0;i<docs.docs.length;i++) {
         var doc = docs.docs[i];
 
-        if(doc.json.title === 'api') {
+        if(doc.json.type.endsWith('.apidescription')) {
 
             this.testApiDescWriter.write(doc);
-
+        } else if(doc.json.type.endsWith('.abstract')) {
+            //Dont write anything
         } else {
 
             grunt.log.debug("start createing test doc");

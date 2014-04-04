@@ -31,10 +31,22 @@ Database.prototype.createSchemes = function(docs)  {
             grunt.log.write("start writing schemes for database " + this.db.name + " and provider "+this.db.provider + ".");
             var Provider = require('./providers/mongoose/mongoose-provider.js');
             var provider = new Provider(grunt);
+
             for(var i=0;i<docs.docs.length;i++) {
                 var doc = docs.docs[i];
 
-                if(doc.json.title !== 'api') {
+                if(doc.json.type.endsWith('.abstract')) {
+
+                    provider.writeAbstractScheme(doc);
+
+                }
+
+            }
+
+            for(var i=0;i<docs.docs.length;i++) {
+                var doc = docs.docs[i];
+
+                if(!doc.json.type.endsWith('.apidescription') && !doc.json.type.endsWith('.abstract')) {
 
                     provider.writeScheme(doc);
 

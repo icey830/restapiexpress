@@ -5,6 +5,7 @@
     "description": "Contacts",
     "version" : "1",
     "type": "application/com.github.restapiexpress.contact",
+    "base": "application/com.github.restapiexpress.object.abstract",
     "_testId" : "5339a146d46d35ebe95303ad",
     "parameter": {
         "limit": {

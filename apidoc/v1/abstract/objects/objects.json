@@ -1,12 +1,11 @@
 {
-    "title": "News",
-    "singular": "News",
-    "request": "/news/",
-    "description": "News",
+    "title": "Objects",
+    "singular": "Object",
+    "request": "none",
+    "description": "Abstract Object",
     "version" : "1",
-    "type": "application/com.github.restapiexpress.news",
-    "base": "",
-    "_testId" : "5339a146d46d35ebe95303an",
+    "type": "application/com.github.restapiexpress.object.abstract",
+    "base": "none",
     "parameter": {
         "limit": {
             "description": "Anzahl der Elemente",
@@ -50,19 +49,18 @@
         }
     },
     "model": {
-        "title": {
-            "name": "title",
-            "description": "News Title",
+        "timestamp": {
+            "name": "timestamp",
+            "description": "time of creation",
             "mandatory": true,
-            "type": "string",
-            "test" : "Starving?",
-            "regex": ""
+            "type": "date",
+            "test" : "2011-07-14T19:43:37+0100"
         },
-        "content": {
-            "name": "content",
-            "description": "News content",
+        "type": {
+            "name": "type",
+            "description": "Object Type",
             "mandatory": true,
-            "test" : "Hans is hungry",
+            "test" : "application/com.github.restapiexpress.object.abstract",
             "type": "string"
         }
     },

@@ -18,10 +18,14 @@ ApiWriter.prototype.write = function(docs)  {
     for(var i=0;i<docs.docs.length;i++) {
         var doc = docs.docs[i];
 
-        if(doc.json.title === 'api') {
+        grunt.log.debug(doc.json.type);
+        if(doc.json.type.endsWith('.apidescription')) {
 
             this.apidescwriter.write(doc);
 
+        } else if(doc.json.type.endsWith('.abstract')) {
+
+            //TODO dont write Route
         } else {
 
             grunt.log.debug("start createing doc");

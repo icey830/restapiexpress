@@ -15,6 +15,11 @@ MongooseProvider.prototype.writeScheme = function(doc)  {
     this.lib.push(scheme);
 }
 
+MongooseProvider.prototype.writeAbstractScheme = function(doc)  {
+    var scheme = this.scheme.writeAbstractScheme(doc);
+    this.lib.push(scheme);
+}
+
 MongooseProvider.prototype.writeLib = function()  {
 
     this.libWriter.writeLib(this.lib);
