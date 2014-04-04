@@ -34,7 +34,7 @@ MongooseLibWriter.prototype.writeLib = function(lib)  {
             libfiles[scheme.version] = "";
         }
 
-        libfiles[scheme.version] += template.replaceAll("{{{SCHEME}}}", scheme.scheme).replace("{{{PATH}}}", scheme.path).replaceAll("{{{scheme}}}",scheme.scheme.toLowerCase());
+        libfiles[scheme.version] += template.replaceAll("{{{SCHEME}}}", scheme.scheme).replace("{{{PATH}}}", scheme.path).replaceAll("{{{type}}}",scheme.type.toLowerCase());
 
     })
     libfiles.forEach(function(libfile,index) {

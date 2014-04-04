@@ -65,7 +65,12 @@ MongooseScheme.prototype.writeScheme = function(doc)  {
 
     this.grunt.file.write(doc.schemefolder+ doc.json.singular+'.js', template);
 
-    return {"path": "./"+doc.json.title.toLowerCase() + "/" + doc.json.singular+'.js', "scheme" : doc.json.singular, "version":doc.json.version};
+    return {
+        "path": "./"+doc.json.title.toLowerCase() + "/" + doc.json.singular+'.js',
+        "scheme" : doc.json.singular,
+        "version":doc.json.version,
+        "type": doc.json.type
+    };
 }
 
 
@@ -112,7 +117,12 @@ MongooseScheme.prototype.writeAbstractScheme = function(doc)  {
     this.grunt.log.debug(doc.schemefolder);
     this.grunt.file.write(doc.schemefolder+ doc.json.singular+'.js', template);
 
-    return {"path": "./abstract/"+doc.json.title.toLowerCase() + "/" + doc.json.singular+'.js', "scheme" : doc.json.singular, "version":doc.json.version};
+    return {
+        "path": "./abstract/"+doc.json.title.toLowerCase() + "/" + doc.json.singular+'.js',
+        "scheme" : doc.json.singular,
+        "version":doc.json.version,
+        "type" : doc.json.type
+    };
 }
 
 
