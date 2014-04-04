@@ -1,12 +1,12 @@
 {
-    "title": "News",
-    "singular": "News",
-    "request": "/news/",
-    "description": "News",
+    "title": "Newsimages",
+    "singular": "Newsimage",
+    "request": "/newsimages/",
+    "description": "News images",
     "version" : "1",
-    "type": "application/com.github.restapiexpress.news",
-    "base": "application/com.github.restapiexpress.object.abstract",
-    "_testId" : "5339a146d46d35ebe95303an",
+    "type": "application/com.github.restapiexpress.newsimages",
+    "base": "application/com.github.restapiexpress.images.abstract",
+    "_testId" : "5339a146d46d35ebe95303ai",
     "parameter": {
         "limit": {
             "description": "Anzahl der Elemente",
@@ -50,28 +50,13 @@
         }
     },
     "model": {
-        "title": {
-            "name": "title",
-            "description": "News Title",
+        "newsId": {
+            "name": "newsId",
+            "description": "News Id",
             "mandatory": true,
-            "type": "string",
-            "test" : "Starving?",
+            "type": "objectId",
+            "test" : "5339a146d46d35ebe95303an",
             "regex": ""
-        },
-        "content": {
-            "name": "content",
-            "description": "News content",
-            "mandatory": true,
-            "test" : "Hans is hungry",
-            "type": "string"
-        },
-        "images": {
-            "name": "images",
-            "description": "News images",
-            "mandatory": false,
-            "test" : "Hans is hungry",
-            "type": "application/com.github.restapiexpress.newsimages",
-            "multiple": true
         }
     },
     "cache-control": {
