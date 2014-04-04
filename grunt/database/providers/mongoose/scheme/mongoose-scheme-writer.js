@@ -1,7 +1,15 @@
 /**
  * Created by samschmid on 28.03.14.
  */
-
+if (typeof String.prototype.startsWith != 'function') {
+    // see below for better implementation!
+    String.prototype.startsWith = function (str){
+        return this.indexOf(str) == 0;
+    };
+}
+String.prototype.endsWith = function(suffix) {
+    return this.indexOf(suffix, this.length - suffix.length) !== -1;
+};
 String.prototype.replaceAll = function(target, replacement) {
     return this.split(target).join(replacement);
 };
@@ -57,31 +65,72 @@ MongooseScheme.prototype.writeScheme = function(doc)  {
     var scheme = {};
     for (var key in model) {
         var field = model[key];
-        var type= "{type: ";
-        type +=  field.type.capitalize();
-        if(field.default) {
 
-            type += ", default: " + JSON.stringify(field.default);
-        }
-        if(field.min) {
+        if(field.type.endsWith("[]")) {
+            //Array
+            var type= "[{type: ";
+            if(field.type.startsWith("application/")) {
+                type +=  "ObjectId, ref: " +JSON.stringify(field.type.substr(0,field.type.length-2));
+            } else {
+                type +=  field.type.capitalize();
 
-            type += ", min: " + JSON.stringify(field.min);
-        }
-        if(field.max) {
-
-            type += ", max: " + JSON.stringify(field.max);
-        }
-        if(field.regex) {
-
-            type += ', match: [' +field.regex+ ',"That file doesn\'t match '+ field.regex+ ' ({VALUE})"' + ']';
-        }
-        if(field.mandatory) {
-            if(field.mandatory === true) {
-                type += ", required: true";
             }
+            if(field.default) {
+
+                type += ", default: " + JSON.stringify(field.default);
+            }
+            if(field.min) {
+
+                type += ", min: " + JSON.stringify(field.min);
+            }
+            if(field.max) {
+
+                type += ", max: " + JSON.stringify(field.max);
+            }
+            if(field.regex) {
+
+                type += ', match: [' +field.regex+ ',"That file doesn\'t match '+ field.regex+ ' ({VALUE})"' + ']';
+            }
+            if(field.mandatory) {
+                if(field.mandatory === true) {
+                    type += ", required: true";
+                }
+            }
+            type += "}]";
+            scheme[key] = type;
+        } else {
+            var type= "{type: ";
+            if(field.type.startsWith("application/")) {
+                type +=  "ObjectId, ref: " +JSON.stringify(field.type);
+            } else {
+                type +=  field.type.capitalize();
+
+            }
+            if(field.default) {
+
+                type += ", default: " + JSON.stringify(field.default);
+            }
+            if(field.min) {
+
+                type += ", min: " + JSON.stringify(field.min);
+            }
+            if(field.max) {
+
+                type += ", max: " + JSON.stringify(field.max);
+            }
+            if(field.regex) {
+
+                type += ', match: [' +field.regex+ ',"That file doesn\'t match '+ field.regex+ ' ({VALUE})"' + ']';
+            }
+            if(field.mandatory) {
+                if(field.mandatory === true) {
+                    type += ", required: true";
+                }
+            }
+            type += "}";
+            scheme[key] = type;
         }
-        type += "}";
-        scheme[key] = type;
+
     }
 
     template = template.replaceAll("{{{SCHEME}}}",objToString(scheme));
@@ -116,33 +165,81 @@ MongooseScheme.prototype.writeAbstractScheme = function(doc)  {
 
     var model = doc.json.model;
     var scheme = {};
+    this.grunt.log.debug(doc.json.title);
     for (var key in model) {
         var field = model[key];
-        var type= "{type: ";
-        type +=  field.type.capitalize();
-        if(field.default) {
 
-            type += ", default: " + field.default;
-        }
-        if(field.min) {
+        if(field.type.endsWith("[]")) {
+            //Array
+            var type= "[{type: ";
 
-            type += ", min: " + JSON.stringify(field.min);
-        }
-        if(field.max) {
+            if(field.type.startsWith("application/")) {
+                type +=  "ObjectId, ref: " +JSON.stringify(field.type.substr(0,field.type.length-2));
+            } else {
+                type +=  field.type.capitalize();
 
-            type += ", max: " + JSON.stringify(field.max);
-        }
-        if(field.regex) {
-
-            type += ', match: [' +field.regex+ ',"That file doesn\'t match '+ field.regex+ ' ({VALUE})"' + ']';
-        }
-        if(field.mandatory) {
-            if(field.mandatory === true) {
-                type += ", required: true";
             }
+
+            if(field.default) {
+
+                type += ", default: " + field.default;
+            }
+            if(field.min) {
+
+                type += ", min: " + JSON.stringify(field.min);
+            }
+            if(field.max) {
+
+                type += ", max: " + JSON.stringify(field.max);
+            }
+            if(field.regex) {
+
+                type += ', match: [' +field.regex+ ',"That file doesn\'t match '+ field.regex+ ' ({VALUE})"' + ']';
+            }
+            if(field.mandatory) {
+                if(field.mandatory === true) {
+                    type += ", required: true";
+                }
+            }
+            type += "}]";
+            scheme[key] = type;
+        } else {
+            var type= "{type: ";
+
+            if(field.type.startsWith("application/")) {
+                type +=  "ObjectId, ref: " +JSON.stringify(field.type);
+            } else {
+                type +=  field.type.capitalize();
+
+            }
+
+            if(field.default) {
+
+                type += ", default: " + field.default;
+            }
+            if(field.min) {
+
+                type += ", min: " + JSON.stringify(field.min);
+            }
+            if(field.max) {
+
+                type += ", max: " + JSON.stringify(field.max);
+            }
+            if(field.regex) {
+
+                type += ', match: [' +field.regex+ ',"That file doesn\'t match '+ field.regex+ ' ({VALUE})"' + ']';
+            }
+            if(field.mandatory) {
+                if(field.mandatory === true) {
+                    type += ", required: true";
+                }
+            }
+            type += "}";
+            scheme[key] = type;
         }
-        type += "}";
-        scheme[key] = type;
+
+
+
     }
 
     template = template.replaceAll("{{{SCHEME}}}",objToString(scheme));
