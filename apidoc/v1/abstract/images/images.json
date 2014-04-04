@@ -1,0 +1,36 @@
+{
+    "title": "Images",
+    "singular": "Image",
+    "request": "none",
+    "description": "Abstract Image",
+    "version" : "1",
+    "type": "application/com.github.restapiexpress.images.abstract",
+    "base": "application/com.github.restapiexpress.documents.abstract",
+    "parameter": {},
+    "model": {
+        "url": {
+            "name": "url",
+            "description": "url to image",
+            "mandatory": true,
+            "type": "string",
+            "test" : "https://scontent-b-fra.xx.fbcdn.net/hphotos-prn2/t1.0-9/1458448_10202078525385199_2069574105_n.jpg"
+        }
+    },
+    "cache-control": {
+        "client" : {
+            "max-age": 3600
+        },
+        "server" : {
+            "use":"etag"
+        }
+    },
+    "states": {},
+    "permission": [],
+    "mimetype": {
+        "json": {
+            "name": "json",
+            "is_default": true,
+            "response": ""
+        }
+    }
+}

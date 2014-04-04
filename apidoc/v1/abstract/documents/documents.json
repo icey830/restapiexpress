@@ -1,0 +1,45 @@
+{
+    "title": "Documents",
+    "singular": "Document",
+    "request": "none",
+    "description": "Abstract Document",
+    "version" : "1",
+    "type": "application/com.github.restapiexpress.documents.abstract",
+    "base": "application/com.github.restapiexpress.object.abstract",
+    "parameter": {},
+    "model": {
+        "isPublic": {
+            "name": "isPublic",
+            "description": "is public flag",
+            "mandatory": true,
+            "default" :  false,
+            "type": "boolean",
+            "test" : false
+        },
+        "lastChanged": {
+            "name": "lastChanged",
+            "description": "last changed timestamp",
+            "mandatory": true,
+            "default" :  "Date.now",
+            "type": "date",
+            "test" : "2011-07-14T19:43:37+0100"
+        }
+    },
+    "cache-control": {
+        "client" : {
+            "max-age": 3600
+        },
+        "server" : {
+            "use":"etag"
+        }
+    },
+    "states": {},
+    "permission": [],
+    "mimetype": {
+        "json": {
+            "name": "json",
+            "is_default": true,
+            "response": ""
+        }
+    }
+}
