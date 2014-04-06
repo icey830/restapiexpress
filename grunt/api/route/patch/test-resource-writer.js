@@ -10,6 +10,28 @@ function TestPatchResourceWriter(grunt, rootdir) {
     this.rootdir = rootdir;
 }
 
+TestPatchResourceWriter.prototype.generateJson = function(json,doc) {
+
+    for (var property in doc.json.model) {
+
+        var path = doc.json.model[property];
+        if(path.mandatory) {
+            if(path.hasOwnProperty("test")) {
+                json[property] = path.test;
+            } else {
+                this.grunt.log.write("no testvalue for propert " + property + " in doument " + doc.title);
+            }
+
+        }
+    }
+
+    if(doc.base && doc.base != "none") {
+        this.generateJson(json,doc.baseDoc);
+
+    }
+
+}
+
 TestPatchResourceWriter.prototype.write = function(doc, permission, method)  {
 
     this.writeInstance(doc,permission,method);
@@ -25,18 +47,7 @@ TestPatchResourceWriter.prototype.writeInstance = function(doc,permission,method
     test = test + '\n' + http200;
 
     var json = {};
-    for (var property in doc.json.model) {
-
-        var path = doc.json.model[property];
-        if(path.mandatory) {
-            if(path.hasOwnProperty("test")) {
-                json[property] = path.test;
-            } else {
-                this.grunt.log.write("no testvalue for propert " + property + " in doument " + doc.title);
-            }
-
-        }
-    }
+    this.generateJson(json,doc);
 
     var modifiedContent =  test.replace('{{{METHOD}}}',method.toUpperCase());
     modifiedContent =  modifiedContent.replace('{{{method}}}',method.toLowerCase());

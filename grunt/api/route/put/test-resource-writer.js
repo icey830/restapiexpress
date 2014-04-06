@@ -17,14 +17,8 @@ TestPutResourceWriter.prototype.write = function(doc, permission, method)  {
 
 }
 
-TestPutResourceWriter.prototype.writeInstance = function(doc,permission,method) {
+TestPutResourceWriter.prototype.generateJson = function(json,doc) {
 
-    var grunt = this.grunt;
-    var test = grunt.file.read('./grunt/templates/test.template');
-    var http200 = grunt.file.read('./grunt/templates/tests/http200sendsJson.template');
-    test = test + '\n' + http200;
-
-    var json = {};
     for (var property in doc.json.model) {
 
         var path = doc.json.model[property];
@@ -37,6 +31,23 @@ TestPutResourceWriter.prototype.writeInstance = function(doc,permission,method) 
 
         }
     }
+
+    if(doc.base && doc.base != "none") {
+        this.generateJson(json,doc.baseDoc);
+
+    }
+
+}
+
+TestPutResourceWriter.prototype.writeInstance = function(doc,permission,method) {
+
+    var grunt = this.grunt;
+    var test = grunt.file.read('./grunt/templates/test.template');
+    var http200 = grunt.file.read('./grunt/templates/tests/http200sendsJson.template');
+    test = test + '\n' + http200;
+
+    var json = {};
+    this.generateJson(json,doc);
 
     var modifiedContent =  test.replace('{{{METHOD}}}',method.toUpperCase());
     modifiedContent =  modifiedContent.replace('{{{method}}}',method.toLowerCase());

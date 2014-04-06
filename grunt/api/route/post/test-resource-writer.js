@@ -17,14 +17,8 @@ TestPostResourceWriter.prototype.write = function(doc, permission, method)  {
 
 }
 
-TestPostResourceWriter.prototype.writeInstance = function(doc,permission,method) {
+TestPostResourceWriter.prototype.generateJson = function(json,doc) {
 
-    var grunt = this.grunt;
-    var test = grunt.file.read('./grunt/templates/test.template');
-    var http200 = grunt.file.read('./grunt/templates/tests/http200sendsJson.template');
-    test = test + '\n' + http200;
-
-    var json = {};
     for (var property in doc.json.model) {
 
         var path = doc.json.model[property];
@@ -37,6 +31,23 @@ TestPostResourceWriter.prototype.writeInstance = function(doc,permission,method)
 
         }
     }
+
+    if(doc.base && doc.base != "none") {
+        this.generateJson(json,doc.baseDoc);
+
+    }
+
+}
+
+TestPostResourceWriter.prototype.writeInstance = function(doc,permission,method) {
+
+    var grunt = this.grunt;
+    var test = grunt.file.read('./grunt/templates/test.template');
+    var http200 = grunt.file.read('./grunt/templates/tests/http200sendsJson.template');
+    test = test + '\n' + http200;
+
+    var json = {};
+    this.generateJson(json,doc);
 
     var modifiedContent =  test.replace('{{{METHOD}}}',method.toUpperCase());
     modifiedContent =  modifiedContent.replace('{{{method}}}',method.toLowerCase());
@@ -57,18 +68,7 @@ TestPostResourceWriter.prototype.writeCollection = function(doc,permission,metho
     test = test + '\n' + http201;
 
     var json = {};
-    for (var property in doc.json.model) {
-
-        var path = doc.json.model[property];
-        if(path.mandatory) {
-            if(path.hasOwnProperty("test")) {
-                json[property] = path.test;
-            } else {
-                this.grunt.log.write("no testvalue for propert " + property + " in doument " + doc.title);
-            }
-
-        }
-    }
+    this.generateJson(json,doc);
 
     var modifiedContent =  test.replace('{{{METHOD}}}',method.toUpperCase());
     modifiedContent =  modifiedContent.replace('{{{method}}}',method.toLowerCase());
