@@ -50,11 +50,12 @@
         }
     },
     "model": {
-        "newsId": {
-            "name": "newsId",
+        "news": {
+            "name": "news",
             "description": "News Id",
             "mandatory": true,
-            "type": "objectId",
+            "type": "application/com.github.restapiexpress.news",
+            "reference" : "images[]",
             "test" : "5339a146d46d35ebe95303an",
             "regex": ""
         }
