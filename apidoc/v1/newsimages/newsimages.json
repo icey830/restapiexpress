@@ -55,7 +55,7 @@
             "description": "News Id",
             "mandatory": true,
             "type": "application/com.github.restapiexpress.news",
-            "reference" : "images[]",
+            "reference" : "images[],latestImage",
             "test" : "5339a146d46d35ebe95303an",
             "regex": ""
         }

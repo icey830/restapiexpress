@@ -69,9 +69,16 @@
             "name": "images",
             "description": "News images",
             "mandatory": false,
-            "test" : "Hans is hungry",
+            "test" : "[]",
             "type": "application/com.github.restapiexpress.newsimages[]",
             "multiple": true
+        },
+        "latestImage": {
+            "name": "latestImage",
+            "description": "latest News images",
+            "mandatory": false,
+            "test" : "null",
+            "type": "application/com.github.restapiexpress.newsimages"
         }
     },
     "cache-control": {
