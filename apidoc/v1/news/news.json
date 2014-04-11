@@ -71,14 +71,18 @@
             "mandatory": false,
             "test" : "[]",
             "type": "application/com.github.restapiexpress.newsimages[]",
-            "multiple": true
+            "multiple": true,
+            "reference" : "news",
+            "referenceRule" : "cascade"
         },
         "latestImage": {
             "name": "latestImage",
             "description": "latest News images",
             "mandatory": false,
             "test" : "null",
-            "type": "application/com.github.restapiexpress.newsimages"
+            "type": "application/com.github.restapiexpress.newsimages",
+            "reference" : "news",
+            "referenceRule" : "noaction"
         }
     },
     "cache-control": {

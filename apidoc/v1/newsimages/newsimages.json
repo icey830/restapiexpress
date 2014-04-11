@@ -56,6 +56,7 @@
             "mandatory": true,
             "type": "application/com.github.restapiexpress.news",
             "reference" : "images[],latestImage",
+            "referenceRule" : "nullify",
             "test" : "5339a146d46d35ebe95303an",
             "regex": ""
         }
