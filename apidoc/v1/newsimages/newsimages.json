@@ -6,7 +6,7 @@
     "version" : "1",
     "type": "application/com.github.restapiexpress.newsimages",
     "base": "application/com.github.restapiexpress.images.abstract",
-    "_testId" : "5339a146d46d35ebe95303ai",
+    "_testId" : "534eead8c6db3400005ce62c",
     "parameter": {
         "limit": {
             "description": "Anzahl der Elemente",
@@ -57,7 +57,7 @@
             "type": "application/com.github.restapiexpress.news",
             "reference" : "images[],latestImage",
             "referenceRule" : "nullify",
-            "test" : "5339a146d46d35ebe95303an",
+            "test" : "5339a146d46d35ebe953030a",
             "regex": ""
         }
     },

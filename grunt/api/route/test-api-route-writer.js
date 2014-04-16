@@ -17,7 +17,7 @@ function TestApiRouteWriter(grunt, rootdir) {
     this.testGetResourceWriter = new TestGetResourceWriter(grunt, rootdir);
     this.testPostResourceWriter = new TestPostResourceWriter(grunt, rootdir);
     this.testPutResourceWriter = new TestPutResourceWriter(grunt, rootdir);
-    this.testPatchResourceWriter = new TestPutResourceWriter(grunt, rootdir);
+    this.testPatchResourceWriter = new TestPatchResourceWriter(grunt, rootdir);
     this.testDeleteResourceWriter = new TestDeleteResourceWriter(grunt, rootdir);
     this.testOptionsResourceWriter = new TestOptionsResourceWriter(grunt, rootdir);
 }

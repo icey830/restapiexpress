@@ -6,7 +6,7 @@
     "version" : "1",
     "type": "application/com.github.restapiexpress.news",
     "base": "application/com.github.restapiexpress.object.abstract",
-    "_testId" : "5339a146d46d35ebe95303an",
+    "_testId" : "5339a146d46d35ebe953030a",
     "parameter": {
         "limit": {
             "description": "Anzahl der Elemente",

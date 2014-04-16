@@ -43,9 +43,9 @@ TestPatchResourceWriter.prototype.writeInstance = function(doc,permission,method
 
     var grunt = this.grunt;
     var test = grunt.file.read('./grunt/templates/test.template');
-    var http200 = grunt.file.read('./grunt/templates/tests/http200sendsJson.template');
-    test = test + '\n' + http200;
-
+    var http400 = grunt.file.read('./grunt/templates/tests/http400sendsJson.template');
+    test = test + '\n' + http400;
+grunt.log.write("400");
     var json = {};
     this.generateJson(json,doc);
 
