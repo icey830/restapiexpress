@@ -155,7 +155,7 @@ describe('PATCH /v1/newsimages/5347cf038499f5f507a62000 --admin', function(){
             .set('Accept', 'application/*')
             .set('DEV-ROLE', 'admin')
             .expect('Content-Type', /json/)
-            .send()
+            .send(json)
             .expect(200)
             .end(function(err, res){
                 if (err) return done(err);
@@ -164,7 +164,7 @@ describe('PATCH /v1/newsimages/5347cf038499f5f507a62000 --admin', function(){
     })
 })
 
-describe('GET /v1/news/5347cf038499f5f507a62ca7 --admin', function(){
+describe('GET after patch IMAGE /v1/news/5347cf038499f5f507a62ca7 --admin', function(){
     it('respond with json', function(done){
         request(app)
             .get('/v1/news/5347cf038499f5f507a62ca7?fields=images,latestImage')
@@ -204,7 +204,7 @@ describe('GET /v1/news/5347cf038499f5f507a62ca7 --admin', function(){
     })
 })
 
-describe('GET /v1/news/5347cf038499f5f507a62ca8 --admin', function(){
+describe('GET after PATCH image /v1/news/5347cf038499f5f507a62ca8 --admin', function(){
     it('respond with json', function(done){
         request(app)
             .get('/v1/news/5347cf038499f5f507a62ca8?fields=images,latestImage')
@@ -234,6 +234,43 @@ describe('GET /v1/news/5347cf038499f5f507a62ca8 --admin', function(){
                     "rel": "show documentation",
                     "method": "GET",
                     "href": "http://127.0.0.1:3000/doc/v1/news/"
+                }
+            }
+        )
+            .end(function(err, res){
+                if (err) return done(err);
+                done()
+            });
+    })
+})
+
+describe('GET after PATCH image /v1/newsimages/5347cf038499f5f507a62000 --admin', function(){
+    it('respond with json', function(done){
+        request(app)
+            .get('/v1/newsimages/5347cf038499f5f507a62000?fields=news')
+            .set('Accept', 'application/*')
+            .set('DEV-ROLE', 'admin')
+            .expect('Content-Type', /json/)
+            .send()
+            .expect(200)
+            .expect({
+                "item": {
+                    "_id": "5347cf038499f5f507a62000",
+                    "news": "5347cf038499f5f507a62ca8"
+                },
+                "links": [
+                    {
+                        "type": "application/com.github.restapiexpress.newsimages",
+                        "rel": "self",
+                        "method": "GET",
+                        "href": "http://127.0.0.1:3000/v1/newsimages/5347cf038499f5f507a62000"
+                    }
+                ],
+                "doc": {
+                    "type": "application/com.github.restapiexpress.newsimages",
+                    "rel": "show documentation",
+                    "method": "GET",
+                    "href": "http://127.0.0.1:3000/doc/v1/newsimages/"
                 }
             }
         )
