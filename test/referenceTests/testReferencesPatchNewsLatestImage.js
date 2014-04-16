@@ -5,7 +5,7 @@ var request = require('supertest')
     , app     = require('../../app.js')
     , assert  = require("assert");
 
-/*
+
 describe('PUT /v1/news/5347cf038499f5f507a62ca7 --admin', function(){
     it('respond with json', function(done){
         var json = {"title":"Starving?","content":"Hans is hungry","timestamp":"2011-07-14T19:43:37+0100"};
@@ -155,7 +155,7 @@ describe('PATCH /v1/news/5347cf038499f5f507a62ca7 --admin', function(){
             .set('Accept', 'application/*')
             .set('DEV-ROLE', 'admin')
             .expect('Content-Type', /json/)
-            .send()
+            .send(json)
             .expect(200)
             .end(function(err, res){
                 if (err) return done(err);
@@ -289,4 +289,3 @@ describe('DELETE /v1/news/5347cf038499f5f507a62ca7 --admin', function(){
             });
     })
 })
-    */
