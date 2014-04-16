@@ -5,7 +5,7 @@ var request = require('supertest')
     , app     = require('../../app.js')
     , assert  = require("assert");
 
-/*
+
 describe('PUT /v1/news/5347cf038499f5f507a62ca7 --admin', function(){
     it('respond with json', function(done){
         var json = {"title":"Starving?","content":"Hans is hungry","timestamp":"2011-07-14T19:43:37+0100"};
@@ -149,13 +149,13 @@ describe('GET /v1/news/5347cf038499f5f507a62ca7 --admin', function(){
 
 describe('PATCH /v1/news/5347cf038499f5f507a62ca7 --admin', function(){
     it('respond with json', function(done){
-        var json = {"latestImage" : null, "images": []}
+        var json = {"images": []}
         request(app)
             .patch('/v1/news/5347cf038499f5f507a62ca7')
             .set('Accept', 'application/*')
             .set('DEV-ROLE', 'admin')
             .expect('Content-Type', /json/)
-            .send()
+            .send(json)
             .expect(200)
             .end(function(err, res){
                 if (err) return done(err);
@@ -163,6 +163,7 @@ describe('PATCH /v1/news/5347cf038499f5f507a62ca7 --admin', function(){
             });
     })
 })
+
 
 describe('GET after PATCH NEWS images /v1/news/5347cf038499f5f507a62ca7 --admin', function(){
     it('respond with json', function(done){
@@ -178,7 +179,7 @@ describe('GET after PATCH NEWS images /v1/news/5347cf038499f5f507a62ca7 --admin'
                     "_id": "5347cf038499f5f507a62ca7",
                     "images": [
                     ],
-                    "latestImage": null
+                    "latestImage": "5347cf038499f5f507a62000"
                 },
                 "links": [
                     {
@@ -249,7 +250,7 @@ describe('DELETE /v1/newsimages/5347cf038499f5f507a62000 --admin', function(){
             .set('DEV-ROLE', 'admin')
             .expect('Content-Type', /json/)
             .send()
-            .expect(200)
+            .expect(400)
             .end(function(err, res){
                 if (err) return done(err);
                 done()
@@ -288,4 +289,3 @@ describe('DELETE /v1/news/5347cf038499f5f507a62ca7 --admin', function(){
             });
     })
 })
-    */
