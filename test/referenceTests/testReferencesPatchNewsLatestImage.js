@@ -147,6 +147,43 @@ describe('GET /v1/news/5347cf038499f5f507a62ca7 --admin', function(){
     })
 })
 
+describe('GET after PATCH image 2 /v1/newsimages/5347cf038499f5f507a62000 --admin', function(){
+    it('respond with json', function(done){
+        request(app)
+            .get('/v1/newsimages/5347cf038499f5f507a62000?fields=news')
+            .set('Accept', 'application/*')
+            .set('DEV-ROLE', 'admin')
+            .expect('Content-Type', /json/)
+            .send()
+            .expect(200)
+            .expect({
+                "item": {
+                    "_id": "5347cf038499f5f507a62000",
+                    "news": "5347cf038499f5f507a62ca7"
+                },
+                "links": [
+                    {
+                        "type": "application/com.github.restapiexpress.newsimages",
+                        "rel": "self",
+                        "method": "GET",
+                        "href": "http://127.0.0.1:3000/v1/newsimages/5347cf038499f5f507a62000"
+                    }
+                ],
+                "doc": {
+                    "type": "application/com.github.restapiexpress.newsimages",
+                    "rel": "show documentation",
+                    "method": "GET",
+                    "href": "http://127.0.0.1:3000/doc/v1/newsimages/"
+                }
+            }
+        )
+            .end(function(err, res){
+                if (err) return done(err);
+                done()
+            });
+    })
+})
+
 describe('PATCH /v1/news/5347cf038499f5f507a62ca7 --admin', function(){
     it('respond with json', function(done){
         var json = {"latestImage" : null}
@@ -157,6 +194,43 @@ describe('PATCH /v1/news/5347cf038499f5f507a62ca7 --admin', function(){
             .expect('Content-Type', /json/)
             .send(json)
             .expect(200)
+            .end(function(err, res){
+                if (err) return done(err);
+                done()
+            });
+    })
+})
+
+describe('GET after PATCH image 2 /v1/newsimages/5347cf038499f5f507a62000 --admin', function(){
+    it('respond with json', function(done){
+        request(app)
+            .get('/v1/newsimages/5347cf038499f5f507a62000?fields=news')
+            .set('Accept', 'application/*')
+            .set('DEV-ROLE', 'admin')
+            .expect('Content-Type', /json/)
+            .send()
+            .expect(200)
+            .expect({
+                "item": {
+                    "_id": "5347cf038499f5f507a62000",
+                    "news": "5347cf038499f5f507a62ca7"
+                },
+                "links": [
+                    {
+                        "type": "application/com.github.restapiexpress.newsimages",
+                        "rel": "self",
+                        "method": "GET",
+                        "href": "http://127.0.0.1:3000/v1/newsimages/5347cf038499f5f507a62000"
+                    }
+                ],
+                "doc": {
+                    "type": "application/com.github.restapiexpress.newsimages",
+                    "rel": "show documentation",
+                    "method": "GET",
+                    "href": "http://127.0.0.1:3000/doc/v1/newsimages/"
+                }
+            }
+        )
             .end(function(err, res){
                 if (err) return done(err);
                 done()
@@ -232,6 +306,101 @@ describe('GET /v1/news/5347cf038499f5f507a62ca8 --admin', function(){
                     "rel": "show documentation",
                     "method": "GET",
                     "href": "http://127.0.0.1:3000/doc/v1/news/"
+                }
+            }
+        )
+            .end(function(err, res){
+                if (err) return done(err);
+                done()
+            });
+    })
+})
+
+
+describe('PATCH /v1/news/5347cf038499f5f507a62ca7 --admin', function(){
+    it('respond with json', function(done){
+        var json = {"latestImage" :"5347cf038499f5f507a62000"}
+        request(app)
+            .patch('/v1/news/5347cf038499f5f507a62ca7')
+            .set('Accept', 'application/*')
+            .set('DEV-ROLE', 'admin')
+            .expect('Content-Type', /json/)
+            .send(json)
+            .expect(200)
+            .end(function(err, res){
+                if (err) return done(err);
+                done()
+            });
+    })
+})
+
+describe('GET /v1/news/5347cf038499f5f507a62ca7 --admin', function(){
+    it('respond with json', function(done){
+        request(app)
+            .get('/v1/news/5347cf038499f5f507a62ca7?fields=images,latestImage')
+            .set('Accept', 'application/*')
+            .set('DEV-ROLE', 'admin')
+            .expect('Content-Type', /json/)
+            .send()
+            .expect(200)
+            .expect({
+                "item": {
+                    "_id": "5347cf038499f5f507a62ca7",
+                    "images": [
+                        "5347cf038499f5f507a62000"
+                    ],
+                    "latestImage": "5347cf038499f5f507a62000"
+                },
+                "links": [
+                    {
+                        "type": "application/com.github.restapiexpress.news",
+                        "rel": "self",
+                        "method": "GET",
+                        "href": "http://127.0.0.1:3000/v1/news/5347cf038499f5f507a62ca7"
+                    }
+                ],
+                "doc": {
+                    "type": "application/com.github.restapiexpress.news",
+                    "rel": "show documentation",
+                    "method": "GET",
+                    "href": "http://127.0.0.1:3000/doc/v1/news/"
+                }
+            }
+        )
+            .end(function(err, res){
+                if (err) return done(err);
+                done()
+            });
+    })
+})
+
+describe('GET after PATCH image 2 /v1/newsimages/5347cf038499f5f507a62000 --admin', function(){
+    it('respond with json', function(done){
+        request(app)
+            .get('/v1/newsimages/5347cf038499f5f507a62000?fields=news')
+            .set('Accept', 'application/*')
+            .set('DEV-ROLE', 'admin')
+            .expect('Content-Type', /json/)
+            .send()
+            .expect(200)
+            .expect({
+                "item": {
+                    "_id": "5347cf038499f5f507a62000",
+                    "news": "5347cf038499f5f507a62ca7"
+                },
+                "links": [
+                    {
+                        "type": "application/com.github.restapiexpress.newsimages",
+                        "rel": "self",
+                        "method": "GET",
+                        "href": "http://127.0.0.1:3000/v1/newsimages/5347cf038499f5f507a62000"
+                    }
+                ],
+                "doc": {
+                    "type": "application/com.github.restapiexpress.newsimages",
+                    "rel": "show documentation",
+                    "method": "GET",
+                    "href": "http://127.0.0.1:3000/doc/v1/newsimages/"
                 }
             }
         )
