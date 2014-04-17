@@ -83,7 +83,7 @@ curl -X POST -H "Content-Type: application/json" -H "DEV-ROLE: admin" -d '{"id":
 
 # How to define your Resources?
 
-**only 3 steps**
+**Just 3 simple steps**
 
 1. write a documentation for your resource
 
@@ -114,7 +114,7 @@ actually there are some fields you have to describe.
 * define supported mime-types
 
 ## Example News.json
-    ```json
+```json
     {
         "title": "News",
         "singular": "News",
@@ -248,11 +248,7 @@ actually there are some fields you have to describe.
             }
         }
     }
-    ```
-
-## How to write data base controller
-* define a template for every HTTP-Method you need.
-* write an extension for every single controller create by grunt if needed to take over the control.
+```json
 
 # Work in PROGRESS
 * the framework handles permissions
