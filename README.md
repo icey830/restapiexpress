@@ -248,7 +248,7 @@ actually there are some fields you have to describe.
             }
         }
     }
-```json
+```
 
 # Work in PROGRESS
 * the framework handles permissions
