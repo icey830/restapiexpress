@@ -4,7 +4,7 @@ restapiexpress
 
 Goals
 -
-Whit this framework it is possible to create a full functional RESTful API with hypermedia.
+Whit this framework it is possible to create a full functional and 100% tested RESTful API with hypermedia.
 The only thing you have to do is to write a uniformed documentation.
 
 What This Framework do
@@ -81,11 +81,167 @@ curl -X POST -H "Content-Type: application/json" -H "DEV-ROLE: admin" -d '{"id":
 > ```
 
 
-## How to write the documentation
-* TBD
-* doc are based in folder apidoc/*
-* define model
-* define permissions for every HTTP-Method (GET, POST, PUT, HEAD, OPTIONS, etc.)
+# How to define your Resources?
+
+**only 3 steps**
+1. write a documentation for your resource
+2. run grunt in your project folder
+    ```javascript
+    grunt
+    ```
+3. run grunt test in your project folder (if not success, you problably made a mistak in step one)
+    ```javascript
+    grunt test
+    ```
+## How to describe in a documentation file?
+Take a look into the folder apidoc/, there are some default documentations
+
+actually theres are some fileds you have to describe.
+* define title, description, version etc.
+* define database model
+* define permissions for every User-Role and HTTP-Method (GET, POST, PUT, HEAD, OPTIONS, etc.)
+### optional and not implemented in current version
+* define parameters on collection
+* define HTTP-States messages
+* define cache-controls
+* define supported mime-types
+
+## Example News.json
+    ```json
+    {
+        "title": "News",
+        "singular": "News",
+        "request": "/news/",
+        "description": "News",
+        "version" : "1",
+        "type": "application/com.github.restapiexpress.news",
+        "base": "application/com.github.restapiexpress.object.abstract",
+        "_testId" : "5339a146d46d35ebe953030a",
+        "parameter": {
+            "limit": {
+                "description": "Anzahl der Elemente",
+                "name": "limit",
+                "type": "int",
+                "mandatory": false,
+                "default": "10",
+                "regex": ""
+            },
+            "page": {
+                "description": "Seite",
+                "name": "page",
+                "type": "int",
+                "mandatory": false,
+                "default": 0,
+                "regex": ""
+            },
+            "scope": {
+                "description": "Scope der Suche (active, inactive)",
+                "name": "scope",
+                "regex": "",
+                "default": "",
+                "type": "string",
+                "mandatory": false
+            },
+            "sort": {
+                "description": "id,name,-age,-days",
+                "name": "sort",
+                "regex": "",
+                "default": "descending",
+                "type": "string",
+                "mandatory": false
+            },
+            "fields": {
+                "description": "Array with requested fieldnames",
+                "name": "fields",
+                "regex": "",
+                "default": "",
+                "type": "string",
+                "mandatory": false
+            }
+        },
+        "model": {
+            "title": {
+                "name": "title",
+                "description": "News Title",
+                "mandatory": true,
+                "type": "string",
+                "test" : "Starving?",
+                "regex": ""
+            },
+            "content": {
+                "name": "content",
+                "description": "News content",
+                "mandatory": true,
+                "test" : "Hans is hungry",
+                "type": "string"
+            },
+            "images": {
+                "name": "images",
+                "description": "News images",
+                "mandatory": false,
+                "test" : "[]",
+                "type": "application/com.github.restapiexpress.newsimages[]",
+                "multiple": true,
+                "reference" : "news",
+                "referenceRule" : "cascade"
+            },
+            "latestImage": {
+                "name": "latestImage",
+                "description": "latest News images",
+                "mandatory": false,
+                "test" : "null",
+                "type": "application/com.github.restapiexpress.newsimages",
+                "reference" : "news",
+                "referenceRule" : "noaction"
+            }
+        },
+        "cache-control": {
+            "client" : {
+                "max-age": 3600
+            },
+            "server" : {
+                "use":"etag"
+            }
+        },
+        "states": {
+            "200": {
+                "code": 200,
+                "message": "OK",
+                "description": "Daten sind im Response Body"
+            },
+            "404": {
+                "code": 404,
+                "message": "Nicht vorhanden",
+                "description": "Objekt mit Identifier nicht gefunden oder nicht vorhanden"
+            }
+        },
+        "permission": [
+            {
+                "role": "Public",
+                "description": "Rolle Public kann...",
+                "methods" : ["GET"]
+            },
+            {
+                "role": "User",
+                "description": "Authentifizierte Benutzer können...",
+                "methods" : ["GET", "HEAD", "OPTIONS"]
+
+            },
+            {
+                "role": "Admin",
+                "description": "Rolle Administrator kann...",
+                "methods" : ["GET", "PUT", "PATCH", "POST", "DELETE", "HEAD", "OPTIONS"]
+            }
+        ],
+        "mimetype": {
+            "json": {
+                "name": "json",
+                "is_default": true,
+                "response": ""
+            }
+        }
+    }
+    ```
 
 ## How to write data base controller
 * define a template for every HTTP-Method you need.
