@@ -1,10 +1,10 @@
 restapiexpress
 =
-**A framework for creating uniform RESTful APIs quickly written in Node.js on top of ExpressJS and GruntJS**
+**A framework for creating uniform RESTful APIs quickly written in Node.js on top of ExpressJS and with help of GruntJS**
 
 Goals
 -
-Whit this framework it should be possible to create a full functional RESTful API with hypermedia.
+Whit this framework it is possible to create a full functional RESTful API with hypermedia.
 The only thing you have to do is to write a uniformed documentation.
 
 What This Framework do
@@ -18,28 +18,11 @@ It takes all your assiduity work - so the only thing your have to do is to desig
 * the framework creates data base controllers based on predefined templates for every request you have defined in the documentation with grunt.
 * the framework serves an admin interface to write the documentation
 
-Installation
-=
-> For the moment there is only database supported is mongodb. So you have to install mongo db first. (no Username an Password). Work is very in progress. What you can do now: Install it and run it. thats basically all. The documentation is prepared for the API Version 1 with one resource (contacts).
-> You can call following routes which should work:
-> * http://localhost:3000/
-> * http://localhost:3000/v1/
-> * http://localhost:3000/v1/contacts
-> * http://localhost:3000/v1/contacts/123.json
-> * Documentation of resource: http://localhost:3000/doc/v1/contacts
-> If you want to write some data then you have to set a Header "DEV-ROLE" = "admin"
-> POST to http://localhost:3000/v1/contacts
-> Example
-> post: 
-> ```bash 
-curl -X POST -H "Content-Type: application/json" -H "DEV-ROLE: admin" -d '{"id": "Barrack","name": "Obama","email": "Bob@bob.com","importance": "5"}' http://localhost:3000/v1/contacts
-```
-> GET all entries
-> ```bash 
-> curl -X GET -H "DEV-ROLE: admin" http://localhost:3000/v1/contacts
-> ```
+# Installation
 
-Then you can make the following steps
+> For the moment there is only database supported is mongodb. So you have to install mongoDB first. (no Username an Password). Work is very in progress. What you can do now: Install it and run it. thats basically all. The documentation is prepared for the API Version 1 with three resource (contacts, news and newsimages).
+
+To install you follow the following steps
 
 1. Fork this project 
 2. Download it on your Computer
@@ -74,30 +57,48 @@ Then you can make the following steps
    grunt test
    ```
 
-How to write the documentation
--
+So far you have the a running System with default resource:
+* Contact
+* News
+* Newsimages
+
+> You can call following routes which should work:
+> * http://localhost:3000/
+> * http://localhost:3000/v1/
+> * http://localhost:3000/v1/contacts
+> * http://localhost:3000/v1/contacts/123.json
+> * Documentation of resource: http://localhost:3000/doc/v1/contacts
+> If you want to write some data then you have to set a Header "DEV-ROLE" = "admin"
+> POST to http://localhost:3000/v1/contacts
+> Example
+> post:
+> ```bash
+curl -X POST -H "Content-Type: application/json" -H "DEV-ROLE: admin" -d '{"id": "Barrack","name": "Obama","email": "Bob@bob.com","importance": "5"}' http://localhost:3000/v1/contacts
+```
+> GET all entries
+> ```bash
+> curl -X GET -H "DEV-ROLE: admin" http://localhost:3000/v1/contacts
+> ```
+
+
+## How to write the documentation
 * TBD
 * doc are based in folder apidoc/*
 * define model
 * define permissions for every HTTP-Method (GET, POST, PUT, HEAD, OPTIONS, etc.)
 
-How to write data base controller 
--
+## How to write data base controller
 * define a template for every HTTP-Method you need.
 * write an extension for every single controller create by grunt if needed to take over the control.
 
-Work in PROGRESS
-=
-* the frameworks takes control over routing
+# Work in PROGRESS
 * the framework handles permissions
 * the framework handles sessions
 * the framework handles API-TOKENS
-* the framework serves HYPERMEDIA RESTFul JSON Files
-* the framework creates data base controllers based on predefined templates for every request you have defined in the documentation with grunt.
 * the framework serves an admin interface to write the documentation
 
-Tasks implemented
--
+## Tasks implemented
+
 ### Server response:
 * returns a json representation of versions when accessing api.yourdomain.com/
 * returns all documented functions of version1 of api when accessing api.yourdomain.com/v1/
@@ -118,17 +119,19 @@ Tasks implemented
 * create correct route for DELETE on instance and collection
 * create correct route for PATCH on instance and collection
 * create correct route for OPTIONS on instance and collection
+* create custom types for mongodb schemes
+
 ### Automated Test cases:
 * responding with http-code 200 if access granted or 302 where no access was granted for every collection or resource
 * responding with http-code 201 a resource was created
 * responding with http-code 400 if bad access
 * responding with http-code 405 if method not supported on put
+* automatic handling of relationships
 
 ## Next Steps
 * create single sign on tables (Username, password, API-Token)
 * generete sessions based on user
 * handle expands for mongodb
-* create custom types for mongodb schemes
 * improve hypermedia to suppress links if not needed
 
 # Become a contributer
