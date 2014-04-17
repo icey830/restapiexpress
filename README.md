@@ -102,6 +102,7 @@ Take a look into the folder apidoc/, there are some default documentations.
 
 There are some fields you have to describe.
 
+* define base model (Yes, you can have abstract "classes")
 * define title, description, version etc.
 * define database model
 * define permissions for every User-Role and HTTP-Method (GET, POST, PUT, HEAD, OPTIONS, etc.)
@@ -124,9 +125,6 @@ There are some fields you have to describe.
     "type": "application/com.github.restapiexpress.news",
     "base": "application/com.github.restapiexpress.object.abstract",
     "_testId" : "5339a146d46d35ebe953030a",
-    "parameter": {
-        ...
-    },
     "model": {
         "title": {
             "name": "title",
@@ -163,12 +161,6 @@ There are some fields you have to describe.
             "referenceRule" : "noaction"
         }
     },
-    "cache-control": {
-        ...
-    },
-    "states": {
-        ...
-    },
     "permission": [
         {
             "role": "Public",
@@ -186,10 +178,7 @@ There are some fields you have to describe.
             "description": "Rolle Administrator kann...",
             "methods" : ["GET", "PUT", "PATCH", "POST", "DELETE", "HEAD", "OPTIONS"]
         }
-    ],
-    "mimetype": {
-        ...
-    }
+    ]
 }
 ```
 
