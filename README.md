@@ -193,44 +193,129 @@ In the documentations of the two resources you have to add a property in each mo
 News have exactly one Newsimage. If the News will be deleted, the images is deleted too.
 If the image will be deleted, the news will still stay alive.
 
-* News.json:
+#### News.json:
 
 ```json
-"model": {
-    "image": {
-        "name": "image",
-        "description": "Reference from News to Newsimage",
-        "mandatory": false,
-        "test" : "null",
-        "type": "application/com.github.restapiexpress.newsimages",
-        "multiple": false,
-        "reference" : "news",
-        "referenceRule" : "cascade"
+{
+    "model": {
+        "image": {
+            "name": "image",
+            "description": "Reference from News to Newsimage",
+            "mandatory": false,
+            "test" : "null",
+            "type": "application/com.github.restapiexpress.newsimages",
+            "multiple": false,
+            "reference" : "news",
+            "referenceRule" : "cascade"
+        }
     }
 }
 ```
 
-* Newsimages.json:
+#### Newsimages.json:
 
 ```json
-"model": {
-    "news": {
-        "name": "news",
-        "description": "Referece from Newsimage to News",
-        "mandatory": true,
-        "test" : "5339a146d46d35ebe953030a",
-        "type": "application/com.github.restapiexpress.news",
-        "multiple": false,
-        "reference" : "news",
-        "referenceRule" : "nullify"
+{
+    "model": {
+        "news": {
+            "name": "news",
+            "description": "Referece from Newsimage to News",
+            "mandatory": true,
+            "test" : "5339a146d46d35ebe953030a",
+            "type": "application/com.github.restapiexpress.news",
+            "multiple": false,
+            "reference" : "news",
+            "referenceRule" : "nullify"
+        }
     }
 }
 ```
+
 ### 1 : n
 
-### n : 1
+News have multiple Newsimage. If the News will be deleted, the images are deleted too.
+If a image will be deleted, the news will still stay alive.
+
+#### News.json:
+
+```json
+{
+    "model": {
+        "image": {
+            "name": "image",
+            "description": "Reference from News to Newsimage",
+            "mandatory": false,
+            "test" : "[]",
+            "type": "application/com.github.restapiexpress.newsimages[]",
+            "multiple": true,
+            "reference" : "news",
+            "referenceRule" : "cascade"
+        }
+    }
+}
+```
+
+#### Newsimages.json:
+
+```json
+{
+    "model": {
+        "news": {
+            "name": "news",
+            "description": "Referece from Newsimage to News",
+            "mandatory": true,
+            "test" : "5339a146d46d35ebe953030a",
+            "type": "application/com.github.restapiexpress.news",
+            "multiple": false,
+            "reference" : "news",
+            "referenceRule" : "nullify"
+        }
+    }
+}
+```
 
 ### n : m
+
+News have multiple Newsimages. Newsimages can be atached to multiple News. If the News will be deleted, the images will still stay alive.
+If a image will be deleted, the news will still stay alive.
+
+#### News.json:
+
+```json
+{
+    "model": {
+        "image": {
+            "name": "image",
+            "description": "Reference from News to Newsimage",
+            "mandatory": false,
+            "test" : "[]",
+            "type": "application/com.github.restapiexpress.newsimages[]",
+            "multiple": true,
+            "reference" : "news",
+            "referenceRule" : "nullify"
+        }
+    }
+}
+```
+
+#### Newsimages.json:
+
+```json
+{
+    "model": {
+        "news": {
+            "name": "news",
+            "description": "Referece from Newsimage to News",
+            "mandatory": true,
+            "test" : "[5339a146d46d35ebe953030a]",
+            "type": "application/com.github.restapiexpress.news[]",
+            "multiple": false,
+            "reference" : "news",
+            "referenceRule" : "nullify"
+        }
+    }
+}
+```
 
 # Work in PROGRESS
 * the framework handles permissions
