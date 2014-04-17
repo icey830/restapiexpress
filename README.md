@@ -1,14 +1,14 @@
-restapiexpress
-=
+# restapiexpress
+
 **A framework for creating uniform RESTful APIs quickly written in Node.js on top of ExpressJS and with help of GruntJS**
 
-Goals
--
+## Goals
+
 Whit this framework it is possible to create a full functional and 100% tested RESTful API with hypermedia.
 The only thing you have to do is to write a uniformed documentation.
 
-What This Framework do
--
+## What This Framework do
+
 It takes all your assiduity work - so the only thing your have to do is to design your models.
 * the frameworks takes control over routing
 * the framework handles permissions
@@ -17,6 +17,23 @@ It takes all your assiduity work - so the only thing your have to do is to desig
 * the framework serves HYPERMEDIA RESTFul JSON Files
 * the framework creates data base controllers based on predefined templates for every request you have defined in the documentation with grunt.
 * the framework serves an admin interface to write the documentation
+
+# Test it - and give me a feedback
+
+I need your help to improve it.
+If you test it, its a good help.
+
+Because we have no user management at the moment, you have to send the a HTTP-Header "DEV-ROLE" if you want to use a specific user role.
+
+## Example
+
+"DEV-ROLE: admin"
+
+> GET all entries
+> ```bash
+> curl -X GET -H "DEV-ROLE: admin" http://localhost:3000/v1/contacts
+> ```
+
 
 # Installation
 
