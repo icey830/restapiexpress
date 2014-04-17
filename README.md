@@ -115,139 +115,139 @@ actually there are some fields you have to describe.
 
 ## Example News.json
 ```json
-    {
-        "title": "News",
-        "singular": "News",
-        "request": "/news/",
-        "description": "News",
-        "version" : "1",
-        "type": "application/com.github.restapiexpress.news",
-        "base": "application/com.github.restapiexpress.object.abstract",
-        "_testId" : "5339a146d46d35ebe953030a",
-        "parameter": {
-            "limit": {
-                "description": "Anzahl der Elemente",
-                "name": "limit",
-                "type": "int",
-                "mandatory": false,
-                "default": "10",
-                "regex": ""
-            },
-            "page": {
-                "description": "Seite",
-                "name": "page",
-                "type": "int",
-                "mandatory": false,
-                "default": 0,
-                "regex": ""
-            },
-            "scope": {
-                "description": "Scope der Suche (active, inactive)",
-                "name": "scope",
-                "regex": "",
-                "default": "",
-                "type": "string",
-                "mandatory": false
-            },
-            "sort": {
-                "description": "id,name,-age,-days",
-                "name": "sort",
-                "regex": "",
-                "default": "descending",
-                "type": "string",
-                "mandatory": false
-            },
-            "fields": {
-                "description": "Array with requested fieldnames",
-                "name": "fields",
-                "regex": "",
-                "default": "",
-                "type": "string",
-                "mandatory": false
-            }
+{
+    "title": "News",
+    "singular": "News",
+    "request": "/news/",
+    "description": "News",
+    "version" : "1",
+    "type": "application/com.github.restapiexpress.news",
+    "base": "application/com.github.restapiexpress.object.abstract",
+    "_testId" : "5339a146d46d35ebe953030a",
+    "parameter": {
+        "limit": {
+            "description": "Anzahl der Elemente",
+            "name": "limit",
+            "type": "int",
+            "mandatory": false,
+            "default": "10",
+            "regex": ""
         },
-        "model": {
-            "title": {
-                "name": "title",
-                "description": "News Title",
-                "mandatory": true,
-                "type": "string",
-                "test" : "Starving?",
-                "regex": ""
-            },
-            "content": {
-                "name": "content",
-                "description": "News content",
-                "mandatory": true,
-                "test" : "Hans is hungry",
-                "type": "string"
-            },
-            "images": {
-                "name": "images",
-                "description": "News images",
-                "mandatory": false,
-                "test" : "[]",
-                "type": "application/com.github.restapiexpress.newsimages[]",
-                "multiple": true,
-                "reference" : "news",
-                "referenceRule" : "cascade"
-            },
-            "latestImage": {
-                "name": "latestImage",
-                "description": "latest News images",
-                "mandatory": false,
-                "test" : "null",
-                "type": "application/com.github.restapiexpress.newsimages",
-                "reference" : "news",
-                "referenceRule" : "noaction"
-            }
+        "page": {
+            "description": "Seite",
+            "name": "page",
+            "type": "int",
+            "mandatory": false,
+            "default": 0,
+            "regex": ""
         },
-        "cache-control": {
-            "client" : {
-                "max-age": 3600
-            },
-            "server" : {
-                "use":"etag"
-            }
+        "scope": {
+            "description": "Scope der Suche (active, inactive)",
+            "name": "scope",
+            "regex": "",
+            "default": "",
+            "type": "string",
+            "mandatory": false
         },
-        "states": {
-            "200": {
-                "code": 200,
-                "message": "OK",
-                "description": "Daten sind im Response Body"
-            },
-            "404": {
-                "code": 404,
-                "message": "Nicht vorhanden",
-                "description": "Objekt mit Identifier nicht gefunden oder nicht vorhanden"
-            }
+        "sort": {
+            "description": "id,name,-age,-days",
+            "name": "sort",
+            "regex": "",
+            "default": "descending",
+            "type": "string",
+            "mandatory": false
         },
-        "permission": [
-            {
-                "role": "Public",
-                "description": "Rolle Public kann...",
-                "methods" : ["GET"]
-            },
-            {
-                "role": "User",
-                "description": "Authentifizierte Benutzer können...",
-                "methods" : ["GET", "HEAD", "OPTIONS"]
+        "fields": {
+            "description": "Array with requested fieldnames",
+            "name": "fields",
+            "regex": "",
+            "default": "",
+            "type": "string",
+            "mandatory": false
+        }
+    },
+    "model": {
+        "title": {
+            "name": "title",
+            "description": "News Title",
+            "mandatory": true,
+            "type": "string",
+            "test" : "Starving?",
+            "regex": ""
+        },
+        "content": {
+            "name": "content",
+            "description": "News content",
+            "mandatory": true,
+            "test" : "Hans is hungry",
+            "type": "string"
+        },
+        "images": {
+            "name": "images",
+            "description": "News images",
+            "mandatory": false,
+            "test" : "[]",
+            "type": "application/com.github.restapiexpress.newsimages[]",
+            "multiple": true,
+            "reference" : "news",
+            "referenceRule" : "cascade"
+        },
+        "latestImage": {
+            "name": "latestImage",
+            "description": "latest News images",
+            "mandatory": false,
+            "test" : "null",
+            "type": "application/com.github.restapiexpress.newsimages",
+            "reference" : "news",
+            "referenceRule" : "noaction"
+        }
+    },
+    "cache-control": {
+        "client" : {
+            "max-age": 3600
+        },
+        "server" : {
+            "use":"etag"
+        }
+    },
+    "states": {
+        "200": {
+            "code": 200,
+            "message": "OK",
+            "description": "Daten sind im Response Body"
+        },
+        "404": {
+            "code": 404,
+            "message": "Nicht vorhanden",
+            "description": "Objekt mit Identifier nicht gefunden oder nicht vorhanden"
+        }
+    },
+    "permission": [
+        {
+            "role": "Public",
+            "description": "Rolle Public kann...",
+            "methods" : ["GET"]
+        },
+        {
+            "role": "User",
+            "description": "Authentifizierte Benutzer können...",
+            "methods" : ["GET", "HEAD", "OPTIONS"]
 
-            },
-            {
-                "role": "Admin",
-                "description": "Rolle Administrator kann...",
-                "methods" : ["GET", "PUT", "PATCH", "POST", "DELETE", "HEAD", "OPTIONS"]
-            }
-        ],
-        "mimetype": {
-            "json": {
-                "name": "json",
-                "is_default": true,
-                "response": ""
-            }
+        },
+        {
+            "role": "Admin",
+            "description": "Rolle Administrator kann...",
+            "methods" : ["GET", "PUT", "PATCH", "POST", "DELETE", "HEAD", "OPTIONS"]
+        }
+    ],
+    "mimetype": {
+        "json": {
+            "name": "json",
+            "is_default": true,
+            "response": ""
         }
     }
+}
 ```
 
 # Work in PROGRESS
