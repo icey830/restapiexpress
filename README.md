@@ -182,6 +182,56 @@ There are some fields you have to describe.
 }
 ```
 
+## References
+
+Its quite Easy to handle references.
+To show you how, i work with two resources "News" and "Newsimages".
+In the documentations of the two resources you have to add a property in each model.
+
+### 1 : 1
+
+News have exactly one Newsimage. If the News will be deleted, the images is deleted too.
+If the image will be deleted, the news will still stay alive.
+
+* News.json:
+
+```json
+"model": {
+    "image": {
+        "name": "image",
+        "description": "Reference from News to Newsimage",
+        "mandatory": false,
+        "test" : "null",
+        "type": "application/com.github.restapiexpress.newsimages",
+        "multiple": false,
+        "reference" : "news",
+        "referenceRule" : "cascade"
+    }
+}
+```
+
+* Newsimages.json:
+
+```json
+"model": {
+    "news": {
+        "name": "news",
+        "description": "Referece from Newsimage to News",
+        "mandatory": true,
+        "test" : "5339a146d46d35ebe953030a",
+        "type": "application/com.github.restapiexpress.news",
+        "multiple": false,
+        "reference" : "news",
+        "referenceRule" : "nullify"
+    }
+}
+```
+### 1 : n
+
+### n : 1
+
+### n : m
+
 # Work in PROGRESS
 * the framework handles permissions
 * the framework handles sessions
