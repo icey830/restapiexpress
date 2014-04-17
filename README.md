@@ -84,23 +84,30 @@ curl -X POST -H "Content-Type: application/json" -H "DEV-ROLE: admin" -d '{"id":
 # How to define your Resources?
 
 **only 3 steps**
+
 1. write a documentation for your resource
+
 2. run grunt in your project folder
     ```javascript
     grunt
     ```
-3. run grunt test in your project folder (if not success, you problably made a mistak in step one)
+
+3. run grunt test in your project folder (if not success, you probably made a mistake in step one)
     ```javascript
     grunt test
     ```
+
 ## How to describe in a documentation file?
 Take a look into the folder apidoc/, there are some default documentations
 
-actually theres are some fileds you have to describe.
+actually there are some fields you have to describe.
+
 * define title, description, version etc.
 * define database model
 * define permissions for every User-Role and HTTP-Method (GET, POST, PUT, HEAD, OPTIONS, etc.)
+
 ### optional and not implemented in current version
+
 * define parameters on collection
 * define HTTP-States messages
 * define cache-controls
