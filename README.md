@@ -97,16 +97,16 @@ curl -X POST -H "Content-Type: application/json" -H "DEV-ROLE: admin" -d '{"id":
     grunt test
     ```
 
-## How to describe in a documentation file?
-Take a look into the folder apidoc/, there are some default documentations
+## How to describe a documentation file?
+Take a look into the folder apidoc/, there are some default documentations.
 
-actually there are some fields you have to describe.
+There are some fields you have to describe.
 
 * define title, description, version etc.
 * define database model
 * define permissions for every User-Role and HTTP-Method (GET, POST, PUT, HEAD, OPTIONS, etc.)
 
-### optional and not implemented in current version
+### Optional and not implemented in current version
 
 * define parameters on collection
 * define HTTP-States messages
@@ -125,46 +125,7 @@ actually there are some fields you have to describe.
     "base": "application/com.github.restapiexpress.object.abstract",
     "_testId" : "5339a146d46d35ebe953030a",
     "parameter": {
-        "limit": {
-            "description": "Anzahl der Elemente",
-            "name": "limit",
-            "type": "int",
-            "mandatory": false,
-            "default": "10",
-            "regex": ""
-        },
-        "page": {
-            "description": "Seite",
-            "name": "page",
-            "type": "int",
-            "mandatory": false,
-            "default": 0,
-            "regex": ""
-        },
-        "scope": {
-            "description": "Scope der Suche (active, inactive)",
-            "name": "scope",
-            "regex": "",
-            "default": "",
-            "type": "string",
-            "mandatory": false
-        },
-        "sort": {
-            "description": "id,name,-age,-days",
-            "name": "sort",
-            "regex": "",
-            "default": "descending",
-            "type": "string",
-            "mandatory": false
-        },
-        "fields": {
-            "description": "Array with requested fieldnames",
-            "name": "fields",
-            "regex": "",
-            "default": "",
-            "type": "string",
-            "mandatory": false
-        }
+        ...
     },
     "model": {
         "title": {
@@ -203,24 +164,10 @@ actually there are some fields you have to describe.
         }
     },
     "cache-control": {
-        "client" : {
-            "max-age": 3600
-        },
-        "server" : {
-            "use":"etag"
-        }
+        ...
     },
     "states": {
-        "200": {
-            "code": 200,
-            "message": "OK",
-            "description": "Daten sind im Response Body"
-        },
-        "404": {
-            "code": 404,
-            "message": "Nicht vorhanden",
-            "description": "Objekt mit Identifier nicht gefunden oder nicht vorhanden"
-        }
+        ...
     },
     "permission": [
         {
@@ -241,11 +188,7 @@ actually there are some fields you have to describe.
         }
     ],
     "mimetype": {
-        "json": {
-            "name": "json",
-            "is_default": true,
-            "response": ""
-        }
+        ...
     }
 }
 ```
