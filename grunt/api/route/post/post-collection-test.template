@@ -1,0 +1,42 @@
+
+var post_id = undefined;
+
+describe('POST should success {{{path}}} --{{{role}}}', function(){
+    it('respond with json', function(done){
+        var json = {{{JSON}}};
+        request(app)
+            .post('{{{path}}}')
+            .set('Accept', 'application/*')
+            .set('DEV-ROLE', '{{{role}}}')
+            .expect('Content-Type', /json/)
+            .send(json)
+            .expect(201)
+            .end(function(err, res){
+                if (err) return done(err);
+
+                post_id = res.body.item._id;
+                done();
+
+
+            });
+    })
+})
+
+/*
+describe('DELETE should success {{{path}}} --{{{role}}}', function(){
+    it('respond with json', function(done){
+        console.log("POSTID: " + post_id);
+        request(app)
+            .del('{{{path}}}' + post_id)
+            .set('Accept', 'application*/
+/*')
+            .set('DEV-ROLE', '{{{role}}}')
+            .expect('Content-Type', /json/)
+            .send()
+            .expect(200)
+            .end(function(err, res){
+                if (err) return done(err);
+                done()
+            });
+    })
+})*/

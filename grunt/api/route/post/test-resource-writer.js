@@ -62,15 +62,14 @@ TestPostResourceWriter.prototype.writeCollection = function(doc,permission,metho
 
     var grunt = this.grunt;
     var test = grunt.file.read('./grunt/templates/test.template');
-    var http201 = grunt.file.read('./grunt/templates/tests/http201.template');
-    test = test + '\n' + http201;
+    var posttest = grunt.file.read('./grunt/api/route/post/post-collection-test.template');
+    test = test + '\n' + posttest;
 
     var json = {};
     this.generateJson(json,doc);
 
-    var modifiedContent =  test.replace('{{{METHOD}}}',method.toUpperCase());
-    modifiedContent =  modifiedContent.replace('{{{method}}}',method.toLowerCase());
-    modifiedContent =  modifiedContent.replace('{{{JSON}}}',JSON.stringify(json));
+
+    var modifiedContent =  test.replaceAll('{{{JSON}}}',JSON.stringify(json));
     var path = '/v'+doc.version + '/' + doc.filetitle + '/';
     modifiedContent =  modifiedContent.replaceAll('{{{path}}}',path);
     modifiedContent =  modifiedContent.replaceAll('{{{role}}}',permission.role.toLowerCase());

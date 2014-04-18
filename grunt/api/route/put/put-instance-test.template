@@ -1,0 +1,35 @@
+
+describe('PUT {{{path}}} --{{{role}}}', function(){
+    it('respond with json', function(done){
+        var json = {{{JSON}}};
+    request(app)
+        .put('{{{path}}}')
+        .set('Accept', 'application/*')
+        .set('DEV-ROLE', '{{{role}}}')
+        .expect('Content-Type', /json/)
+        .send(json)
+        .expect(200)
+        .end(function(err, res){
+            if (err) return done(err);
+            done()
+        });
+    })
+})
+/*
+
+describe('DELETE should success {{{path}}} --{{{role}}}', function(){
+    it('respond with json', function(done){
+         request(app)
+            .del('{{{path}}}' )
+            .set('Accept', 'application*/
+/*')
+            .set('DEV-ROLE', '{{{role}}}')
+            .expect('Content-Type', /json/)
+            .send()
+            .expect(200)
+            .end(function(err, res){
+                if (err) return done(err);
+                done()
+            });
+    })
+})*/
