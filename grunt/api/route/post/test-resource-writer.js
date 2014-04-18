@@ -43,15 +43,13 @@ TestPostResourceWriter.prototype.writeInstance = function(doc,permission,method)
 
     var grunt = this.grunt;
     var test = grunt.file.read('./grunt/templates/test.template');
-    var http200 = grunt.file.read('./grunt/templates/tests/http200sendsJson.template');
+    var http200 = grunt.file.read('./grunt/api/route/post/post-instance-test.template');
     test = test + '\n' + http200;
 
     var json = {};
     this.generateJson(json,doc);
 
-    var modifiedContent =  test.replace('{{{METHOD}}}',method.toUpperCase());
-    modifiedContent =  modifiedContent.replace('{{{method}}}',method.toLowerCase());
-    modifiedContent =  modifiedContent.replace('{{{JSON}}}',JSON.stringify(json));
+    var modifiedContent =  test.replaceAll('{{{JSON}}}',JSON.stringify(json));
     var path = '/v'+doc.version + '/' + doc.filetitle + '/' + doc.json._testId;
     modifiedContent =  modifiedContent.replaceAll('{{{path}}}',path);
     modifiedContent =  modifiedContent.replaceAll('{{{role}}}',permission.role.toLowerCase());
