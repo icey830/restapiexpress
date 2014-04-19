@@ -7,6 +7,7 @@ var Setup = require('./grunt/setup.js');
 var Database = require('./grunt/database/database.js');
 var ApiWriter = require('./grunt/api/api-writer.js');
 var TestWriter = require('./grunt/api/test-writer.js');
+var Database = require('./lib/database/database');
 module.exports = function(grunt){
 
     grunt.initConfig({
@@ -44,9 +45,18 @@ module.exports = function(grunt){
 
         var done = this.async();
         require('child_process').exec('make test', function (err, stdout) {
-            grunt.log.write(stdout);
-            done(err);
+            //grunt.log.write(stdout);
+            clearTestDB(done);
+
         });
+
+        function clearTestDB(done) {
+            grunt.log.write("Clear Test DB");
+            var database = new Database(grunt);
+            database.clear(done);
+
+
+        } ;
     });
 
     grunt.registerTask('setup', 'install extensions', function() {
