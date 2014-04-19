@@ -7,7 +7,7 @@ var Setup = require('./grunt/setup.js');
 var Database = require('./grunt/database/database.js');
 var ApiWriter = require('./grunt/api/api-writer.js');
 var TestWriter = require('./grunt/api/test-writer.js');
-var Database = require('./lib/database/database');
+var LibDatabase = require('./lib/database/database');
 module.exports = function(grunt){
 
     grunt.initConfig({
@@ -44,17 +44,23 @@ module.exports = function(grunt){
     grunt.registerTask('test', 'test with mocha', function() {
 
         var done = this.async();
+
         require('child_process').exec('make test', function (err, stdout) {
-            //grunt.log.write(stdout);
+            grunt.log.write(stdout);
+            if(err) {
+                grunt.log.errorlns(err);
+            } else {
+                grunt.log.ok("Test run SUCCESSFULL")
+            }
+
             clearTestDB(done);
 
         });
 
         function clearTestDB(done) {
             grunt.log.write("Clear Test DB");
-            var database = new Database(grunt);
+            var database = new LibDatabase(grunt);
             database.clear(done);
-
 
         } ;
     });
