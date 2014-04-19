@@ -8,6 +8,7 @@
         "name" : "mongodb",
         "provider" : "mongoose",
         "location" : "localhost:27017/restapiexpress",
+        "testlocation" : "localhost:27017/restapiexpress-test",
         "dependencies": {
             "mongodb": "*",
             "mongoose": "*",
