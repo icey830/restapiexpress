@@ -27,7 +27,7 @@ function Doc(filename,abspath, grunt) {
 Doc.prototype.readFile = function(grunt) {
 
     this.json=grunt.file.readJSON(this.abspath);
-
+    this.base = this.json.base;
     this.version = this.json.version;
     this.filetitle = this.json.title.toLowerCase();
     //Iterate over permissions and get all supported methods
@@ -43,7 +43,7 @@ Doc.prototype.readFile = function(grunt) {
 
     });
 
-    this.base = this.json.base;
+    
 }
 
 Doc.prototype.pathToAppJsFromFolder = function(folder,minus) {
