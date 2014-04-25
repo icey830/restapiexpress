@@ -7,6 +7,20 @@ Array.prototype.contains = function(obj) {
     }
     return false;
 }
+function jsonConcat(o1, o2) {
+    for (var key in o2) {
+        o1[key] = o2[key];
+    }
+    return o1;
+}
+function clone(obj) {
+    if (null == obj || "object" != typeof obj) return obj;
+    var copy = obj.constructor();
+    for (var attr in obj) {
+        if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+    }
+    return copy;
+}
 
 function Doc(filename,abspath, grunt) {
     this.grunt = grunt;
@@ -20,6 +34,7 @@ function Doc(filename,abspath, grunt) {
     this.generatedDocsFolder = this.folder.replace("api/","generated/");
     this.version = undefined;
     this.filetitle = undefined;
+    this.model = undefined;
     this.json = {};
     this.supportedMethods = [];
     this.readFile(grunt);
@@ -33,6 +48,23 @@ Doc.prototype.readFile = function(grunt) {
     this.filetitle = this.json.title.toLowerCase();
 
 
+}
+
+Doc.prototype.readModel = function() {
+
+    var grunt = this.grunt;
+
+    var parentModel = {};
+    if(this.base && this.base != "none") {
+        var parentModel = this.baseDoc.readModel();
+
+    }
+    if(this.json.model) {
+        this.model = JSON.parse(JSON.stringify(this.json.model));
+        this.model = jsonConcat(this.model,parentModel);
+    }
+
+    return this.model;
 }
 Doc.prototype.getPermissions = function() {
 
@@ -99,10 +131,12 @@ Doc.prototype.getPermissions = function() {
     return thisPermission;
 }
 
-Doc.prototype.readPermissions = function() {
+Doc.prototype.readParent = function() {
 
     this.json.permission = this.getPermissions();
     readPermissionFromDoc(this,this.json.permission);
+    this.readModel();
+
 
 }
 

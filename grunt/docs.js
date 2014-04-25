@@ -76,7 +76,7 @@ Docs.prototype.findDocs = function(grunt) {
     for(var i=0;i<this.docs.length;i++) {
         var doc = this.docs[i];
 
-        doc.readPermissions();
+        doc.readParent();
 
     }
 
@@ -90,13 +90,17 @@ Docs.prototype.genereateDocFiles = function() {
         if(!doc.json.type.endsWith(".abstract")) {
             grunt.log.debug("filename: " + doc.generatedDocsFolder + doc.filename);
 
-            var json = doc.json;
-            json.permission.forEach(function(permission) {
+            var deepJsonCopy = JSON.parse(JSON.stringify(doc.json));
+            deepJsonCopy.permission.forEach(function(permission) {
 
                 permission.allowedMethods = undefined;
                 permission.deniedMethods = undefined;
             })
-            grunt.file.write(doc.generatedDocsFolder + doc.filename, JSON.stringify(json,null, 4));
+            if(doc.model) {
+                deepJsonCopy.model = JSON.parse(JSON.stringify(doc.model));
+            }
+
+            grunt.file.write(doc.generatedDocsFolder + doc.filename, JSON.stringify(deepJsonCopy,null, 4));
         }
 
 
