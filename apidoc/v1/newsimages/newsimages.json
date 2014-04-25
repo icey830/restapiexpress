@@ -81,6 +81,13 @@
             "description": "Objekt mit Identifier nicht gefunden oder nicht vorhanden"
         }
     },
+    "permission": [
+        {
+            "role": "Admin",
+            "description": "Rolle Administrator kann...",
+            "deniedMethods" : ["HEAD"]
+        }
+    ],
     "mimetype": {
         "json": {
             "name": "json",

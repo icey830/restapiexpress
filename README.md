@@ -182,18 +182,18 @@ There are some fields you have to describe.
         {
             "role": "Public",
             "description": "Rolle Public kann...",
-            "methods" : ["GET"]
+            "allowedMethods" : ["GET"]
         },
         {
             "role": "User",
             "description": "Authentifizierte Benutzer können...",
-            "methods" : ["GET", "HEAD", "OPTIONS"]
+            "allowedMethods" : ["GET", "HEAD", "OPTIONS"]
 
         },
         {
             "role": "Admin",
             "description": "Rolle Administrator kann...",
-            "methods" : ["GET", "PUT", "PATCH", "POST", "DELETE", "HEAD", "OPTIONS"]
+            "allowedMethods" : ["GET", "PUT", "PATCH", "POST", "DELETE", "HEAD", "OPTIONS"]
         }
     ]
 }

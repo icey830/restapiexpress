@@ -36,21 +36,72 @@ Doc.prototype.readFile = function(grunt) {
 }
 Doc.prototype.getPermissions = function() {
 
-    if(this.json.permission) {
-        return this.json.permission;
-    } else {
-        this.baseDoc.getPermissions();
+    var grunt = this.grunt;
+    var parentPermissions = [];
+    if(this.base && this.base != "none") {
+        var parentPermissions = this.baseDoc.getPermissions();
+
     }
+
+    var thisPermission = this.json.permission;
+
+    //Translate allowedMethods to methods
+    thisPermission.forEach(function(docPermission) {
+        if(docPermission.allowedMethods) {
+            docPermission.methods = docPermission.allowedMethods;
+        }
+
+    });
+
+    //Add methods from Parent
+    parentPermissions.forEach(function(basePermission) {
+
+        var baseRole = basePermission.role;
+        var docHasRole = false;
+        thisPermission.forEach(function(docPermission) {
+           if(docPermission.role === baseRole) {
+               docHasRole = true;
+               return;
+           }
+        });
+        if(!docHasRole) {
+            var translatedBasePermission = basePermission;
+
+            if(translatedBasePermission.allowedMethods) {
+                translatedBasePermission.methods = translatedBasePermission.allowedMethods;
+            }
+
+            thisPermission.push(translatedBasePermission)
+        } else {
+            grunt.log.debug("loop basePermissions");
+            basePermission.allowedMethods.forEach(function(allowedMethod) {
+
+                if(thisPermission.length > 0) {
+                    thisPermission.forEach(function(docPermission) {
+                        if(docPermission.role === baseRole) {
+                            if(docPermission.deniedMethods && docPermission.deniedMethods.contains(allowedMethod)) {
+                              return;
+                            };
+                            if(docPermission.methods && !docPermission.methods.contains(allowedMethod)) {
+                                docPermission.methods.push(allowedMethod);
+                            } else {
+                                docPermission.methods = [];
+                                docPermission.methods.push(allowedMethod);
+                            }
+                        }
+                    })
+                }
+            });
+        }
+
+    })
+
+    return thisPermission;
 }
+
 Doc.prototype.readPermissions = function() {
 
-    //Iterate over permissions and get all supported methods
-    if(!this.json.permission) {
-
-        this.grunt.log.debug("read permission from base doc " + this.baseDoc.constructor.name);
-        this.json.permission = this.baseDoc.getPermissions();
-
-    }
+    this.json.permission = this.getPermissions();
     readPermissionFromDoc(this,this.json.permission);
 
 }

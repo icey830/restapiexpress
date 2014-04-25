@@ -80,8 +80,6 @@ Docs.prototype.findDocs = function(grunt) {
 
     }
 
-    //TODO wirte ./resource/v1/news/news.json etc.
-
 }
 
 Docs.prototype.genereateDocFiles = function() {
@@ -92,7 +90,13 @@ Docs.prototype.genereateDocFiles = function() {
         if(!doc.json.type.endsWith(".abstract")) {
             grunt.log.debug("filename: " + doc.generatedDocsFolder + doc.filename);
 
-            grunt.file.write(doc.generatedDocsFolder + doc.filename, JSON.stringify(doc.json,null, 4));
+            var json = doc.json;
+            json.permission.forEach(function(permission) {
+
+                permission.allowedMethods = undefined;
+                permission.deniedMethods = undefined;
+            })
+            grunt.file.write(doc.generatedDocsFolder + doc.filename, JSON.stringify(json,null, 4));
         }
 
 
