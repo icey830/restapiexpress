@@ -34,14 +34,21 @@ Doc.prototype.readFile = function(grunt) {
 
 
 }
+Doc.prototype.getPermissions = function() {
 
+    if(this.json.permission) {
+        return this.json.permission;
+    } else {
+        this.baseDoc.getPermissions();
+    }
+}
 Doc.prototype.readPermissions = function() {
 
     //Iterate over permissions and get all supported methods
     if(!this.json.permission) {
 
-        this.grunt.log.debug("read permission from base doc");
-        this.json.permission = this.baseDoc.json.permission;
+        this.grunt.log.debug("read permission from base doc " + this.baseDoc.constructor.name);
+        this.json.permission = this.baseDoc.getPermissions();
 
     }
     readPermissionFromDoc(this,this.json.permission);

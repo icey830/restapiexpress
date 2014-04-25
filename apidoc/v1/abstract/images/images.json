@@ -25,24 +25,6 @@
         }
     },
     "states": {},
-    "permission": [
-        {
-            "role": "Public",
-            "description": "Rolle Public kann...",
-            "methods" : ["GET"]
-        },
-        {
-            "role": "User",
-            "description": "Authentifizierte Benutzer können...",
-            "methods" : ["GET", "HEAD", "OPTIONS"]
-
-        },
-        {
-            "role": "Admin",
-            "description": "Rolle Administrator kann...",
-            "methods" : ["GET", "PUT", "PATCH", "POST", "DELETE", "HEAD", "OPTIONS"]
-        }
-    ],
     "mimetype": {
         "json": {
             "name": "json",
