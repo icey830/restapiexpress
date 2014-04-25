@@ -1,0 +1,96 @@
+{
+    "title": "api",
+    "version": "1",
+    "request": "/",
+    "description": "API",
+    "deprecated": false,
+    "type": "application/com.github.restapiexpress.apidescription",
+    "base": "none",
+    "parameter": {},
+    "states": {
+        "200": {
+            "code": 200,
+            "message": "OK",
+            "description": "Daten sind im Response Body"
+        },
+        "404": {
+            "code": 404,
+            "message": "Nicht vorhanden",
+            "description": "Objekt mit Identifier nicht gefunden oder nicht vorhanden"
+        }
+    },
+    "permission": [
+        {
+            "role": "Public",
+            "description": "Rolle Public kann...",
+            "methods": [
+                "GET",
+                "POST",
+                "HEAD",
+                "OPTIONS"
+            ],
+            "permanentLinks": [
+                {
+                    "type": "application/com.github.restapiexpress.api",
+                    "rel": "list versions of api",
+                    "method": "GET",
+                    "href": "http://localhost:3000/"
+                },
+                {
+                    "type": "application/com.github.restapiexpress.api",
+                    "rel": "login to api",
+                    "method": "POST",
+                    "href": "http://localhost:3000/v1/login/"
+                },
+                {
+                    "type": "application/com.github.restapiexpress.api",
+                    "rel": "signup to api",
+                    "method": "POST",
+                    "href": "http://localhost:3000/v1/signup/"
+                }
+            ]
+        },
+        {
+            "role": "User",
+            "description": "Authentifizierte Benutzer können...",
+            "methods": [
+                "GET",
+                "HEAD",
+                "OPTIONS"
+            ],
+            "permanentLinks": [
+                {
+                    "type": "application/com.github.restapiexpress.api",
+                    "rel": "logout from api",
+                    "method": "POST",
+                    "href": "http://localhost:3000/v1/logout/"
+                }
+            ]
+        },
+        {
+            "role": "Admin",
+            "description": "Rolle Administrator kann...",
+            "methods": [
+                "GET",
+                "POST",
+                "HEAD",
+                "OPTIONS"
+            ],
+            "permanentLinks": [
+                {
+                    "type": "application/com.github.restapiexpress.api",
+                    "rel": "logout from api",
+                    "method": "POST",
+                    "href": "http://localhost:3000/v1/logout/"
+                }
+            ]
+        }
+    ],
+    "mimetype": {
+        "json": {
+            "name": "json",
+            "is_default": true,
+            "response": ""
+        }
+    }
+}

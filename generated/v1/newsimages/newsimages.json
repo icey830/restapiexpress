@@ -3,10 +3,10 @@
     "singular": "Newsimage",
     "request": "/newsimages/",
     "description": "News images",
-    "version" : "1",
+    "version": "1",
     "type": "application/com.github.restapiexpress.newsimages",
     "base": "application/com.github.restapiexpress.images.abstract",
-    "_testId" : "534eead8c6db3400005ce62c",
+    "_testId": "534eead8c6db3400005ce62c",
     "parameter": {
         "limit": {
             "description": "Anzahl der Elemente",
@@ -55,18 +55,18 @@
             "description": "News Id",
             "mandatory": true,
             "type": "application/com.github.restapiexpress.news",
-            "reference" : "images[],latestImage",
-            "referenceRule" : "nullify",
-            "test" : "5339a146d46d35ebe953030a",
+            "reference": "images[],latestImage",
+            "referenceRule": "nullify",
+            "test": "5339a146d46d35ebe953030a",
             "regex": ""
         }
     },
     "cache-control": {
-        "client" : {
+        "client": {
             "max-age": 3600
         },
-        "server" : {
-            "use":"etag"
+        "server": {
+            "use": "etag"
         }
     },
     "states": {
@@ -87,5 +87,36 @@
             "is_default": true,
             "response": ""
         }
-    }
+    },
+    "permission": [
+        {
+            "role": "Public",
+            "description": "Rolle Public kann...",
+            "methods": [
+                "GET"
+            ]
+        },
+        {
+            "role": "User",
+            "description": "Authentifizierte Benutzer können...",
+            "methods": [
+                "GET",
+                "HEAD",
+                "OPTIONS"
+            ]
+        },
+        {
+            "role": "Admin",
+            "description": "Rolle Administrator kann...",
+            "methods": [
+                "GET",
+                "PUT",
+                "PATCH",
+                "POST",
+                "DELETE",
+                "HEAD",
+                "OPTIONS"
+            ]
+        }
+    ]
 }

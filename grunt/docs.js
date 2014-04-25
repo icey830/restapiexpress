@@ -44,6 +44,7 @@ Docs.prototype.findDocs = function(grunt) {
             }
 
             var doc = new Doc(filename,abspath,grunt);
+
             var key = doc.json.type.split("/")[1];
             that.docMap[key] = doc;
 
@@ -58,8 +59,46 @@ Docs.prototype.findDocs = function(grunt) {
         }
 
     });
+
+
+    for(var i=0;i<this.docs.length;i++) {
+        var doc = this.docs[i];
+
+        grunt.log.debug("Base: " + doc.base);
+        if(doc.base && doc.base != "none") {
+
+            doc.baseDoc = this.docMap[doc.base.split("/")[1]];
+            grunt.log.debug("basedoc:" + doc.baseDoc.filename);
+        }
+
+    }
+
+    for(var i=0;i<this.docs.length;i++) {
+        var doc = this.docs[i];
+
+        doc.readPermissions();
+
+    }
+
+    //TODO wirte ./resource/v1/news/news.json etc.
+
 }
 
+Docs.prototype.genereateDocFiles = function() {
+
+    var grunt = this.grunt;
+    for(var i=0;i<this.docs.length;i++) {
+        var doc = this.docs[i];
+        if(!doc.json.type.endsWith(".abstract")) {
+            grunt.log.debug("filename: " + doc.generatedDocsFolder + doc.filename);
+
+            grunt.file.write(doc.generatedDocsFolder + doc.filename, JSON.stringify(doc.json,null, 4));
+        }
+
+
+    }
+
+}
 Docs.prototype.createVersionTest = function(version, folder) {
 
     this.grunt.log.debug("folder:" + folder);

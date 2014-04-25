@@ -18,17 +18,8 @@ module.exports = function(grunt){
     grunt.registerTask('default', 'searchDocs', function() {
 
         var allDocuments = new Docs(grunt);
-        for(var i=0;i<allDocuments.docs.length;i++) {
-            var doc = allDocuments.docs[i];
 
-            if(doc.base && doc.base != "none") {
-
-                doc.baseDoc = allDocuments.docMap[doc.base.split("/")[1]];
-                grunt.log.debug("basedoc:" + doc.baseDoc.filename);
-            }
-
-        }
-
+        allDocuments.genereateDocFiles();
 
         var apiWriter = new ApiWriter(grunt, __dirname);
         apiWriter.write(allDocuments);

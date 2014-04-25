@@ -17,6 +17,7 @@ function Doc(filename,abspath, grunt) {
     this.folder = abspath.substring(0,abspath.length - filename.length).replace("apidoc/","api/");
     this.schemefolder = abspath.substring(0,abspath.length - filename.length).replace("apidoc/","database/schemes/");
     this.testfolder = this.folder.replace("api/","test/");
+    this.generatedDocsFolder = this.folder.replace("api/","generated/");
     this.version = undefined;
     this.filetitle = undefined;
     this.json = {};
@@ -30,9 +31,26 @@ Doc.prototype.readFile = function(grunt) {
     this.base = this.json.base;
     this.version = this.json.version;
     this.filetitle = this.json.title.toLowerCase();
+
+
+}
+
+Doc.prototype.readPermissions = function() {
+
     //Iterate over permissions and get all supported methods
-    var that = this;
-    this.json.permission.forEach(function(permission) {
+    if(!this.json.permission) {
+
+        this.grunt.log.debug("read permission from base doc");
+        this.json.permission = this.baseDoc.json.permission;
+
+    }
+    readPermissionFromDoc(this,this.json.permission);
+
+}
+
+function readPermissionFromDoc(that,permissions) {
+
+    permissions.forEach(function(permission) {
 
         permission.methods.forEach(function(method) {
             if(!that.supportedMethods.contains(method)) {
@@ -42,8 +60,6 @@ Doc.prototype.readFile = function(grunt) {
         });
 
     });
-
-    
 }
 
 Doc.prototype.pathToAppJsFromFolder = function(folder,minus) {
