@@ -11,10 +11,25 @@ function ApiWriter(grunt, rootdir) {
     this.apiRouteWriter = new ApiRouteWriter(grunt, rootdir);
 }
 
+ApiWriter.prototype.delete = function(docs) {
+    var grunt = this.grunt;
+    grunt.log.debug("start ");
+    if(docs.docs.length > 0) {
+        var firstDoc = docs.docs[0];
+        var rootfolder =  firstDoc.folder.split("/")[0];
+
+        grunt.log.debug("ApiWriter: delete files in folder:" + rootfolder);
+        grunt.file.delete(rootfolder);
+    } else {
+        grunt.log.debug("Empty");
+        return;
+    }
+}
+
 ApiWriter.prototype.write = function(docs)  {
 
     var grunt = this.grunt;
-    grunt.log.debug("start ");
+
     for(var i=0;i<docs.docs.length;i++) {
         var doc = docs.docs[i];
 

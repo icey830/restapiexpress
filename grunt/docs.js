@@ -85,6 +85,16 @@ Docs.prototype.findDocs = function(grunt) {
 Docs.prototype.genereateDocFiles = function() {
 
     var grunt = this.grunt;
+    if(this.docs.length > 0) {
+        var firstDoc = this.docs[0];
+        var rootfolder =  firstDoc.generatedDocsFolder.split("/")[0];
+
+        grunt.log.debug("delete files in folder:" + rootfolder);
+        grunt.file.delete(rootfolder);
+    } else {
+        return;
+    }
+
     for(var i=0;i<this.docs.length;i++) {
         var doc = this.docs[i];
         if(!doc.json.type.endsWith(".abstract")) {

@@ -22,12 +22,15 @@ module.exports = function(grunt){
         allDocuments.genereateDocFiles();
 
         var apiWriter = new ApiWriter(grunt, __dirname);
+        apiWriter.delete(allDocuments);
         apiWriter.write(allDocuments);
 
         var testWriter = new TestWriter(grunt, __dirname);
+        testWriter.delete(allDocuments);
         testWriter.write(allDocuments);
 
         var db = new Database(grunt);
+        db.deleteSchemes(allDocuments);
         db.createSchemes(allDocuments);
 
     });

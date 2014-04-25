@@ -4,6 +4,16 @@
 var TestApiDescriptionWriter = require('./description/test-api-description-writer.js');
 var TestApiRouteWriter = require('./route/test-api-route-writer.js');
 
+Array.prototype.contains = function(obj) {
+    var i = this.length;
+    while (i--) {
+        if (this[i] === obj) {
+            return true;
+        }
+    }
+    return false;
+}
+
 String.prototype.replaceAll = function(target, replacement) {
     return this.split(target).join(replacement);
 };
@@ -14,10 +24,43 @@ function TestWriter(grunt, rootdir) {
     this.testApiDescWriter = new TestApiDescriptionWriter(grunt, rootdir);
     this.testApiRouteWriter = new TestApiRouteWriter(grunt, rootdir);
 }
+TestWriter.prototype.delete = function(docs) {
+    var grunt = this.grunt;
+    if(docs.docs.length == 0) {
+        grunt.log.debug("Empty");
+        return;
+    }
+
+    var versionsToDelete = [];
+    for(var i=0;i<docs.docs.length;i++) {
+        var doc = docs.docs[i];
+
+        if(doc.json.type.endsWith('.apidescription')) {
+            //Dont delete anything
+        } else if(doc.json.type.endsWith('.abstract')) {
+            //Dont delete anything
+        } else {
+
+            grunt.log.debug("start createing test doc");
+            var path = doc.testfolder.split("/");
+            var version = path[0] + "/"+path[1];
+            if(!versionsToDelete.contains(version)) {
+                versionsToDelete.push(version);
+            }
+        }
+
+    }
+
+    versionsToDelete.forEach(function(path) {
+
+        grunt.log.debug("TestWriter: delete files in folder:" + path);
+        grunt.file.delete(path);
+    })
+}
 
 TestWriter.prototype.write = function(docs)  {
-
     var grunt = this.grunt;
+
     for(var i=0;i<docs.docs.length;i++) {
         var doc = docs.docs[i];
 

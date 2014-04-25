@@ -20,6 +20,20 @@ function Database(grunt) {
     this.appconfig = grunt.config().appconfig;
     this.db = this.appconfig.db;
 }
+Database.prototype.deleteSchemes = function(docs) {
+    var grunt = this.grunt;
+    grunt.log.debug("start ");
+    if(docs.docs.length > 0) {
+        var firstDoc = docs.docs[0];
+        var rootfolder =  firstDoc.schemefolder.split("/")[0];
+
+        grunt.log.debug("Database: delete files in folder:" + rootfolder);
+        grunt.file.delete(rootfolder);
+    } else {
+        grunt.log.debug("Empty");
+        return;
+    }
+}
 
 Database.prototype.createSchemes = function(docs)  {
 
