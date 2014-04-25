@@ -11,6 +11,7 @@ test/node_modules
 #################
 api/_api_*
 api/v*
+generated/*
 test/_api_*
 test/v*
 database/*
