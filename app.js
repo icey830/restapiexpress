@@ -50,6 +50,8 @@ app.set('db', database);
 app.set('rootdir', __dirname);
 app.all('/', apirouter.versions);
 app.all(/\/v\d+[\/\Z]?$/,apirouter.apidescription);
+app.post(/\/v\d+\/login[\/\Z]?$/,apirouter.login);
+app.post(/\/v\d+\/signup[\/\Z]?$/,apirouter.signup);
 app.get(/\/doc\/v(\d+)\/(\w+)[\/\Z]?$/, apirouter.docs);
 app.post(/\/doc\/v(\d+)\/(\w+)[\/\Z]?$/, apirouter.docs);
 app.all('*', apirouter.route);
