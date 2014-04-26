@@ -28,8 +28,8 @@ ApiRouteWriter.prototype.write = function(doc)  {
     var that = this;
 
     doc.supportedMethods.forEach(function(method) {
-        doc.json.permission.forEach(function(permission) {
-
+        doc.getPermissions().forEach(function(permission) {
+            that.grunt.log.debug("permission: for role" + permission.role + " and method " + method + " for doc " + doc.filename);
             if(method.toUpperCase() == "POST") {
                 that.postResourceWriter.write(doc, permission, method);
 

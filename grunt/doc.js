@@ -78,14 +78,19 @@ Doc.prototype.getPermissions = function() {
     var thisPermission = this.json.permission;
 
     //Translate allowedMethods to methods
+    grunt.log.debug("thispermission");
     thisPermission.forEach(function(docPermission) {
         if(docPermission.allowedMethods) {
             docPermission.methods = docPermission.allowedMethods;
         }
-
+        if(!docPermission.methods) {
+            docPermission.methods = [];
+        }
     });
 
+
     //Add methods from Parent
+    grunt.log.debug("parentPermission");
     parentPermissions.forEach(function(basePermission) {
 
         var baseRole = basePermission.role;
@@ -105,7 +110,7 @@ Doc.prototype.getPermissions = function() {
 
             thisPermission.push(translatedBasePermission)
         } else {
-            grunt.log.debug("loop basePermissions");
+            grunt.log.debug("loop basePermissions" +JSON.stringify(basePermission));
             basePermission.allowedMethods.forEach(function(allowedMethod) {
 
                 if(thisPermission.length > 0) {
@@ -124,6 +129,7 @@ Doc.prototype.getPermissions = function() {
                     })
                 }
             });
+            grunt.log.debug("loop end");
         }
 
     })
@@ -142,14 +148,18 @@ Doc.prototype.readParent = function() {
 
 function readPermissionFromDoc(that,permissions) {
 
+    //that.grunt.log.debug("readPermissionFromDoc");
     permissions.forEach(function(permission) {
+        //that.grunt.log.debug("methods");
+        if(permission.methods) {
+            permission.methods.forEach(function(method) {
+                if(!that.supportedMethods.contains(method)) {
+                    that.supportedMethods.push(method);
 
-        permission.methods.forEach(function(method) {
-            if(!that.supportedMethods.contains(method)) {
-                that.supportedMethods.push(method);
+                }
+            });
+        }
 
-            }
-        });
 
     });
 }

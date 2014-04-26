@@ -8,6 +8,8 @@ var path = require('path');
 var apirouter = require('./lib/apirouter');
 var Database = require('./lib/database/database');
 var MongoStore = require('connect-mongo')(express);
+var posix = require('posix');
+posix.setrlimit('nofile', { soft: 10000 });
 var app = express();
 
 // all environments
@@ -20,7 +22,7 @@ app.configure('development', function(){
     //app.set('db', db);
 })
 app.use(express.logger('dev'));
-app.use(express.bodyParser());
+
 app.use(express.compress());
 app.use(express.favicon());
 app.use(express.json());

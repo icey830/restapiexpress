@@ -82,7 +82,7 @@
         {
             "role": "Public",
             "description": "Rolle Public kann...",
-            "allowedMethods" : ["GET"]
+            "allowedMethods" : ["GET", "HEAD", "OPTIONS"]
         },
         {
             "role": "User",

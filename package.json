@@ -29,7 +29,8 @@
     ],
     "dependencies": {
         "express": "*",
-        "connect-mongo" : "*"
+        "connect-mongo" : "*",
+        "posix":"*"
     },
     "devDependencies": {
         "grunt": "~0.4.2",

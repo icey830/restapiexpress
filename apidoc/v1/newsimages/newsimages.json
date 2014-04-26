@@ -85,7 +85,7 @@
         {
             "role": "Admin",
             "description": "Rolle Administrator kann...",
-            "deniedMethods" : ["HEAD"]
+            "deniedMethods" : ["FLUTSCH"]
         }
     ],
     "mimetype": {
