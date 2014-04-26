@@ -1,0 +1,72 @@
+{
+    "title": "Users",
+    "singular": "User",
+    "request": "/users/",
+    "description": "Users",
+    "version" : "1",
+    "type": "application/com.github.restapiexpress.user",
+    "base": "application/com.github.restapiexpress.object.abstract",
+    "_testId" : "5339a146d46d35ebe95444ad",
+    "model": {
+        "username": {
+            "name": "username",
+            "description": "Username",
+            "mandatory": true,
+            "type": "string",
+            "test" : "samuelschmid75@gmail.com"
+        },
+        "password": {
+            "name": "password",
+            "description": "Password",
+            "mandatory": true,
+            "type": "string",
+            "test" : "123456"
+        }
+    },
+    "cache-control": {
+        "client" : {
+            "max-age": 3600
+        },
+        "server" : {
+            "use":"etag"
+        }
+    },
+    "states": {
+        "200": {
+            "code": 200,
+            "message": "OK",
+            "description": "Daten sind im Response Body"
+        },
+        "404": {
+            "code": 404,
+            "message": "Nicht vorhanden",
+            "description": "Objekt mit Identifier nicht gefunden oder nicht vorhanden"
+        }
+    },
+    "permission": [
+        {
+            "role": "Admin",
+            "description": "Rolle Administrator kann...",
+            "allowedMethods" : ["GET", "PUT", "PATCH", "POST", "DELETE", "HEAD", "OPTIONS"]
+        },
+        {
+            "role": "Public",
+            "description": "Rolle Public kann...",
+            "deniedMethods" : ["GET", "PUT", "PATCH", "POST", "DELETE", "HEAD", "OPTIONS"]
+        },
+        {
+            "role": "User",
+            "description": "Authentifizierte Benutzer können...",
+            "allowedMethods" : ["GET", "POST", "PATCH", "PUT", "HEAD", "OPTIONS"]
+
+        }
+
+    ],
+    "mimetype": {
+        "json": {
+            "name": "json",
+            "is_default": true,
+            "response": ""
+        }
+    }
+}
