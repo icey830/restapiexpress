@@ -28,7 +28,8 @@
         "HYPERMEDIA"
     ],
     "dependencies": {
-        "express": "*"
+        "express": "*",
+        "connect-mongo" : "*"
     },
     "devDependencies": {
         "grunt": "~0.4.2",
