@@ -7,7 +7,7 @@
 Whit this framework it is possible to create a full functional and 100% tested RESTful API with hypermedia.
 The only thing you have to do is to write a uniformed documentation.
 
-## What This Framework do
+## What This Framework does
 
 It takes all your assiduity work - so the only thing your have to do is to design your models.
 * the frameworks takes control over routing
@@ -342,12 +342,17 @@ If a image will be deleted, the news will still stay alive.
 
 ## Tasks implemented
 
+### General
+* generete sessions based on user
+* usermanagement (Username, password)
+
 ### Server response:
 * returns a json representation of versions when accessing api.yourdomain.com/
 * returns all documented functions of version1 of api when accessing api.yourdomain.com/v1/
 * handles permissions in dev-mode via. header-field (DEV-ROLE)
 * connect database mongodb with mongoose
 * handles page, limit, sort, fields and scope
+
 
 ### Grunt tasks:
 * creates json-files based on api.json (documentation, example: apidoc/v1/api.json) for every described VERB and permission-role
@@ -372,8 +377,8 @@ If a image will be deleted, the news will still stay alive.
 * automatic handling of relationships
 
 ## Next Steps
-* create single sign on tables (Username, password, API-Token)
-* generete sessions based on user
+* handle API-Tokens
+* handle roles
 * handle expands for mongodb
 * improve hypermedia to suppress links if not needed
 
