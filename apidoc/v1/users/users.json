@@ -21,6 +21,21 @@
             "mandatory": true,
             "type": "string",
             "test" : "123456"
+        },
+        "role": {
+            "name": "role",
+            "description": "Role",
+            "mandatory": false,
+            "default": "user",
+            "type": "string",
+            "test" : "user"
+        },
+        "apitoken": {
+            "name": "apitoken",
+            "description": "API-TOKEN",
+            "mandatory": false,
+            "type": "string",
+            "test" : "TOKEN-1234567890"
         }
     },
     "cache-control": {
@@ -52,6 +67,11 @@
         {
             "role": "Public",
             "description": "Rolle Public kann...",
+            "deniedMethods" : ["GET", "PUT", "PATCH", "POST", "DELETE", "HEAD", "OPTIONS"]
+        },
+        {
+            "role": "App",
+            "description": "Rolle App kann...",
             "deniedMethods" : ["GET", "PUT", "PATCH", "POST", "DELETE", "HEAD", "OPTIONS"]
         },
         {

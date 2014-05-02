@@ -85,6 +85,11 @@
             "allowedMethods" : ["GET", "HEAD", "OPTIONS"]
         },
         {
+            "role": "App",
+            "description": "Rolle App kann...",
+            "allowedMethods" : ["GET", "HEAD", "OPTIONS"]
+        },
+        {
             "role": "User",
             "description": "Authentifizierte Benutzer können...",
             "allowedMethods" : ["GET", "HEAD", "OPTIONS"]
