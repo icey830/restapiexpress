@@ -1,0 +1,15 @@
+describe('{{{METHOD}}} {{{path}}} --{{{role}}}', function(){
+    it('respond with json', function(done){
+        request(app)
+            .{{{method}}}('{{{path}}}?scope={{{SCOPE}}}')
+            .set('Accept', 'application/*')
+            .set('DEV-ROLE', '{{{role}}}')
+            .expect('Content-Type', /json/)
+            .send()
+            .expect({{{CODE}}})
+            .end(function(err, res){
+                if (err) return done(err);
+                done()
+            });
+    })
+})

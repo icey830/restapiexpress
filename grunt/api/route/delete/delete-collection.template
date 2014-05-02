@@ -1,8 +1,49 @@
 exports.send = function(req, res, resource) {
 
-    res.status(405).json({
+    //TODO DELETE instance
+    //Update or create instance
+    var dbprovider = req.app.get("db").provider;
+    var documentation = resource.documentationJson;
+
+    var errorCallback = function(err) {
+        console.log(err);
+
+        var links = {
+            "resource":documentation.title.toLowerCase(),
+            "error":err
+        };
+        res.status(400).json(links);
+    }
+    var callback = function(err, object) {
+
+        if(err) {
+
+            errorCallback(err);
+            return;
+
+        } else {
+
+            if(object) {
+                var links = {
+                    "location":documentation.title.toLowerCase()+"/"+object._id,
+                    "message": "documents deleted",
+                    "items": object
+                };
+                res.status(200).json(links);
+            } else {
+
+                errorCallback("document does not exists");
+            }
+
+        }
+
+    };
+
+    dbprovider.delete(resource, callback );
+
+    /*res.status(405).json({
             "error" : 405,
             "message" : "DELETE ist forbidden for this request, you can try POST or GET instead."}
-    );
+    );*/
 
 };
