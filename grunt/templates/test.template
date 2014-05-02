@@ -1,6 +1,7 @@
-process.env.NODE_ENV    = 'test'
+
 
 var request = require('supertest')
     , app     = require('{{{appjs}}}')
     , assert  = require("assert");
 
+process.env.NODE_ENV = 'test';

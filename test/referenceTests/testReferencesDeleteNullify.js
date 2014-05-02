@@ -4,7 +4,7 @@
 var request = require('supertest')
     , app     = require('../../app.js')
     , assert  = require("assert");
-
+process.env.NODE_ENV = 'test';
 
 describe('PUT /v1/news/5347cf038499f5f507a62ca7 --admin', function(){
     it('respond with json', function(done){
