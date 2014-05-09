@@ -14,7 +14,6 @@ var TestOptionsResourceWriter = require('./options/test-resource-writer.js');
 function TestApiRouteWriter(grunt, rootdir) {
     this.grunt = grunt;
     this.rootdir = rootdir;
-    this.allSupportedMethods = grunt.config().appconfig.routing.supportedMethods;
     this.testGetResourceWriter = new TestGetResourceWriter(grunt, rootdir);
     this.testPostResourceWriter = new TestPostResourceWriter(grunt, rootdir);
     this.testPutResourceWriter = new TestPutResourceWriter(grunt, rootdir);
@@ -23,7 +22,7 @@ function TestApiRouteWriter(grunt, rootdir) {
     this.testOptionsResourceWriter = new TestOptionsResourceWriter(grunt, rootdir);
 }
 
-function writeRouteTest(that, method, doc, permission) {
+function writeRouteTest(that, method, doc, permission, collectionOrEntity) {
     if(!permission.methods.contains(method.toUpperCase())) {
 
         //No Access tests
@@ -32,17 +31,17 @@ function writeRouteTest(that, method, doc, permission) {
 
     } else {
         if(method.toUpperCase() == "GET" || method.toUpperCase() == "HEAD") {
-            that.testGetResourceWriter.write(doc, permission, method);
+            that.testGetResourceWriter.write(doc, permission, method, collectionOrEntity);
         } else if(method.toUpperCase() == "POST") {
-            that.testPostResourceWriter.write(doc, permission, method);
+            that.testPostResourceWriter.write(doc, permission, method, collectionOrEntity);
         } else if(method.toUpperCase() == "PUT") {
-            that.testPutResourceWriter.write(doc, permission, method);
+            that.testPutResourceWriter.write(doc, permission, method, collectionOrEntity);
         } else if(method.toUpperCase() == "PATCH") {
-            that.testPatchResourceWriter.write(doc, permission, method);
+            that.testPatchResourceWriter.write(doc, permission, method, collectionOrEntity);
         } else if(method.toUpperCase() == "DELETE") {
-            that.testDeleteResourceWriter.write(doc, permission, method);
+            that.testDeleteResourceWriter.write(doc, permission, method, collectionOrEntity);
         } else if(method.toUpperCase() == "OPTIONS") {
-            that.testOptionsResourceWriter.write(doc, permission, method);
+            that.testOptionsResourceWriter.write(doc, permission, method, collectionOrEntity);
         } else {
 
             that.grunt.log.write("\n=====");
@@ -79,18 +78,38 @@ TestApiRouteWriter.prototype.write = function(doc)  {
 }
 
 TestApiRouteWriter.prototype.writeRouteForTestingAllMethods = function(doc)  {
+
+    var allSupportedMethods = doc.apidescription.supportedMethods;
+    var supportedVerbs = [];
+    Object.keys(allSupportedMethods).forEach(function(verb) {
+        supportedVerbs.push(verb);
+    });
+
     var permission  ={
         "role" : "test",
         "description" : "test methods",
-        "methods" : this.allSupportedMethods
+        "methods" : supportedVerbs
     };
     var that = this;
-    this.allSupportedMethods.forEach(function(method) {
 
-        that.grunt.log.debug("for test permission: for role" + permission.role + " and method " + method + " for doc " + doc.filename);
+    Object.keys(allSupportedMethods).forEach(function(verb) {
+        var method = allSupportedMethods[verb];
+        var collectionMethod = method.collection;
+        var entityMethod = method.entity;
 
-        writeRouteTest(that, method, doc, permission);
+        that.grunt.log.writeln(verb + " c " + JSON.stringify(collectionMethod));
+        that.grunt.log.writeln(verb + " e " +  JSON.stringify(entityMethod));
+
+        if(collectionMethod) {
+
+            writeRouteTest(that, verb.toUpperCase(), doc, permission, "collection");
+        }
+        if(entityMethod) {
+
+            writeRouteTest(that, verb.toUpperCase(), doc, permission, "entity");
+        }
     });
+
 }
 
 TestApiRouteWriter.prototype.createNoAccessInstance = function(doc,permission, method) {

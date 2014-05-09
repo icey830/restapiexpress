@@ -32,10 +32,16 @@ TestPatchResourceWriter.prototype.generateJson = function(json,doc) {
 
 }
 
-TestPatchResourceWriter.prototype.write = function(doc, permission, method)  {
+TestPatchResourceWriter.prototype.write = function(doc, permission, method, collectionOrEntity)  {
 
-    this.writeInstance(doc,permission,method);
-    this.writeCollection(doc,permission,method);
+    if(collectionOrEntity === undefined) {
+        this.writeInstance(doc,permission,method);
+        this.writeCollection(doc,permission,method);
+    } else if(collectionOrEntity === "collection") {
+        this.writeCollection(doc,permission,method);
+    } else {
+        this.writeInstance(doc,permission,method);
+    }
 
 }
 

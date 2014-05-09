@@ -8,6 +8,7 @@ var PatchResourceWriter = require('./patch/resource-writer.js');
 var GetResourceWriter = require('./get/resource-writer.js');
 var DeleteResourceWriter = require('./delete/resource-writer.js');
 var OptionsResourceWriter = require('./options/resource-writer.js');
+
 String.prototype.replaceAll = function(target, replacement) {
     return this.split(target).join(replacement);
 };
@@ -15,7 +16,6 @@ String.prototype.replaceAll = function(target, replacement) {
 function ApiRouteWriter(grunt, rootdir) {
     this.grunt = grunt;
     this.rootdir = rootdir;
-    this.allSupportedMethods = grunt.config().appconfig.routing.supportedMethods;
     this.getResourceWriter = new GetResourceWriter(grunt, rootdir);
     this.postResourceWriter = new PostResourceWriter(grunt, rootdir);
     this.putResourceWriter = new PutResourceWriter(grunt, rootdir);
@@ -30,7 +30,7 @@ ApiRouteWriter.prototype.write = function(doc)  {
 
     doc.supportedMethods.forEach(function(method) {
         doc.getPermissions().forEach(function(permission) {
-            that.grunt.log.debug("permission: for role" + permission.role + " and method " + method + " for doc " + doc.filename);
+            //that.grunt.log.debug("permission: for role" + permission.role + " and method " + method + " for doc " + doc.filename);
             writeRoute(that, method, doc, permission);
 
         });
@@ -42,39 +42,60 @@ ApiRouteWriter.prototype.write = function(doc)  {
 }
 
 ApiRouteWriter.prototype.writeRouteForTestingAllMethods = function(doc)  {
+
+    var allSupportedMethods = doc.apidescription.supportedMethods;
+    var supportedVers = [];
+    Object.keys(allSupportedMethods).forEach(function(verb) {
+        supportedVers.push(verb);
+
+    });
+
     var permission  ={
         "role" : "test",
         "description" : "test methods",
-        "methods" : this.allSupportedMethods
+        "methods" : supportedVers
     };
     var that = this;
-    this.allSupportedMethods.forEach(function(method) {
 
-        that.grunt.log.debug("for test permission: for role" + permission.role + " and method " + method + " for doc " + doc.filename);
 
-        writeRoute(that, method, doc, permission);
+    Object.keys(allSupportedMethods).forEach(function(verb) {
+        var method = allSupportedMethods[verb];
+        var collectionMethod = method.collection;
+        var entityMethod = method.entity;
+
+        //that.grunt.log.writeln(verb + " c " + JSON.stringify(collectionMethod));
+        //that.grunt.log.writeln(verb + " e " +  JSON.stringify(entityMethod));
+
+        if(collectionMethod) {
+            writeRoute(that, verb.toUpperCase(), doc, permission, "collection");
+        }
+        if(entityMethod) {
+            writeRoute(that, verb.toUpperCase(), doc, permission, "entity");
+        }
     });
+
+
 }
 
-function writeRoute(that, method, doc, permission) {
+function writeRoute(that, method, doc, permission, collectionOrEntity) {
 
     if(method.toUpperCase() == "POST") {
-        that.postResourceWriter.write(doc, permission, method);
+        that.postResourceWriter.write(doc, permission, method, collectionOrEntity);
 
     } else if(method.toUpperCase() == "PUT") {
-        that.putResourceWriter.write(doc, permission, method);
+        that.putResourceWriter.write(doc, permission, method, collectionOrEntity);
 
     } else if(method.toUpperCase() == "PATCH") {
-        that.patchResourceWriter.write(doc, permission, method);
+        that.patchResourceWriter.write(doc, permission, method, collectionOrEntity);
 
     }   else if(method.toUpperCase() == "OPTIONS") {
-        that.optionsResourceWriter.write(doc, permission, method);
+        that.optionsResourceWriter.write(doc, permission, method, collectionOrEntity);
 
     } else if(method.toUpperCase() == "DELETE" || method.toUpperCase() == "DEL") {
-        that.deleteResourceWriter.write(doc, permission, method);
+        that.deleteResourceWriter.write(doc, permission, method, collectionOrEntity);
 
     } else if(method.toUpperCase() == "GET" || method.toUpperCase() == "HEAD") {
-        that.getResourceWriter.write(doc, permission, method);
+        that.getResourceWriter.write(doc, permission, method, collectionOrEntity);
 
     } else {
         that.grunt.log.write("\n=====");

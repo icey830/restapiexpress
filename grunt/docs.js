@@ -21,6 +21,7 @@ function Docs(grunt) {
     this.grunt = grunt;
     this.docs = [];
     this.docMap = {};
+    this.apidescription = {};
     this.versions = [];
     this.findDocs(grunt);
 
@@ -46,6 +47,10 @@ Docs.prototype.findDocs = function(grunt) {
             var doc = new Doc(filename,abspath,grunt);
 
             var key = doc.json.type.split("/")[1];
+            if(key.endsWith(".apidescription")) {
+                that.apidescription[that.versions[that.versions.length-1]] = doc.json;
+                that.grunt.log.write("doc for version: " + that.versions[that.versions.length-1])
+            }
             that.docMap[key] = doc;
 
             that.docs.push(doc);
@@ -70,6 +75,8 @@ Docs.prototype.findDocs = function(grunt) {
             doc.baseDoc = this.docMap[doc.base.split("/")[1]];
             grunt.log.debug("basedoc:" + doc.baseDoc.filename);
         }
+
+        doc.apidescription = this.apidescription[doc.version];
 
     }
 

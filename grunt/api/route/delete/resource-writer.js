@@ -11,12 +11,19 @@ function DeleteResourceWriter(grunt, rootdir) {
     this.rootdir = rootdir;
 }
 
-DeleteResourceWriter.prototype.write = function(doc, permission, method)  {
+DeleteResourceWriter.prototype.write = function(doc, permission, method, collectionOrEntity)  {
 
     var instanceContent = this.grunt.file.read(__dirname +'/delete-instance.template');
     var collectionContent = this.grunt.file.read(__dirname + '/delete-collection.template');
-    this.writeInstance(doc,permission,method,instanceContent);
-    this.writeCollection(doc,permission,method,collectionContent);
+
+    if(collectionOrEntity === undefined) {
+        this.writeInstance(doc,permission,method,instanceContent);
+        this.writeCollection(doc,permission,method,collectionContent);
+    } else if(collectionOrEntity === "collection") {
+        this.writeCollection(doc,permission,method,collectionContent);
+    } else {
+        this.writeInstance(doc,permission,method,instanceContent);
+    }
 
 }
 

@@ -11,15 +11,20 @@ function OptionsResourceWriter(grunt, rootdir) {
     this.rootdir = rootdir;
 }
 
-OptionsResourceWriter.prototype.write = function(doc, permission, method)  {
+OptionsResourceWriter.prototype.write = function(doc, permission, method, collectionOrEntity)  {
 
     var grunt = this.grunt;
     var instanceContent = grunt.file.read(__dirname +'/options-instance.template');
     var collectionContent = grunt.file.read(__dirname +'/options-collection.template');
 
-    this.writeInstance(doc,permission,method,instanceContent);
-    this.writeCollection(doc,permission,method,collectionContent);
-
+    if(collectionOrEntity === undefined) {
+        this.writeInstance(doc,permission,method,instanceContent);
+        this.writeCollection(doc,permission,method,collectionContent);
+    } else if(collectionOrEntity === "collection") {
+        this.writeCollection(doc,permission,method,collectionContent);
+    } else {
+        this.writeInstance(doc,permission,method,instanceContent);
+    }
 }
 
 OptionsResourceWriter.prototype.writeInstance = function(doc,permission,method, content) {

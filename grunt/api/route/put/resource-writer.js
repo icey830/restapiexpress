@@ -11,12 +11,19 @@ function PutResourceWriter(grunt, rootdir) {
     this.rootdir = rootdir;
 }
 
-PutResourceWriter.prototype.write = function(doc, permission, method)  {
+PutResourceWriter.prototype.write = function(doc, permission, method,collectionOrEntity)  {
 
     var instanceContent = this.grunt.file.read(__dirname +'/put-instance.template');
     var post_collectionContent = this.grunt.file.read(__dirname + '/put-collection.template');
-    this.writeInstance(doc,permission,method,instanceContent);
-    this.writeCollection(doc,permission,method,post_collectionContent);
+
+    if(collectionOrEntity === undefined) {
+        this.writeInstance(doc,permission,method,instanceContent);
+        this.writeCollection(doc,permission,method,post_collectionContent);
+    } else if(collectionOrEntity === "collection") {
+        this.writeCollection(doc,permission,method,post_collectionContent);
+    } else {
+        this.writeInstance(doc,permission,method,instanceContent);
+    }
 
 }
 

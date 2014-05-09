@@ -34,6 +34,7 @@ ApiWriter.prototype.write = function(docs)  {
         var doc = docs.docs[i];
 
         grunt.log.debug(doc.json.type);
+
         if(doc.json.type.endsWith('.apidescription')) {
 
             this.apidescwriter.write(doc);
