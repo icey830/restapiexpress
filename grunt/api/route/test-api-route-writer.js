@@ -14,6 +14,7 @@ var TestOptionsResourceWriter = require('./options/test-resource-writer.js');
 function TestApiRouteWriter(grunt, rootdir) {
     this.grunt = grunt;
     this.rootdir = rootdir;
+    this.allSupportedMethods = grunt.config().appconfig.routing.supportedMethods;
     this.testGetResourceWriter = new TestGetResourceWriter(grunt, rootdir);
     this.testPostResourceWriter = new TestPostResourceWriter(grunt, rootdir);
     this.testPutResourceWriter = new TestPutResourceWriter(grunt, rootdir);
@@ -22,6 +23,39 @@ function TestApiRouteWriter(grunt, rootdir) {
     this.testOptionsResourceWriter = new TestOptionsResourceWriter(grunt, rootdir);
 }
 
+function writeRouteTest(that, method, doc, permission) {
+    if(!permission.methods.contains(method.toUpperCase())) {
+
+        //No Access tests
+        that.createNoAccessInstance(doc,permission,method);
+        that.createNoAccessCollection(doc,permission,method);
+
+    } else {
+        if(method.toUpperCase() == "GET" || method.toUpperCase() == "HEAD") {
+            that.testGetResourceWriter.write(doc, permission, method);
+        } else if(method.toUpperCase() == "POST") {
+            that.testPostResourceWriter.write(doc, permission, method);
+        } else if(method.toUpperCase() == "PUT") {
+            that.testPutResourceWriter.write(doc, permission, method);
+        } else if(method.toUpperCase() == "PATCH") {
+            that.testPatchResourceWriter.write(doc, permission, method);
+        } else if(method.toUpperCase() == "DELETE") {
+            that.testDeleteResourceWriter.write(doc, permission, method);
+        } else if(method.toUpperCase() == "OPTIONS") {
+            that.testOptionsResourceWriter.write(doc, permission, method);
+        } else {
+
+            that.grunt.log.write("\n=====");
+            that.grunt.log.write("\nNO Resource-Writer TESTS for method " + method.toUpperCase());
+            that.grunt.log.write("\nplease create one in folder /grunt/api/route/ " + method.toLowerCase() + "/");
+            that.grunt.log.write("\nand add it to the api-writer /grunt/api/route/test-api-route-writer.js");
+            that.grunt.log.write("\nyou can see an example for it in folder /grunt/api/route/get/\n");
+            that.grunt.log.write("\nnever forget to write a test case ;-)\n");
+            that.grunt.log.write("=====\n\n");
+
+        }
+    }
+}
 TestApiRouteWriter.prototype.write = function(doc)  {
 
     var grunt = this.grunt;
@@ -30,46 +64,33 @@ TestApiRouteWriter.prototype.write = function(doc)  {
     doc.supportedMethods.forEach(function(method) {
         doc.getPermissions().forEach(function(permission) {
 
-            if(!permission.methods.contains(method.toUpperCase())) {
-
-                //No Access tests
-                that.createNoAccessInstance(doc,permission,method);
-                that.createNoAccessCollection(doc,permission,method);
-
-            } else {
-                if(method.toUpperCase() == "GET" || method.toUpperCase() == "HEAD") {
-                    that.testGetResourceWriter.write(doc, permission, method);
-                } else if(method.toUpperCase() == "POST") {
-                    that.testPostResourceWriter.write(doc, permission, method);
-                } else if(method.toUpperCase() == "PUT") {
-                    that.testPutResourceWriter.write(doc, permission, method);
-                } else if(method.toUpperCase() == "PATCH") {
-                    that.testPatchResourceWriter.write(doc, permission, method);
-                } else if(method.toUpperCase() == "DELETE") {
-                    that.testDeleteResourceWriter.write(doc, permission, method);
-                } else if(method.toUpperCase() == "OPTIONS") {
-                    that.testOptionsResourceWriter.write(doc, permission, method);
-                } else {
-
-                    that.grunt.log.write("\n=====");
-                    that.grunt.log.write("\nNO Resource-Writer TESTS for method " + method.toUpperCase());
-                    that.grunt.log.write("\nplease create one in folder /grunt/api/route/ " + method.toLowerCase() + "/");
-                    that.grunt.log.write("\nand add it to the api-writer /grunt/api/route/test-api-route-writer.js");
-                    that.grunt.log.write("\nyou can see an example for it in folder /grunt/api/route/get/\n");
-                    that.grunt.log.write("\nnever forget to write a test case ;-)\n");
-                    that.grunt.log.write("=====\n\n");
-
-                }
-            }
+            writeRouteTest(that,method,doc,permission);
 
         });
 
     });
 
+    this.writeRouteForTestingAllMethods(doc);
+
     var test = grunt.file.read('./grunt/templates/test.template');
     var http200 = grunt.file.read('./grunt/templates/tests/http200.template');
     test = test + '\n' + http200;
     this.createAPIDocTestsForMethod(doc,test);
+}
+
+TestApiRouteWriter.prototype.writeRouteForTestingAllMethods = function(doc)  {
+    var permission  ={
+        "role" : "test",
+        "description" : "test methods",
+        "methods" : this.allSupportedMethods
+    };
+    var that = this;
+    this.allSupportedMethods.forEach(function(method) {
+
+        that.grunt.log.debug("for test permission: for role" + permission.role + " and method " + method + " for doc " + doc.filename);
+
+        writeRouteTest(that, method, doc, permission);
+    });
 }
 
 TestApiRouteWriter.prototype.createNoAccessInstance = function(doc,permission, method) {

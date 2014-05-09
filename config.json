@@ -19,6 +19,10 @@
             "node": ">=0.10.21"
         }
 
+    },
+    "routing": {
+        "supportedMethods" : ["GET", "PUT", "PATCH", "POST", "DELETE", "HEAD", "OPTIONS"]
     }
+
 
 }
