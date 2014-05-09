@@ -11,6 +11,9 @@ var TestPutResourceWriter = require('./put/test-resource-writer.js');
 var TestPatchResourceWriter = require('./patch/test-resource-writer.js');
 var TestDeleteResourceWriter = require('./delete/test-resource-writer.js');
 var TestOptionsResourceWriter = require('./options/test-resource-writer.js');
+
+module.exports = TestApiRouteWriter;
+
 function TestApiRouteWriter(grunt, rootdir) {
     this.grunt = grunt;
     this.rootdir = rootdir;
@@ -20,41 +23,11 @@ function TestApiRouteWriter(grunt, rootdir) {
     this.testPatchResourceWriter = new TestPatchResourceWriter(grunt, rootdir);
     this.testDeleteResourceWriter = new TestDeleteResourceWriter(grunt, rootdir);
     this.testOptionsResourceWriter = new TestOptionsResourceWriter(grunt, rootdir);
+
+
+
 }
 
-function writeRouteTest(that, method, doc, permission, collectionOrEntity) {
-    if(!permission.methods.contains(method.toUpperCase())) {
-
-        //No Access tests
-        that.createNoAccessInstance(doc,permission,method);
-        that.createNoAccessCollection(doc,permission,method);
-
-    } else {
-        if(method.toUpperCase() == "GET" || method.toUpperCase() == "HEAD") {
-            that.testGetResourceWriter.write(doc, permission, method, collectionOrEntity);
-        } else if(method.toUpperCase() == "POST") {
-            that.testPostResourceWriter.write(doc, permission, method, collectionOrEntity);
-        } else if(method.toUpperCase() == "PUT") {
-            that.testPutResourceWriter.write(doc, permission, method, collectionOrEntity);
-        } else if(method.toUpperCase() == "PATCH") {
-            that.testPatchResourceWriter.write(doc, permission, method, collectionOrEntity);
-        } else if(method.toUpperCase() == "DELETE") {
-            that.testDeleteResourceWriter.write(doc, permission, method, collectionOrEntity);
-        } else if(method.toUpperCase() == "OPTIONS") {
-            that.testOptionsResourceWriter.write(doc, permission, method, collectionOrEntity);
-        } else {
-
-            that.grunt.log.write("\n=====");
-            that.grunt.log.write("\nNO Resource-Writer TESTS for method " + method.toUpperCase());
-            that.grunt.log.write("\nplease create one in folder /grunt/api/route/ " + method.toLowerCase() + "/");
-            that.grunt.log.write("\nand add it to the api-writer /grunt/api/route/test-api-route-writer.js");
-            that.grunt.log.write("\nyou can see an example for it in folder /grunt/api/route/get/\n");
-            that.grunt.log.write("\nnever forget to write a test case ;-)\n");
-            that.grunt.log.write("=====\n\n");
-
-        }
-    }
-}
 TestApiRouteWriter.prototype.write = function(doc)  {
 
     var grunt = this.grunt;
@@ -79,26 +52,21 @@ TestApiRouteWriter.prototype.write = function(doc)  {
 
 TestApiRouteWriter.prototype.writeRouteForTestingAllMethods = function(doc)  {
 
-    var allSupportedMethods = doc.apidescription.supportedMethods;
-    var supportedVerbs = [];
-    Object.keys(allSupportedMethods).forEach(function(verb) {
-        supportedVerbs.push(verb);
-    });
-
     var permission  ={
         "role" : "test",
         "description" : "test methods",
-        "methods" : supportedVerbs
+        "methods" : doc.supportedVerbs()
     };
     var that = this;
 
+    var allSupportedMethods = doc.apidescription.supportedMethods;
     Object.keys(allSupportedMethods).forEach(function(verb) {
         var method = allSupportedMethods[verb];
         var collectionMethod = method.collection;
         var entityMethod = method.entity;
 
-        that.grunt.log.writeln(verb + " c " + JSON.stringify(collectionMethod));
-        that.grunt.log.writeln(verb + " e " +  JSON.stringify(entityMethod));
+        //that.grunt.log.writeln(verb + " c " + JSON.stringify(collectionMethod));
+        //that.grunt.log.writeln(verb + " e " +  JSON.stringify(entityMethod));
 
         if(collectionMethod) {
 
@@ -109,6 +77,8 @@ TestApiRouteWriter.prototype.writeRouteForTestingAllMethods = function(doc)  {
             writeRouteTest(that, verb.toUpperCase(), doc, permission, "entity");
         }
     });
+
+    writeIntegrationTests(this, doc)
 
 }
 
@@ -168,5 +138,54 @@ TestApiRouteWriter.prototype.createAPIDocTestsForMethod = function(doc,content) 
     grunt.file.write(doc.testfolder + 'doc-post.js', modifiedContent);
 }
 
+//
+// private
+//
+function writeRouteTest(that, method, doc, permission, collectionOrEntity) {
+    if(!permission.methods.contains(method.toUpperCase())) {
 
-module.exports = TestApiRouteWriter;
+        //No Access tests
+        that.createNoAccessInstance(doc,permission,method);
+        that.createNoAccessCollection(doc,permission,method);
+
+    } else {
+        if(method.toUpperCase() == "GET" || method.toUpperCase() == "HEAD") {
+            that.testGetResourceWriter.write(doc, permission, method, collectionOrEntity);
+        } else if(method.toUpperCase() == "POST") {
+            that.testPostResourceWriter.write(doc, permission, method, collectionOrEntity);
+        } else if(method.toUpperCase() == "PUT") {
+            that.testPutResourceWriter.write(doc, permission, method, collectionOrEntity);
+        } else if(method.toUpperCase() == "PATCH") {
+            that.testPatchResourceWriter.write(doc, permission, method, collectionOrEntity);
+        } else if(method.toUpperCase() == "DELETE") {
+            that.testDeleteResourceWriter.write(doc, permission, method, collectionOrEntity);
+        } else if(method.toUpperCase() == "OPTIONS") {
+            that.testOptionsResourceWriter.write(doc, permission, method, collectionOrEntity);
+        } else {
+
+            that.grunt.log.write("\n=====");
+            that.grunt.log.write("\nNO Resource-Writer TESTS for method " + method.toUpperCase());
+            that.grunt.log.write("\nplease create one in folder /grunt/api/route/ " + method.toLowerCase() + "/");
+            that.grunt.log.write("\nand add it to the api-writer /grunt/api/route/test-api-route-writer.js");
+            that.grunt.log.write("\nyou can see an example for it in folder /grunt/api/route/get/\n");
+            that.grunt.log.write("\nnever forget to write a test case ;-)\n");
+            that.grunt.log.write("=====\n\n");
+
+        }
+    }
+}
+
+function writeIntegrationTests(testApiWriter, doc) {
+    testApiWriter.grunt.log.write("TEST");
+    var allSupportedMethods = doc.apidescription.supportedMethods;
+    Object.keys(allSupportedMethods).forEach(function(verb) {
+        var method = allSupportedMethods[verb];
+        var collectionMethod = method.collection;
+        var entityMethod = method.entity;
+
+        //that.grunt.log.writeln(verb + " c " + JSON.stringify(collectionMethod));
+        //that.grunt.log.writeln(verb + " e " +  JSON.stringify(entityMethod));
+
+       
+    });
+}

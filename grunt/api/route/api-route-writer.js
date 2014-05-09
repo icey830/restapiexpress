@@ -13,6 +13,8 @@ String.prototype.replaceAll = function(target, replacement) {
     return this.split(target).join(replacement);
 };
 
+module.exports = ApiRouteWriter;
+
 function ApiRouteWriter(grunt, rootdir) {
     this.grunt = grunt;
     this.rootdir = rootdir;
@@ -44,16 +46,12 @@ ApiRouteWriter.prototype.write = function(doc)  {
 ApiRouteWriter.prototype.writeRouteForTestingAllMethods = function(doc)  {
 
     var allSupportedMethods = doc.apidescription.supportedMethods;
-    var supportedVers = [];
-    Object.keys(allSupportedMethods).forEach(function(verb) {
-        supportedVers.push(verb);
 
-    });
 
     var permission  ={
         "role" : "test",
         "description" : "test methods",
-        "methods" : supportedVers
+        "methods" : doc.supportedVerbs()
     };
     var that = this;
 
@@ -76,6 +74,10 @@ ApiRouteWriter.prototype.writeRouteForTestingAllMethods = function(doc)  {
 
 
 }
+
+//
+// private
+//
 
 function writeRoute(that, method, doc, permission, collectionOrEntity) {
 
@@ -107,4 +109,3 @@ function writeRoute(that, method, doc, permission, collectionOrEntity) {
         that.grunt.log.write("=====\n\n");
     }
 }
-module.exports = ApiRouteWriter;

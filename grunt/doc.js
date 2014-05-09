@@ -174,4 +174,16 @@ Doc.prototype.pathToAppJsFromFolder = function(folder,minus) {
     for(var i=0;i<=level-minus;i++) pathToAppJS = "../" + pathToAppJS;
     return pathToAppJS;
 }
+
+Doc.prototype.supportedVerbs = function(){
+    if(this.apidescription === undefined) {
+        return undefined;
+    }
+    var allSupportedMethods = this.apidescription.supportedMethods;
+    var supportedVerbs = [];
+    Object.keys(allSupportedMethods).forEach(function(verb) {
+        supportedVerbs.push(verb);
+    });
+    return supportedVerbs;
+}
 module.exports = Doc;
