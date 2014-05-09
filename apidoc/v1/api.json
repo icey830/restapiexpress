@@ -19,6 +19,58 @@
             "description": "Objekt mit Identifier nicht gefunden oder nicht vorhanden"
         }
     },
+    "supportedMethods" : {
+        "POST" : {
+            "collection" : {
+                "action" : "create entity"
+            },
+            "entity" : {
+                "action" : "update entity"
+            }
+        },
+        "PUT" : {
+            "entity" : {
+                "action" : "creates or updates entity and deletes empty fields"
+            }
+        },
+        "PATCH" : {
+            "entity" : {
+                "action" : "updates entity"
+            }
+        },
+        "GET" : {
+            "collection" : {
+                "action" : "list all entities of a collection"
+            },
+            "entity" : {
+              "action" : "read entity"
+            }
+        },
+        "HEAD" : {
+            "collection" : {
+                "action" : "list all entities of a collection and returns only header information"
+            },
+            "entity" : {
+                "action" : "read entity and returns header information"
+            }
+        },
+        "OPTIONS" : {
+            "collection" : {
+                "action" : "lists all implemented verbs of entity and all subresources"
+            },
+            "entity" : {
+                "action" : "lists all implemented verbs of entity and all subresources"
+            }
+        },
+        "DELETE" : {
+            "collection" : {
+                "action" : "deletes all entities and subresources (if needed) which are matching the scope"
+            },
+            "entity" : {
+                "action" : "deletes entity and subresources (if needed)"
+            }
+        }
+    },
     "permission": [
         {
             "role": "Public",
