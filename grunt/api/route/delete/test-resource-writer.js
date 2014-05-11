@@ -23,19 +23,42 @@ TestDeleteResourceWriter.prototype.write = function(doc, permission, method, col
 
 }
 
+TestDeleteResourceWriter.prototype.getInstanceTestContent = function(testfileContent, doc, role, appJsPath, success) {
+    var grunt = this.grunt;
+
+    if(success === true) {
+        var http200 = grunt.file.read('./grunt/templates/tests/http200.template');
+        testfileContent = testfileContent + '\n' + http200;
+    } else {
+        var http400 = grunt.file.read('./grunt/templates/tests/http400.template');
+        testfileContent = testfileContent + '\n' + http400;
+
+    }
+
+    var modifiedContent =  testfileContent.replace('{{{METHOD}}}',"DELETE");
+    modifiedContent =  modifiedContent.replace('{{{method}}}',"del");
+    if(success === true) {
+        var path = '/v'+doc.version + '/' + doc.filetitle + '/' +  doc.json._testId;;
+        modifiedContent =  modifiedContent.replaceAll('{{{path}}}',path);
+    } else {
+        var path = '/v'+doc.version + '/' + doc.filetitle + '/123.json';
+        modifiedContent =  modifiedContent.replaceAll('{{{path}}}',path);
+    }
+
+    modifiedContent =  modifiedContent.replaceAll('{{{role}}}',role);
+    modifiedContent =  modifiedContent.replace('{{{appjs}}}',appJsPath);
+
+    return modifiedContent;
+
+}
+
+
+
 TestDeleteResourceWriter.prototype.writeInstance = function(doc,permission,method) {
 
     var grunt = this.grunt;
     var test = grunt.file.read('./grunt/templates/test.template');
-    var http400 = grunt.file.read('./grunt/templates/tests/http400.template');
-    test = test + '\n' + http400;
-
-    var modifiedContent =  test.replace('{{{METHOD}}}',method.toUpperCase());
-    modifiedContent =  modifiedContent.replace('{{{method}}}',"del");
-    var path = '/v'+doc.version + '/' + doc.filetitle + '/123.json';
-    modifiedContent =  modifiedContent.replaceAll('{{{path}}}',path);
-    modifiedContent =  modifiedContent.replaceAll('{{{role}}}',permission.role.toLowerCase());
-    modifiedContent =  modifiedContent.replace('{{{appjs}}}',doc.pathToAppJsFromFolder(doc.testfolder));
+    var modifiedContent = this.getInstanceTestContent(test,doc, permission.role.toLowerCase(),doc.pathToAppJsFromFolder(doc.testfolder), false);
     grunt.file.write(doc.testfolder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase() + '/instance.js', modifiedContent);
 
 }

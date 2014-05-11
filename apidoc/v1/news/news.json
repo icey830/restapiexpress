@@ -27,7 +27,7 @@
             "name": "images",
             "description": "News images",
             "mandatory": false,
-            "test" : "[]",
+            "test" : ["534eead8c6db3400005ce62c"],
             "type": "application/com.github.restapiexpress.newsimages[]",
             "multiple": true,
             "reference" : "news",
@@ -37,7 +37,7 @@
             "name": "latestImage",
             "description": "latest News images",
             "mandatory": false,
-            "test" : "null",
+            "test" : "534eead8c6db3400005ce62c",
             "type": "application/com.github.restapiexpress.newsimages",
             "reference" : "news",
             "referenceRule" : "noaction"

@@ -11,6 +11,7 @@ var TestPutResourceWriter = require('./put/test-resource-writer.js');
 var TestPatchResourceWriter = require('./patch/test-resource-writer.js');
 var TestDeleteResourceWriter = require('./delete/test-resource-writer.js');
 var TestOptionsResourceWriter = require('./options/test-resource-writer.js');
+var IntegrationTestWriter = require('./integration-test-writer.js');
 
 module.exports = TestApiRouteWriter;
 
@@ -23,12 +24,10 @@ function TestApiRouteWriter(grunt, rootdir) {
     this.testPatchResourceWriter = new TestPatchResourceWriter(grunt, rootdir);
     this.testDeleteResourceWriter = new TestDeleteResourceWriter(grunt, rootdir);
     this.testOptionsResourceWriter = new TestOptionsResourceWriter(grunt, rootdir);
-
-
-
+    this.integrationTestWriter = new IntegrationTestWriter(grunt, rootdir, this);
 }
 
-TestApiRouteWriter.prototype.write = function(doc)  {
+TestApiRouteWriter.prototype.write = function(doc, docs)  {
 
     var grunt = this.grunt;
     var that = this;
@@ -42,7 +41,7 @@ TestApiRouteWriter.prototype.write = function(doc)  {
 
     });
 
-    this.writeRouteForTestingAllMethods(doc);
+    this.writeRouteForTestingAllMethods(doc, docs);
 
     var test = grunt.file.read('./grunt/templates/test.template');
     var http200 = grunt.file.read('./grunt/templates/tests/http200.template');
@@ -50,7 +49,7 @@ TestApiRouteWriter.prototype.write = function(doc)  {
     this.createAPIDocTestsForMethod(doc,test);
 }
 
-TestApiRouteWriter.prototype.writeRouteForTestingAllMethods = function(doc)  {
+TestApiRouteWriter.prototype.writeRouteForTestingAllMethods = function(doc, docs)  {
 
     var permission  ={
         "role" : "test",
@@ -78,7 +77,7 @@ TestApiRouteWriter.prototype.writeRouteForTestingAllMethods = function(doc)  {
         }
     });
 
-    writeIntegrationTests(this, doc)
+    this.integrationTestWriter.write(doc,docs);
 
 }
 
@@ -175,17 +174,3 @@ function writeRouteTest(that, method, doc, permission, collectionOrEntity) {
     }
 }
 
-function writeIntegrationTests(testApiWriter, doc) {
-    testApiWriter.grunt.log.write("TEST");
-    var allSupportedMethods = doc.apidescription.supportedMethods;
-    Object.keys(allSupportedMethods).forEach(function(verb) {
-        var method = allSupportedMethods[verb];
-        var collectionMethod = method.collection;
-        var entityMethod = method.entity;
-
-        //that.grunt.log.writeln(verb + " c " + JSON.stringify(collectionMethod));
-        //that.grunt.log.writeln(verb + " e " +  JSON.stringify(entityMethod));
-
-       
-    });
-}

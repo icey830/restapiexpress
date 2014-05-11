@@ -72,7 +72,7 @@ TestWriter.prototype.write = function(docs)  {
         } else {
 
             grunt.log.debug("start createing test doc");
-            this.testApiRouteWriter.write(doc);
+            this.testApiRouteWriter.write(doc,docs);
 
         }
 

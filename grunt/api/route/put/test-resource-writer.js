@@ -45,21 +45,32 @@ TestPutResourceWriter.prototype.generateJson = function(json,doc) {
 
 }
 
-TestPutResourceWriter.prototype.writeInstance = function(doc,permission,method) {
-
+TestPutResourceWriter.prototype.getInstanceTestContent = function(testfileContent, doc, role, appJsPath) {
     var grunt = this.grunt;
-    var test = grunt.file.read('./grunt/templates/test.template');
+
     var http200 = grunt.file.read('./grunt/api/route/put/put-instance-test.template');
-    test = test + '\n' + http200;
+    testfileContent = testfileContent + '\n' + http200;
 
     var json = {};
     this.generateJson(json,doc);
 
-    var modifiedContent =  test.replaceAll('{{{JSON}}}',JSON.stringify(json));
+    var modifiedContent =  testfileContent.replaceAll('{{{JSON}}}',JSON.stringify(json));
     var path = '/v'+doc.version + '/' + doc.filetitle + '/' +  doc.json._testId;;
     modifiedContent =  modifiedContent.replaceAll('{{{path}}}',path);
-    modifiedContent =  modifiedContent.replaceAll('{{{role}}}',permission.role.toLowerCase());
-    modifiedContent =  modifiedContent.replace('{{{appjs}}}',doc.pathToAppJsFromFolder(doc.testfolder));
+    modifiedContent =  modifiedContent.replaceAll('{{{role}}}',role);
+    modifiedContent =  modifiedContent.replace('{{{appjs}}}',appJsPath);
+
+    return modifiedContent;
+
+}
+
+
+TestPutResourceWriter.prototype.writeInstance = function(doc,permission,method) {
+
+    var grunt = this.grunt;
+    var test = grunt.file.read('./grunt/templates/test.template');
+
+    var modifiedContent = this.getInstanceTestContent(test,doc, permission.role.toLowerCase(),doc.pathToAppJsFromFolder(doc.testfolder));
     grunt.file.write(doc.testfolder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase() + '/instance.js', modifiedContent);
 
 }

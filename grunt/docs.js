@@ -51,6 +51,7 @@ Docs.prototype.findDocs = function(grunt) {
                 that.apidescription[that.versions[that.versions.length-1]] = doc.json;
                 that.grunt.log.write("doc for version: " + that.versions[that.versions.length-1])
             }
+
             that.docMap[key] = doc;
 
             that.docs.push(doc);
