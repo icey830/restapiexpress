@@ -1,14 +1,27 @@
 
+
+
 describe('PUT {{{path}}} --{{{role}}}', function(){
     it('respond with json', function(done){
+        function isValidJsonPut(res) {
+            var json = {{{JSON}}};
+
+            var testedPart = res.body.item;
+
+            for(var key in json){
+                if (!(key in testedPart)) return "missing "+key+" key" + JSON.stringify(res.body);
+                if(!json[key]===testedPart[key]) return "wrong value" + json[value] + "/" + testedPart[key];
+            }
+        };
         var json = {{{JSON}}};
-    request(app)
+        request(app)
         .put('{{{path}}}')
         .set('Accept', 'application/*')
         .set('DEV-ROLE', '{{{role}}}')
         .expect('Content-Type', /json/)
         .send(json)
         .expect(200)
+        .expect(isValidJsonPut)
         .end(function(err, res){
             if (err) return done(err);
             done()

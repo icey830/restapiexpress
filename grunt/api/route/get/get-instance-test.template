@@ -1,16 +1,18 @@
-function isValidJson(res) {
-    var json = {{{JSON}}};
 
-    var testedPart = res.body.item;
-
-for(var key in json){
-    if (!(key in testedPart)) return "missing "+key+" key" + JSON.stringify(res.body);
-    if(!json[key]===testedPart[key]) return "wrong value" + json[value] + "/" + testedPart[key];
-}
-};
 
 describe('GET {{{path}}} --{{{role}}}', function(){
     it('respond with json', function(done){
+
+        function isValidJsonGet(res) {
+            var json = {{{JSON}}};
+
+            var testedPart = res.body.item;
+
+            for(var key in json){
+                if (!(key in testedPart)) return "missing "+key+" key" + JSON.stringify(res.body);
+                if(!json[key]===testedPart[key]) return "wrong value" + json[value] + "/" + testedPart[key];
+            }
+        };
 
         request(app)
             .get('{{{path}}}')
@@ -19,7 +21,7 @@ describe('GET {{{path}}} --{{{role}}}', function(){
             .expect('Content-Type', /json/)
             .send()
             .expect(200)
-            .expect(isValidJson)
+            .expect(isValidJsonGet)
             .end(function(err, res){
                 if (err) return done(err);
                 done()
