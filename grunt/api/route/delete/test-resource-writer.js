@@ -27,7 +27,7 @@ TestDeleteResourceWriter.prototype.getInstanceTestContent = function(testfileCon
     var grunt = this.grunt;
 
     if(success === true) {
-        var http200 = grunt.file.read('./grunt/templates/tests/http200.template');
+        var http200 = grunt.file.read('./grunt/api/route/delete/delete-instance-test.template');
         testfileContent = testfileContent + '\n' + http200;
     } else {
         var http400 = grunt.file.read('./grunt/templates/tests/http400.template');

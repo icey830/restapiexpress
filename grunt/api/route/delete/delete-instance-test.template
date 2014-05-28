@@ -1,0 +1,25 @@
+
+
+describe('DELETE {{{path}}} --{{{role}}}', function(){
+    it('respond with json', function(done){
+
+        function isValidJson(res) {
+
+            var testedPart = res.body.message;
+            if(testedPart !== "document deleted") return JSON.stringify(res.body);
+        };
+
+        request(app)
+            .del('{{{path}}}')
+            .set('Accept', 'application/*')
+            .set('DEV-ROLE', '{{{role}}}')
+            .expect('Content-Type', /json/)
+            .send()
+            .expect(200)
+            .expect(isValidJson)
+            .end(function(err, res){
+                if (err) return done(err);
+                done()
+            });
+        })
+})
