@@ -1,0 +1,28 @@
+function isValidJson(res) {
+    var json = {{{JSON}}};
+
+    var testedPart = res.body.item;
+
+for(var key in json){
+    if (!(key in testedPart)) return "missing "+key+" key" + JSON.stringify(res.body);
+    if(!json[key]===testedPart[key]) return "wrong value" + json[value] + "/" + testedPart[key];
+}
+};
+
+describe('GET {{{path}}} --{{{role}}}', function(){
+    it('respond with json', function(done){
+
+        request(app)
+            .get('{{{path}}}')
+            .set('Accept', 'application/*')
+            .set('DEV-ROLE', '{{{role}}}')
+            .expect('Content-Type', /json/)
+            .send()
+            .expect(200)
+            .expect(isValidJson)
+            .end(function(err, res){
+                if (err) return done(err);
+                done()
+            });
+        })
+})

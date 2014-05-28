@@ -63,6 +63,11 @@ IntegrationTestWriter.prototype.write = function (doc, docs) {
 
             //Create self
             test = that.getCreateEntityContent(doc.json._testId, doc.json.type.split("/")[1], test)
+
+            //Read self
+            test = that.getReadEntityContent(doc.json._testId, doc.json.type.split("/")[1], test);
+
+            //Delete self
             test = that.getDeleteEntityContent(doc.json._testId, doc.json.type.split("/")[1], test)
         }
     });
@@ -81,7 +86,7 @@ IntegrationTestWriter.prototype.getCreateEntityContent = function(id, type, test
         return;
     }
     var doc = this.docs.docMap[type];
-    this.grunt.log.writeln("doc of " + type + " " + JSON.stringify(doc.readModel(), null, 2));
+    //this.grunt.log.writeln("doc of " + type + " " + JSON.stringify(doc.readModel(), null, 2));
     return this.testApiRouteWriter.testPutResourceWriter.getInstanceTestContent(test,doc,"test",'../../../app.js');
 
 }
@@ -92,7 +97,16 @@ IntegrationTestWriter.prototype.getDeleteEntityContent = function(id, type, test
         return;
     }
     var doc = this.docs.docMap[type];
-    this.grunt.log.writeln("doc of " + type + " " + JSON.stringify(doc.readModel(), null, 2));
     return this.testApiRouteWriter.testDeleteResourceWriter.getInstanceTestContent(test,doc,"test",'../../../app.js', true);
+
+}
+
+IntegrationTestWriter.prototype.getReadEntityContent = function(id, type, test) {
+    if(!this.docs) {
+        this.grunt.log.writeln("Docs not set");
+        return;
+    }
+    var doc = this.docs.docMap[type];
+    return this.testApiRouteWriter.testGetResourceWriter.getInstanceTestContent(test,doc,"test",'../../../app.js');
 
 }

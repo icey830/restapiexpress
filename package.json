@@ -34,10 +34,11 @@
     },
     "devDependencies": {
         "grunt": "~0.4.2",
-        "supertest" : "*",
+        "supertest" : "0.13.0",
         "mocha" :"*",
         "should" :"*",
-        "assert" :"*"
+        "assert" :"*",
+        "chai" :"*"
     },
     "license": "MIT",
     "engines": {
