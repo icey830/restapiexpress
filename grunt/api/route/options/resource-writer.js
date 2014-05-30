@@ -2,6 +2,21 @@
  * Created by samschmid on 28.03.14.
  */
 
+/**
+ * Class for writing route
+ *
+ * writes a route for OPTIONS instance or collection of resource
+ *
+ * Collection:
+ * OPTIONS http://localhost:3000/v1/resources
+ *
+ * Instance:
+ * OPTIONS http://localhost:3000/v1/resources/132456789.json
+ *
+ * @type {OptionsResourceWriter}
+ */
+module.exports = OptionsResourceWriter;
+
 String.prototype.replaceAll = function(target, replacement) {
     return this.split(target).join(replacement);
 };
@@ -43,4 +58,3 @@ OptionsResourceWriter.prototype.writeCollection = function(doc,permission,method
 
 }
 
-module.exports = OptionsResourceWriter;

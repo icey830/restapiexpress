@@ -2,6 +2,21 @@
  * Created by samschmid on 28.03.14.
  */
 
+/**
+ * Class for writing route
+ *
+ * writes a route for GET instance or collection of resource
+ *
+ * Collection:
+ * GET http://localhost:3000/v1/resources
+ *
+ * Instance:
+ * GET http://localhost:3000/v1/resources/132456789.json
+ *
+ * @type {GetResourceWriter}
+ */
+module.exports = GetResourceWriter;
+
 String.prototype.replaceAll = function(target, replacement) {
     return this.split(target).join(replacement);
 };
@@ -43,4 +58,3 @@ GetResourceWriter.prototype.writeCollection = function(doc,permission,method, co
 
 }
 
-module.exports = GetResourceWriter;

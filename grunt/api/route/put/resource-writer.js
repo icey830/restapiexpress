@@ -2,6 +2,21 @@
  * Created by samschmid on 28.03.14.
  */
 
+/**
+ * Class for writing route
+ *
+ * writes a route for PUT instance or collection of resource
+ *
+ * Collection:
+ * PUT http://localhost:3000/v1/resources
+ *
+ * Instance:
+ * PUT http://localhost:3000/v1/resources/132456789.json
+ *
+ * @type {PutResourceWriter}
+ */
+module.exports = PutResourceWriter;
+
 String.prototype.replaceAll = function(target, replacement) {
     return this.split(target).join(replacement);
 };
@@ -43,5 +58,3 @@ PutResourceWriter.prototype.writeInstance = function(doc,permission,method, cont
 
 }
 
-
-module.exports = PutResourceWriter;

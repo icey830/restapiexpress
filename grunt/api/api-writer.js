@@ -4,6 +4,22 @@
 var ApiDescriptionWriter = require('./description/api-description-writer.js');
 var ApiRouteWriter = require('./route/api-route-writer.js');
 
+/**
+ * Class for writing route to instance and resource and route to description of resource
+ *
+ * Collection:
+ * http://localhost:3000/v1/resources
+ *
+ * Instance:
+ * http://localhost:3000/v1/resources/132456789.json
+ *
+ * Documentation:
+ * http://localhost:3000/doc/v1/resources
+ *
+ * @type {ApiWriter}
+ */
+module.exports = ApiWriter;
+
 function ApiWriter(grunt, rootdir) {
     this.grunt = grunt;
     this.rootdir = rootdir;
@@ -74,5 +90,3 @@ ApiWriter.prototype.writeVersions = function(docs)  {
 
 }
 
-
-module.exports = ApiWriter;

@@ -2,6 +2,21 @@
  * Created by samschmid on 28.03.14.
  */
 
+/**
+ * Class for writing route
+ *
+ * writes a route for DELETE instance or collection of resource
+ *
+ * Collection:
+ * DELETE http://localhost:3000/v1/resources
+ *
+ * Instance:
+ * DELETE http://localhost:3000/v1/resources/132456789.json
+ *
+ * @type {DeleteResourceWriter}
+ */
+module.exports = DeleteResourceWriter;
+
 String.prototype.replaceAll = function(target, replacement) {
     return this.split(target).join(replacement);
 };
@@ -43,4 +58,3 @@ DeleteResourceWriter.prototype.writeInstance = function(doc,permission,method, c
 
 }
 
-module.exports = DeleteResourceWriter;

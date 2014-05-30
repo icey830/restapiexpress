@@ -2,6 +2,21 @@
  * Created by samschmid on 28.03.14.
  */
 
+/**
+ * Class for writing route
+ *
+ * writes a route for PATCH instance or collection of resource
+ *
+ * Collection:
+ * PATCH http://localhost:3000/v1/resources
+ *
+ * Instance:
+ * PATCH http://localhost:3000/v1/resources/132456789.json
+ *
+ * @type {PatchResourceWriter}
+ */
+module.exports = PatchResourceWriter;
+
 String.prototype.replaceAll = function(target, replacement) {
     return this.split(target).join(replacement);
 };
@@ -43,5 +58,3 @@ PatchResourceWriter.prototype.writeInstance = function(doc,permission,method, co
 
 }
 
-
-module.exports = PatchResourceWriter;

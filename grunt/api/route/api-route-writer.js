@@ -13,6 +13,19 @@ String.prototype.replaceAll = function(target, replacement) {
     return this.split(target).join(replacement);
 };
 
+/**
+ * Class for writing route
+ *
+ * writes a route for each supported VERB for instance and collection of resource
+ *
+ * Collection:
+ * VERB http://localhost:3000/v1/resources
+ *
+ * Instance:
+ * VERB http://localhost:3000/v1/resources/132456789.json
+ *
+ * @type {ApiRouteWriter}
+ */
 module.exports = ApiRouteWriter;
 
 function ApiRouteWriter(grunt, rootdir) {
