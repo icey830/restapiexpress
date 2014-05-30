@@ -1,6 +1,6 @@
 #Providers
 
-Containing all supported providers
+Containing all supported database providers
 
 ##mongoose
 
