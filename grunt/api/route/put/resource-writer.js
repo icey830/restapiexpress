@@ -1,8 +1,6 @@
 /**
- * Created by samschmid on 28.03.14.
- */
-
-/**
+ * Created by Samuel Schmid on 28.03.14.
+ *
  * Class for writing route
  *
  * writes a route for PUT instance or collection of resource

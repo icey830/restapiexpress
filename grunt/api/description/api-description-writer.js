@@ -1,8 +1,6 @@
 /**
- * Created by samschmid on 28.03.14.
- */
-
-/**
+ * Created by Samuel Schmid on 28.03.14.
+ *
  * Uses api.template and creates version description for URL
  *
  * http://localhost:3000/v1/

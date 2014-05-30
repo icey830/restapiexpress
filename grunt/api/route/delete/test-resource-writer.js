@@ -1,12 +1,6 @@
 /**
- * Created by samschmid on 30.03.14.
- */
-String.prototype.replaceAll = function(target, replacement) {
-    return this.split(target).join(replacement);
-};
-
-
-/**
+ * Created by Samuel Schmid on 30.03.14.
+ *
  * Class for writing Test file
  *
  * writes a route tests DELETE Resource or collection
@@ -14,6 +8,13 @@ String.prototype.replaceAll = function(target, replacement) {
  * @type {TestDeleteResourceWriter}
  */
 module.exports = TestDeleteResourceWriter;
+
+String.prototype.replaceAll = function(target, replacement) {
+    return this.split(target).join(replacement);
+};
+
+
+
 
 /**
  * Constructor

@@ -1,7 +1,10 @@
 /**
- * Created by samschmid on 11.05.14.
+ * Created by Samuel Schmid on 11.05.14.
+ *
+ * Class for writing integrations tests for resource and all supported VERBs
+ *
+ * @type {IntegrationTestWriter}
  */
-
 module.exports = IntegrationTestWriter;
 
 function IntegrationTestWriter(grunt, rootdir, testApiRouteWriter) {

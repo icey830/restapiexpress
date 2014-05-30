@@ -1,11 +1,6 @@
 /**
- * Created by samschmid on 30.03.14.
- */
-String.prototype.replaceAll = function(target, replacement) {
-    return this.split(target).join(replacement);
-};
-
-/**
+ * Created by Samuel Schmid on 30.03.14.
+ *
  * Class for writing Test file
  *
  * writes a route tests POST Resource or collection
@@ -13,6 +8,12 @@ String.prototype.replaceAll = function(target, replacement) {
  * @type {TestPostResourceWriter}
  */
 module.exports = TestPostResourceWriter;
+
+String.prototype.replaceAll = function(target, replacement) {
+    return this.split(target).join(replacement);
+};
+
+
 
 function TestPostResourceWriter(grunt, rootdir) {
     this.grunt = grunt;

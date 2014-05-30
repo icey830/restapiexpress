@@ -1,6 +1,15 @@
 /**
- * Created by samschmid on 28.03.14.
+ * Created by Samuel Schmid on 28.03.14.
+ *
+ * Class for writing Test files
+ *
+ * writes test for versions, documentation and routes
+ *
+ * @type {TestWriter}
  */
+
+module.exports = TestWriter;
+
 var TestApiDescriptionWriter = require('./description/test-api-description-writer.js');
 var TestApiRouteWriter = require('./route/test-api-route-writer.js');
 
@@ -17,15 +26,6 @@ Array.prototype.contains = function(obj) {
 String.prototype.replaceAll = function(target, replacement) {
     return this.split(target).join(replacement);
 };
-
-/**
- * Class for writing Test files
- *
- * writes test for versions and containing classes for creating documentation tests and route tests
- *
- * @type {TestWriter}
- */
-module.exports = TestWriter;
 
 /**
  * Constructor

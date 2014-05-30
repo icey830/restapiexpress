@@ -1,19 +1,6 @@
 /**
- * Created by samschmid on 28.03.14.
- */
-
-var PostResourceWriter = require('./post/resource-writer.js');
-var PutResourceWriter = require('./put/resource-writer.js');
-var PatchResourceWriter = require('./patch/resource-writer.js');
-var GetResourceWriter = require('./get/resource-writer.js');
-var DeleteResourceWriter = require('./delete/resource-writer.js');
-var OptionsResourceWriter = require('./options/resource-writer.js');
-
-String.prototype.replaceAll = function(target, replacement) {
-    return this.split(target).join(replacement);
-};
-
-/**
+ * Created by Samuel Schmid on 28.03.14.
+ *
  * Class for writing route
  *
  * writes a route for each supported VERB for instance and collection of resource
@@ -27,6 +14,19 @@ String.prototype.replaceAll = function(target, replacement) {
  * @type {ApiRouteWriter}
  */
 module.exports = ApiRouteWriter;
+
+var PostResourceWriter = require('./post/resource-writer.js');
+var PutResourceWriter = require('./put/resource-writer.js');
+var PatchResourceWriter = require('./patch/resource-writer.js');
+var GetResourceWriter = require('./get/resource-writer.js');
+var DeleteResourceWriter = require('./delete/resource-writer.js');
+var OptionsResourceWriter = require('./options/resource-writer.js');
+
+String.prototype.replaceAll = function(target, replacement) {
+    return this.split(target).join(replacement);
+};
+
+
 
 function ApiRouteWriter(grunt, rootdir) {
     this.grunt = grunt;

@@ -1,10 +1,6 @@
 /**
- * Created by samschmid on 28.03.14.
- */
-var ApiDescriptionWriter = require('./description/api-description-writer.js');
-var ApiRouteWriter = require('./route/api-route-writer.js');
-
-/**
+ * Created by Samuel Schmid on 28.03.14.
+ *
  * Class for writing route to instance and resource and route to description of resource
  *
  * Collection:
@@ -19,6 +15,11 @@ var ApiRouteWriter = require('./route/api-route-writer.js');
  * @type {ApiWriter}
  */
 module.exports = ApiWriter;
+
+var ApiDescriptionWriter = require('./description/api-description-writer.js');
+var ApiRouteWriter = require('./route/api-route-writer.js');
+
+
 
 function ApiWriter(grunt, rootdir) {
     this.grunt = grunt;

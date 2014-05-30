@@ -1,10 +1,7 @@
 /**
- * Created by samschmid on 28.03.14.
- */
-/**
- * Class for writing Test files
+ * Created by Samuel Schmid on 28.03.14.
  *
- * writes documentation tests
+ * Class for writing api description Test files
  *
  * @type {TestApiDescriptionWriter}
  */

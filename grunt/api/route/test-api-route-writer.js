@@ -1,6 +1,17 @@
 /**
- * Created by samschmid on 28.03.14.
+ * Created by Samuel Schmid on 28.03.14.
+ *
+ * Class for writing Test files
+ *
+ * writes a route tests for each supported VERB
+ * GET/POST/PUT/PATCH/HEAD/OPTIONS/DELETE
+ *
+ * writes a integration test with test user having all rights
+ *
+ * @type {TestApiRouteWriter}
  */
+module.exports = TestApiRouteWriter;
+
 String.prototype.replaceAll = function(target, replacement) {
     return this.split(target).join(replacement);
 };
@@ -13,17 +24,7 @@ var TestDeleteResourceWriter = require('./delete/test-resource-writer.js');
 var TestOptionsResourceWriter = require('./options/test-resource-writer.js');
 var IntegrationTestWriter = require('./integration-test-writer.js');
 
-/**
- * Class for writing Test files
- *
- * writes a route tests for each supported VERB
- * GET/POST/PUT/PATCH/HEAD/OPTIONS/DELETE
- *
- * writes a integration test with test user having all rights
- *
- * @type {TestApiRouteWriter}
- */
-module.exports = TestApiRouteWriter;
+
 
 /**
  * Consturcotr
