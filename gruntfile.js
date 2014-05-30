@@ -1,5 +1,8 @@
 /**
- * Created by samschmid on 24.02.14.
+ * Created by Samuel Schmid on 24.02.14.
+ *
+ * Grunt File for generating all Routes based on JSON-Files located in apidoc-Folder.
+ *
  */
 
 var Docs = require('./grunt/docs.js');
@@ -8,13 +11,26 @@ var Database = require('./grunt/database/database.js');
 var ApiWriter = require('./grunt/api/api-writer.js');
 var TestWriter = require('./grunt/api/test-writer.js');
 var LibDatabase = require('./lib/database/database');
+
+
 module.exports = function(grunt){
 
+    /**
+     * Initialize Grunt
+     */
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         appconfig: grunt.file.readJSON('config.json')
     });
 
+    /**
+     * Registers default Tasks which runs with command line command 'grunt'
+     *
+     * 1. reads all documentation files
+     * 2. creates all routes
+     * 3. creates all tests
+     * 4. creates all database files
+     */
     grunt.registerTask('default', 'searchDocs', function() {
 
         var allDocuments = new Docs(grunt);
@@ -35,6 +51,9 @@ module.exports = function(grunt){
 
     });
 
+    /**
+     * Registers test task which runs all test with command line command 'grunt test'
+     */
     grunt.registerTask('test', 'test with mocha', function() {
 
         var done = this.async();
@@ -59,16 +78,23 @@ module.exports = function(grunt){
         } ;
     });
 
+    /**
+     * Registers setup task which downloads all grunt-dependencies with the command line command 'grunt setup'
+     */
     grunt.registerTask('setup', 'install extensions', function() {
 
         var setup = new Setup(grunt);
         setup.downloadDependencies(this);
     });
 
+    /**
+     * Registers database task which creates all database files which runs with the command line command 'grunt setup'
+     */
     grunt.registerTask('database', 'install database features', function() {
 
         var db = new Database(grunt);
         var docs = new Docs(grunt);
+        db.deleteSchemes(docs);
         db.createSchemes(docs);
     });
 

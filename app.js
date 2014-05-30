@@ -1,5 +1,5 @@
 /**
- * Module dependencies.
+ * Node Js App initializer
  */
 
 var express = require('express');
@@ -14,8 +14,7 @@ var app = express();
 
 // all environments
 app.set('port', process.env.PORT || 3000);
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+
 
 // development only
 app.configure('development', function(){
@@ -48,6 +47,9 @@ app.configure('development', function(){
 app.configure('production', function(){
 
 })
+
+
+//RestAPIExpress specific routes
 app.set('db', database);
 app.set('rootdir', __dirname);
 app.all('/', apirouter.versions);
