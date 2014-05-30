@@ -27,9 +27,10 @@ module.exports = function(grunt){
      * Registers default Tasks which runs with command line command 'grunt'
      *
      * 1. reads all documentation files
-     * 2. creates all routes
-     * 3. creates all tests
-     * 4. creates all database files
+     * 2. creates generated apidocs
+     * 3. creates all routes
+     * 4. creates all tests
+     * 5. creates all database files
      */
     grunt.registerTask('default', 'searchDocs', function() {
 

@@ -384,3 +384,6 @@ If a image will be deleted, the news will still stay alive.
 
 # Become a contributer
 We are looking for contributers. Please contact samuelschmid75@gmail.com.
+
+{{md  Grunt.md }}
+{{md  LICENSE.md }}
