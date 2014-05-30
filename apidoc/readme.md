@@ -3,7 +3,7 @@ contains all resources documented with JSON for each version
 
 version/resources/resources.json
 
-##for example
+####example
 v1/news/news.json
 
 #Abstract Classes
@@ -11,13 +11,15 @@ Can contain abstract classes!
 
 version/abstract/abstractresource/abstractresource.json
 
-##for example
+####example
 v1/abstract/objects/objects.json
 
-#naming convention
+#Naming convention
 Resource names must be descripte in plural form.
 
 #Resource
+
+####example
 ```json
 {
     "title": "News",
