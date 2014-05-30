@@ -1,3 +1,10 @@
+/**
+ * Doc.js representing a documentation files
+ *
+ * @type {Doc}
+ */
+module.exports = Doc;
+
 Array.prototype.contains = function(obj) {
     var i = this.length;
     while (i--) {
@@ -22,6 +29,14 @@ function clone(obj) {
     return copy;
 }
 
+/**
+ * Initializa Doc with json file
+ *
+ * @param filename
+ * @param abspath
+ * @param grunt
+ * @constructor
+ */
 function Doc(filename,abspath, grunt) {
     this.grunt = grunt;
     this.filename = filename;
@@ -40,6 +55,7 @@ function Doc(filename,abspath, grunt) {
     this.readFile(grunt);
 }
 
+//TODO private
 Doc.prototype.readFile = function(grunt) {
 
     this.json=grunt.file.readJSON(this.abspath);
@@ -47,9 +63,13 @@ Doc.prototype.readFile = function(grunt) {
     this.version = this.json.version;
     this.filetitle = this.json.title.toLowerCase();
 
-
 }
 
+/**
+ * Reads the model of base class and saves it as a ivar (model)
+ *
+ * @returns {json}
+ */
 Doc.prototype.readModel = function() {
 
     var grunt = this.grunt;
@@ -66,6 +86,12 @@ Doc.prototype.readModel = function() {
 
     return this.model;
 }
+
+/**
+ * Reads the permission
+ *
+ * @returns {permission}
+ */
 Doc.prototype.getPermissions = function() {
 
     var grunt = this.grunt;
@@ -78,7 +104,7 @@ Doc.prototype.getPermissions = function() {
     var thisPermission = this.json.permission;
 
     //Translate allowedMethods to methods
-    grunt.log.debug("thispermission");
+   // grunt.log.debug("thispermission");
     thisPermission.forEach(function(docPermission) {
         if(docPermission.allowedMethods) {
             docPermission.methods = docPermission.allowedMethods;
@@ -90,7 +116,7 @@ Doc.prototype.getPermissions = function() {
 
 
     //Add methods from Parent
-    grunt.log.debug("parentPermission");
+    //grunt.log.debug("parentPermission");
     parentPermissions.forEach(function(basePermission) {
 
         var baseRole = basePermission.role;
@@ -110,7 +136,7 @@ Doc.prototype.getPermissions = function() {
 
             thisPermission.push(translatedBasePermission)
         } else {
-            grunt.log.debug("loop basePermissions" +JSON.stringify(basePermission));
+            //grunt.log.debug("loop basePermissions" +JSON.stringify(basePermission));
             basePermission.allowedMethods.forEach(function(allowedMethod) {
 
                 if(thisPermission.length > 0) {
@@ -129,7 +155,7 @@ Doc.prototype.getPermissions = function() {
                     })
                 }
             });
-            grunt.log.debug("loop end");
+            //grunt.log.debug("loop end");
         }
 
     })
@@ -137,6 +163,9 @@ Doc.prototype.getPermissions = function() {
     return thisPermission;
 }
 
+/**
+ * reads base document and saves correct permissions and model to this
+ */
 Doc.prototype.readParent = function() {
 
     this.json.permission = this.getPermissions();
@@ -146,6 +175,7 @@ Doc.prototype.readParent = function() {
 
 }
 
+//TODO private
 function readPermissionFromDoc(that,permissions) {
 
     //that.grunt.log.debug("readPermissionFromDoc");
@@ -164,6 +194,15 @@ function readPermissionFromDoc(that,permissions) {
     });
 }
 
+
+/**
+ * Helper method for Grunt to specify path to app.js from test methods
+ *
+ *
+ * @param folder
+ * @param minus
+ * @returns {string}
+ */
 Doc.prototype.pathToAppJsFromFolder = function(folder,minus) {
 
     if(!minus) {
@@ -175,6 +214,11 @@ Doc.prototype.pathToAppJsFromFolder = function(folder,minus) {
     return pathToAppJS;
 }
 
+/**
+ * gets all supported VERBs for this resource
+ *
+ * @returns {Array[String]}
+ */
 Doc.prototype.supportedVerbs = function(){
     if(this.apidescription === undefined) {
         return undefined;
@@ -186,4 +230,3 @@ Doc.prototype.supportedVerbs = function(){
     });
     return supportedVerbs;
 }
-module.exports = Doc;

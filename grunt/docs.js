@@ -1,3 +1,16 @@
+/**
+ * Represents all documented resources of Restapiexpress
+ *
+ * contains
+ * - an array of Doc (docs)
+ * - a map of Name/Doc (docMap)
+ * - apidescription
+ * - an array of version (versions)
+ *
+ * @type {Docs}
+ */
+module.exports = Docs;
+
 if (typeof String.prototype.endsWith != 'function') {
     // see below for better implementation!
     String.prototype.endsWith = function (str){
@@ -16,6 +29,12 @@ Array.prototype.contains = function(obj) {
 var fs = require('fs');
 var Doc = require('./doc');
 
+/**
+ * Constructor
+ *
+ * @param grunt
+ * @constructor
+ */
 function Docs(grunt) {
 
     this.grunt = grunt;
@@ -27,6 +46,12 @@ function Docs(grunt) {
 
 }
 
+//TODO private
+/**
+ * Reads all Docs in apidoc folder
+ *
+ * @param grunt
+ */
 Docs.prototype.findDocs = function(grunt) {
 
     var that = this;
@@ -67,6 +92,7 @@ Docs.prototype.findDocs = function(grunt) {
     });
 
 
+    //Set base Doc
     for(var i=0;i<this.docs.length;i++) {
         var doc = this.docs[i];
 
@@ -81,6 +107,7 @@ Docs.prototype.findDocs = function(grunt) {
 
     }
 
+    //Read Parent
     for(var i=0;i<this.docs.length;i++) {
         var doc = this.docs[i];
 
@@ -90,6 +117,15 @@ Docs.prototype.findDocs = function(grunt) {
 
 }
 
+/**
+ * Generates Doc Files in folder "generated"
+ *
+ * Takes original Documentation Files from apidoc and copy to "generated", adds
+ * important additions from abstract files.
+ *
+ * defines correct permissions
+ *
+ */
 Docs.prototype.genereateDocFiles = function() {
 
     var grunt = this.grunt;
@@ -125,6 +161,13 @@ Docs.prototype.genereateDocFiles = function() {
     }
 
 }
+
+/**
+ * creates a test for the given version
+ *
+ * @param version
+ * @param folder
+ */
 Docs.prototype.createVersionTest = function(version, folder) {
 
     this.grunt.log.debug("folder:" + folder);
@@ -147,6 +190,12 @@ Docs.prototype.createVersionTest = function(version, folder) {
 
 }
 
+/**
+ * Helper method for Grunt to specify path to app.js from test methods
+ *
+ * @param folder
+ * @returns {string}
+ */
 Docs.prototype.pathToAppJsFromFolder = function(folder) {
 
     var level = folder.split('/').length ;
@@ -154,4 +203,3 @@ Docs.prototype.pathToAppJsFromFolder = function(folder) {
     for(var i=0;i<=level-2;i++) pathToAppJS = "../" + pathToAppJS;
     return pathToAppJS;
 }
-module.exports = Docs;
