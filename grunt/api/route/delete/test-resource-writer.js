@@ -5,6 +5,23 @@ String.prototype.replaceAll = function(target, replacement) {
     return this.split(target).join(replacement);
 };
 
+
+/**
+ * Class for writing Test file
+ *
+ * writes a route tests DELETE Resource or collection
+ *
+ * @type {TestDeleteResourceWriter}
+ */
+module.exports = TestDeleteResourceWriter;
+
+/**
+ * Constructor
+ *
+ * @param grunt
+ * @param rootdir
+ * @constructor
+ */
 function TestDeleteResourceWriter(grunt, rootdir) {
     this.grunt = grunt;
     this.rootdir = rootdir;
@@ -81,5 +98,3 @@ TestDeleteResourceWriter.prototype.writeCollection = function(doc,permission,met
     grunt.file.write(doc.testfolder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase() + '/collection.js', modifiedContent);
 
 }
-
-module.exports = TestDeleteResourceWriter;

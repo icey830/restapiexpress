@@ -13,8 +13,25 @@ var TestDeleteResourceWriter = require('./delete/test-resource-writer.js');
 var TestOptionsResourceWriter = require('./options/test-resource-writer.js');
 var IntegrationTestWriter = require('./integration-test-writer.js');
 
+/**
+ * Class for writing Test files
+ *
+ * writes a route tests for each supported VERB
+ * GET/POST/PUT/PATCH/HEAD/OPTIONS/DELETE
+ *
+ * writes a integration test with test user having all rights
+ *
+ * @type {TestApiRouteWriter}
+ */
 module.exports = TestApiRouteWriter;
 
+/**
+ * Consturcotr
+ *
+ * @param grunt
+ * @param rootdir
+ * @constructor
+ */
 function TestApiRouteWriter(grunt, rootdir) {
     this.grunt = grunt;
     this.rootdir = rootdir;

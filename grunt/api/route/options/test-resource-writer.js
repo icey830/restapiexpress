@@ -5,6 +5,15 @@ String.prototype.replaceAll = function(target, replacement) {
     return this.split(target).join(replacement);
 };
 
+/**
+ * Class for writing Test file
+ *
+ * writes a route tests OPTIONS Resource or collection
+ *
+ * @type {TestOptionsResourceWriter}
+ */
+module.exports = TestOptionsResourceWriter;
+
 function TestOptionsResourceWriter(grunt, rootdir) {
     this.grunt = grunt;
     this.rootdir = rootdir;
@@ -56,5 +65,3 @@ TestOptionsResourceWriter.prototype.writeCollection = function(doc,permission,me
     grunt.file.write(doc.testfolder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase() + '/collection.js', modifiedContent);
 
 }
-
-module.exports = TestOptionsResourceWriter;

@@ -2,14 +2,31 @@
  * Created by samschmid on 28.03.14.
  */
 /**
- * Created by samschmid on 28.03.14.
+ * Class for writing Test files
+ *
+ * writes documentation tests
+ *
+ * @type {TestApiDescriptionWriter}
  */
+module.exports = TestApiDescriptionWriter;
 
+/**
+ * Constructor
+ *
+ * @param grunt
+ * @param rootdir
+ * @constructor
+ */
 function TestApiDescriptionWriter(grunt, rootdir) {
     this.grunt = grunt;
     this.rootdir = rootdir;
 }
 
+/**
+ * writes test for each permission and supported verb
+ *
+ * @param doc
+ */
 TestApiDescriptionWriter.prototype.write = function(doc)  {
 
     var grunt = this.grunt;
@@ -26,6 +43,7 @@ TestApiDescriptionWriter.prototype.write = function(doc)  {
 
 }
 
+//TODO private
 TestApiDescriptionWriter.prototype.writeTests = function(doc,permission, method, content) {
 
     var grunt = this.grunt;
@@ -41,4 +59,3 @@ TestApiDescriptionWriter.prototype.writeTests = function(doc,permission, method,
 
 }
 
-module.exports = TestApiDescriptionWriter;

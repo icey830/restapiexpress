@@ -18,12 +18,33 @@ String.prototype.replaceAll = function(target, replacement) {
     return this.split(target).join(replacement);
 };
 
+/**
+ * Class for writing Test files
+ *
+ * writes test for versions and containing classes for creating documentation tests and route tests
+ *
+ * @type {TestWriter}
+ */
+module.exports = TestWriter;
+
+/**
+ * Constructor
+ *
+ * @param grunt
+ * @param rootdir
+ * @constructor
+ */
 function TestWriter(grunt, rootdir) {
     this.grunt = grunt;
     this.rootdir = rootdir;
     this.testApiDescWriter = new TestApiDescriptionWriter(grunt, rootdir);
     this.testApiRouteWriter = new TestApiRouteWriter(grunt, rootdir);
 }
+
+/**
+ * deletes tests
+ * @param docs
+ */
 TestWriter.prototype.delete = function(docs) {
     var grunt = this.grunt;
     if(docs.docs.length == 0) {
@@ -41,7 +62,6 @@ TestWriter.prototype.delete = function(docs) {
             //Dont delete anything
         } else {
 
-            grunt.log.debug("start createing test doc");
             var path = doc.testfolder.split("/");
             var version = path[0] + "/"+path[1];
             if(!versionsToDelete.contains(version)) {
@@ -58,6 +78,11 @@ TestWriter.prototype.delete = function(docs) {
     })
 }
 
+/**
+ * create tests
+ *
+ * @param docs
+ */
 TestWriter.prototype.write = function(docs)  {
     var grunt = this.grunt;
 
@@ -82,6 +107,12 @@ TestWriter.prototype.write = function(docs)  {
 
 }
 
+/**
+ * create Version Tests
+ *
+ * tests if http://localhost:3000/ returns correct json
+ *
+ */
 TestWriter.prototype.writeVersionsTest = function()  {
     var grunt = this.grunt;
     var test = grunt.file.read('./grunt/templates/test.template');
@@ -97,4 +128,3 @@ TestWriter.prototype.writeVersionsTest = function()  {
     grunt.file.write(this.rootdir + '/test/versions.js', modifiedContent);
 
 }
-module.exports = TestWriter;

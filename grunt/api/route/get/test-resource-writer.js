@@ -5,6 +5,16 @@ String.prototype.replaceAll = function(target, replacement) {
     return this.split(target).join(replacement);
 };
 
+
+/**
+ * Class for writing Test file
+ *
+ * writes a route tests GET Resource or collection
+ *
+ * @type {TestGetResourceWriter}
+ */
+module.exports = TestGetResourceWriter;
+
 function TestGetResourceWriter(grunt, rootdir) {
     this.grunt = grunt;
     this.rootdir = rootdir;
@@ -103,5 +113,3 @@ TestGetResourceWriter.prototype.writeTestGetExistingResource = function(doc,perm
     modifiedContent =  modifiedContent.replace('{{{appjs}}}',doc.pathToAppJsFromFolder(doc.testfolder));
     grunt.file.write(doc.testfolder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase() + '/instance.js', modifiedContent);
 }
-
-module.exports = TestGetResourceWriter;
