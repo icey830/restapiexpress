@@ -1,6 +1,13 @@
 /**
- * Created by samschmid on 28.03.14.
+ * Created by Samuel Schmid on 28.03.14.
+ *
+ * Class for writing Lib Files
+ *
+ * Gets all Schemes and wrap it in one lib files
+ *
+ * @type {MongooseLibWriter}
  */
+module.exports = MongooseLibWriter;
 
 String.prototype.replaceAll = function(target, replacement) {
     return this.split(target).join(replacement);
@@ -46,4 +53,3 @@ MongooseLibWriter.prototype.writeLib = function(lib)  {
     })
 }
 
-module.exports = MongooseLibWriter;

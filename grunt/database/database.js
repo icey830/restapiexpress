@@ -1,6 +1,16 @@
 /**
- * Created by samschmid on 23.03.14.
+ * Created by Samuel Schmid on 23.03.14.
+ *
+ * Class for Database Handling
+ *
+ * Containing
+ * - App Config
+ * - Database Information
+ *
+ * @type {Database}
  */
+module.exports = Database;
+
 Array.prototype.contains = function(obj) {
     var i = this.length;
     while (i--) {
@@ -20,6 +30,12 @@ function Database(grunt) {
     this.appconfig = grunt.config().appconfig;
     this.db = this.appconfig.db;
 }
+
+/**
+ * delete Database Schemes of Docs
+ *
+ * @param docs
+ */
 Database.prototype.deleteSchemes = function(docs) {
     var grunt = this.grunt;
     grunt.log.debug("start ");
@@ -35,6 +51,11 @@ Database.prototype.deleteSchemes = function(docs) {
     }
 }
 
+/**
+ * create Database Schemes for Docs
+ *
+ * @param docs
+ */
 Database.prototype.createSchemes = function(docs)  {
 
     var grunt = this.grunt;
@@ -79,4 +100,3 @@ Database.prototype.createSchemes = function(docs)  {
 
     }
 }
-module.exports = Database;

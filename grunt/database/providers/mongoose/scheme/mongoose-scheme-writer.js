@@ -1,6 +1,12 @@
 /**
- * Created by samschmid on 28.03.14.
+ * Created by Samuel Schmid on 28.03.14.
+ *
+ * Class for writing MongoDB Scheme
+ *
+ * @type {MongooseScheme}
  */
+module.exports = MongooseScheme;
+
 if (typeof String.prototype.startsWith != 'function') {
     // see below for better implementation!
     String.prototype.startsWith = function (str){
@@ -278,5 +284,3 @@ MongooseScheme.prototype.writeLib = function(lib)  {
 
     })
 }
-
-module.exports = MongooseScheme;

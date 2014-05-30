@@ -1,6 +1,11 @@
 /**
- * Created by samschmid on 23.03.14.
+ * Created by Samuel Schmid on 23.03.14.
+ *
+ * Class for Download grunt dependencies
+ *
+ * @type {Setup}
  */
+module.exports = Setup;
 
 function Setup(grunt) {
     this.grunt = grunt;
@@ -69,4 +74,3 @@ Setup.prototype.downloadDependencies = function(context)  {
     }
 
 }
-module.exports = Setup;

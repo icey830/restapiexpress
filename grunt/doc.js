@@ -1,5 +1,7 @@
 /**
- * Doc.js representing a documentation files
+ * create by Samuel Schmid on 24.02.14.
+ *
+ * Doc.js representing a documentation file
  *
  * @type {Doc}
  */

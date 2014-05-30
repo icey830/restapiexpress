@@ -1,4 +1,6 @@
 /**
+ * Created by Samuel Schmid on 24.02.14.
+ *
  * Represents all documented resources of Restapiexpress
  *
  * contains
