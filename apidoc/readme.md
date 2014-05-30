@@ -1,23 +1,51 @@
 #apidoc
 contains all resources documented with JSON for each version
 
-version/resources/resources.json
+/version/resources/resources.json
 
 ####example
-v1/news/news.json
+/v1/news/news.json
 
 #Abstract Classes
 Can contain abstract classes!
-
-version/abstract/abstractresource/abstractresource.json
+/version/abstract/abstractresource/abstractresource.json
 
 ####example
-v1/abstract/objects/objects.json
+/v1/abstract/objects/objects.json
 
 #Naming convention
 Resource names must be descripte in plural form.
 
 #Resource
+
+####title
+Name of Resource in plural form
+
+####singular
+Sigular Version of Name
+
+####request
+relative path to resource
+
+####version
+version of resource
+
+####type
+unique type name in form "application/name"
+
+####base
+base class (none, if no base class)
+
+####_testId
+an id used for testing with grunt
+
+####model
+the database model
+if a base class is defined the base class model will be extended
+
+####permissions
+the permissions
+if a base class is defined the base class permissions will be extended, child permissions overrides base permissions
 
 ####example
 ```json
