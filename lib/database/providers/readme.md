@@ -3,6 +3,8 @@ Every database can be connected, at the moment, only one provider (mongoose) is 
 But its easy to write your own provider if you need an other database than MongoDB.
 You have to create a subfolder here for your provider an support the same methods like mongoose-provider.js.
 
+Don't forget to write scheme and lib for your grunt task. See [grunt database provider](/grunt/database/providers)
+
 ##mongoose
 classes in this folders handles all database operations on monogDB
 
