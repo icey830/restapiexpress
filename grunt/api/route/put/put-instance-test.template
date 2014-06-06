@@ -9,8 +9,8 @@ describe('PUT {{{path}}} --{{{role}}}', function(){
             var testedPart = res.body.item;
 
             for(var key in json){
-                if (!(key in testedPart)) return "missing "+key+" key" + JSON.stringify(res.body);
-                if(!json[key]===testedPart[key]) return "wrong value" + json[value] + "/" + testedPart[key];
+                if (!(key in testedPart)) return "{{{COMMENT}}} missing "+key+" key" + JSON.stringify(res.body);
+                if(!json[key]===testedPart[key]) return "{{{COMMENT}}} wrong value" + json[value] + "/" + testedPart[key];
             }
         };
         var json = {{{JSON}}};
@@ -23,7 +23,7 @@ describe('PUT {{{path}}} --{{{role}}}', function(){
         .expect(200)
         .expect(isValidJsonPut)
         .end(function(err, res){
-            if (err) return done(err);
+            if (err) return done(JSON.stringify(json) + "\n"+err);
             done()
         });
     })

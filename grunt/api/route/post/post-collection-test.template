@@ -12,7 +12,7 @@ describe('POST should success {{{path}}} --{{{role}}}', function(){
             .send(json)
             .expect(201)
             .end(function(err, res){
-                if (err) return done(err);
+                if (err) return done(JSON.stringify(json)+"\n"+err);
 
                 post_id = res.body.item._id;
                 done();

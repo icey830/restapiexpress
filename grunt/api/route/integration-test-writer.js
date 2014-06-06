@@ -31,11 +31,11 @@ function IntegrationTestWriter(grunt, rootdir, testApiRouteWriter) {
  */
 IntegrationTestWriter.prototype.write = function (doc, docs) {
     this.docs = docs;
-    this.grunt.log.writeln("TEST " + doc.filename);
 
     if(doc.filename !== "newsimages.json") {
         return;
     }
+
     var allSupportedMethods = doc.apidescription.supportedMethods;
     var that = this;
 
@@ -71,20 +71,20 @@ IntegrationTestWriter.prototype.write = function (doc, docs) {
                         var ids =  doc.json.model[model].test;
                         ids.forEach(function(id) {
                             that.grunt.log.writeln("id: " + id)
-                            test = that.getCreateEntityContent(id,type,test);
+                            test = that.getCreateEntityContent(id,type,test, "create mandatory reference");
                         });
                     } else {
                         var id = doc.json.model[model].test;
-                        test = that.getCreateEntityContent(id,type, test);
+                        test = that.getCreateEntityContent(id,type, test, "create mandatory reference");
                     }
                 }
             });
 
             //Create self
-            test = that.getCreateEntityContent(doc.json._testId, doc.json.type.split("/")[1], test)
+            test = that.getCreateEntityContent(doc.json._testId, doc.json.type.split("/")[1], test, "integration test create self")
 
             //Read self
-            test = that.getReadEntityContent(doc.json._testId, doc.json.type.split("/")[1], test);
+            test = that.getReadEntityContent(doc.json._testId, doc.json.type.split("/")[1], test, false, undefined, "Integrationtest first get");
 
             //Read reference
             Object.keys(fullModel).forEach(function(model) {
@@ -101,17 +101,20 @@ IntegrationTestWriter.prototype.write = function (doc, docs) {
                         var ids =  doc.json.model[model].test;
                         ids.forEach(function(id) {
                             that.grunt.log.writeln("id: " + id)
-                            test = that.getReadEntityContent(id,type,test, true);
+                            test = that.getReadEntityContent(id,type,test, true,undefined,"Read Reference");
                         });
                     } else {
                         var id = doc.json.model[model].test;
-                        test = that.getReadEntityContent(id,type, test, true);
+                        test = that.getReadEntityContent(id,type, test, true, undefined, "Read Reference");
                     }
                 }
             });
 
             //Delete self
             test = that.getDeleteEntityContent(doc.json._testId, doc.json.type.split("/")[1], test)
+
+            //Read self and Check If deleted
+            test = that.getReadEntityContent(doc.json._testId, doc.json.type.split("/")[1], test, false, undefined, "Integrationtest check if deleted, expect deleted", true);
 
             //Check if referenceRule applied
             Object.keys(fullModel).forEach(function(model) {
@@ -128,11 +131,11 @@ IntegrationTestWriter.prototype.write = function (doc, docs) {
                             var ids =  doc.json.model[model].test;
                             ids.forEach(function(id) {
                                 that.grunt.log.writeln("id: " + id)
-                                test = that.getReadEntityContent(id,type,test, true, {"reference" : fullModel[model].reference, "value" : doc.json._testId});
+                                test = that.getReadEntityContent(id,type,test, true, {"reference" : fullModel[model].reference, "value" : doc.json._testId}, "GET after refernce rule applied");
                             });
                         } else {
                             var id = doc.json.model[model].test;
-                            test = that.getReadEntityContent(id,type, test, true, {"reference" : fullModel[model].reference, "value" : doc.json._testId});
+                            test = that.getReadEntityContent(id,type, test, true, {"reference" : fullModel[model].reference, "value" : doc.json._testId},"GET after refernce rule applied");
                         }
                     }
 
@@ -140,9 +143,7 @@ IntegrationTestWriter.prototype.write = function (doc, docs) {
             });
 
             //Delete created Reference
-            /*Object.keys(fullModel).forEach(function(model) {
-
-                if(fullModel[model].mandatory === false) return;
+            Object.keys(fullModel).forEach(function(model) {
 
                 if(fullModel[model].reference) {
                     that.grunt.log.writeln("read mandatory reference");
@@ -161,8 +162,8 @@ IntegrationTestWriter.prototype.write = function (doc, docs) {
                         test = that.getDeleteEntityContent(id,type, test);
                     }
                 }
-            });*/
-        }
+            });
+         }
     });
 
     //TODO
@@ -173,14 +174,14 @@ IntegrationTestWriter.prototype.write = function (doc, docs) {
     grunt.file.write(doc.testfolder + '/integrationTest.js', test);
 }
 
-IntegrationTestWriter.prototype.getCreateEntityContent = function(id, type, test) {
+IntegrationTestWriter.prototype.getCreateEntityContent = function(id, type, test, comment) {
     if(!this.docs) {
         this.grunt.log.writeln("Docs not set");
         return;
     }
     var doc = this.docs.docMap[type];
     //this.grunt.log.writeln("doc of " + type + " " + JSON.stringify(doc.readModel(), null, 2));
-    return this.testApiRouteWriter.testPutResourceWriter.getInstanceTestContent(test,doc,"test",'../../../app.js');
+    return this.testApiRouteWriter.testPutResourceWriter.getInstanceTestContent(test,doc,"test",'../../../app.js', comment);
 
 }
 
@@ -194,12 +195,12 @@ IntegrationTestWriter.prototype.getDeleteEntityContent = function(id, type, test
 
 }
 
-IntegrationTestWriter.prototype.getReadEntityContent = function(id, type, test, allData, removeFromJson) {
+IntegrationTestWriter.prototype.getReadEntityContent = function(id, type, test, allData, removeFromJson, comment, expectDeleted) {
     if(!this.docs) {
         this.grunt.log.writeln("Docs not set");
         return;
     }
     var doc = this.docs.docMap[type];
-    return this.testApiRouteWriter.testGetResourceWriter.getInstanceTestContent(test,doc,"test",'../../../app.js', allData, removeFromJson);
+    return this.testApiRouteWriter.testGetResourceWriter.getInstanceTestContent(test,doc,"test",'../../../app.js', allData, removeFromJson, comment, expectDeleted);
 
 }

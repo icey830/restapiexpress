@@ -30,6 +30,7 @@
             "test" : ["534eead8c6db3400005ce62c"],
             "type": "application/com.github.restapiexpress.newsimages[]",
             "multiple": true,
+            "default" : [],
             "reference" : "news",
             "referenceRule" : "cascade"
         },

@@ -55,7 +55,7 @@ TestPutResourceWriter.prototype.generateJson = function(json,doc) {
 
 }
 
-TestPutResourceWriter.prototype.getInstanceTestContent = function(testfileContent, doc, role, appJsPath) {
+TestPutResourceWriter.prototype.getInstanceTestContent = function(testfileContent, doc, role, appJsPath, comment) {
     var grunt = this.grunt;
 
     var http200 = grunt.file.read('./grunt/api/route/put/put-instance-test.template');
@@ -68,6 +68,7 @@ TestPutResourceWriter.prototype.getInstanceTestContent = function(testfileConten
     var path = '/v'+doc.version + '/' + doc.filetitle + '/' +  doc.json._testId;;
     modifiedContent =  modifiedContent.replaceAll('{{{path}}}',path);
     modifiedContent =  modifiedContent.replaceAll('{{{role}}}',role);
+    modifiedContent =  modifiedContent.replaceAll('{{{COMMENT}}}',comment);
     modifiedContent =  modifiedContent.replace('{{{appjs}}}',appJsPath);
 
     return modifiedContent;

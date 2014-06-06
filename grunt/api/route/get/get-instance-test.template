@@ -6,26 +6,34 @@ describe('GET {{{path}}} --{{{role}}}', function(){
         function isValidJsonGet(res) {
             var json = {{{JSON}}};
 
+            if(json === undefined) return;
             var testedPart = res.body.item;
 
-            for(var key in json){
-                if (!(key in testedPart)) return "missing "+key+" key" + JSON.stringify(res.body);
+            if(testedPart === undefined) return "{{{COMMENT}}} \nmissing item key... json is " + JSON.stringify(json) + "\n"+ JSON.stringify(res.body);
 
+
+            for(var key in json){
+                if (!(key in testedPart)) return "{{{COMMENT}}} \nmissing "+key+" key" + JSON.stringify(res.body);
+
+               /* if(json[key] === null ||testedPart[key] === null) {
+                    return "{{{COMMENT}}} \nmissing item key... json is " + JSON.stringify(json) + "\n"+ JSON.stringify(res.body);
+
+                }*/
                 if(json[key] instanceof Array) {
                     var array = json[key];
-                    if(array.length != testedPart[key].length)  return "wrong value for key " + key + "\n" + json[key] + "\n" + testedPart[key]
-                        + "\n" + JSON.stringify(res.body, 2, null)
-                        + "\n" + JSON.stringify(json, 2, null);
+                    if(array.length != testedPart[key].length)  return "{{{COMMENT}}} \nwrong value for key " + key + "\n expect " + json[key] + "\n was    " + testedPart[key]
+                        + "\n is \n" + JSON.stringify(res.body, 2, null)
+                        + "\n should \n"  + JSON.stringify(json, 2, null);
                     for (index = 0; index < array.length; ++index) {
                         var value = array[index];
-                        if(testedPart[key][index] !== value) return "wrong value for key " + key + "\n" + json[key] + "\n" + testedPart[key]
-                            + "\n" + JSON.stringify(res.body, 2, null)
-                            + "\n" + JSON.stringify(json, 2, null);
+                        if(testedPart[key][index] !== value) return "{{{COMMENT}}} \nwrong value for key " + key + "\n expect " + json[key] + "\n was    " + testedPart[key]
+                            + "\n is \n" + JSON.stringify(res.body, 2, null)
+                            + "\n should \n"  + JSON.stringify(json, 2, null);
                     }
                 } else {
-                    if(json[key]!==testedPart[key]) return "wrong value for key " + key + "\n" + json[key] + "\n" + testedPart[key]
-                        + "\n" + JSON.stringify(res.body, 2, null)
-                        + "\n" + JSON.stringify(json, 2, null);
+                    if(json[key]!==testedPart[key]) return "{{{COMMENT}}} \nwrong value for key " + key + "\n expect " + json[key] + "\n was    " + testedPart[key]
+                        + "\n is \n" + JSON.stringify(res.body, 2, null)
+                        + "\n should \n"  + JSON.stringify(json, 2, null);
                 }
 
 
