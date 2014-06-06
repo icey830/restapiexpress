@@ -52,7 +52,7 @@ describe('GET {{{path}}} --{{{role}}}', function(){
             .expect(200)
             .expect(isValidJsonGet)
             .end(function(err, res){
-                if (err) return done(err);
+                if (err) return done('{{{COMMENT}}}'+err);
                 done()
             });
         })

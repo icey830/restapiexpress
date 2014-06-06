@@ -70,14 +70,12 @@ function writePreCondition(scope, grunt, doc, fullModel) {
 
 function writePostCondition(scope, grunt, doc, fullModel) {
 
-    //NO POST Condition needed at the moment
-    return;
-
-
     var test = grunt.file.read('./grunt/templates/test.template');
     var hasMandatoryReference = false;
     //Delete created Reference
     Object.keys(fullModel).forEach(function(model) {
+
+        if(fullModel[model].mandatory === false) return;
 
         if(fullModel[model].reference) {
             hasMandatoryReference = true;

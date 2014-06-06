@@ -116,7 +116,7 @@ IntegrationTestWriter.prototype.write = function (doc, docs) {
 
             //Check if referenceRule applied
             Object.keys(fullModel).forEach(function(model) {
-
+                if(fullModel[model].mandatory === false) return;
                 if(fullModel[model].reference) {
                     that.grunt.log.writeln("rule:" +  fullModel[model].referenceRule);
                     if(fullModel[model].referenceRule === "nullify") {

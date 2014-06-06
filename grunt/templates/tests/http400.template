@@ -7,7 +7,7 @@ describe('{{{METHOD}}} {{{path}}} --{{{role}}}', function(){
             .expect('Content-Type', /json/)
             .expect(400)
             .end(function(err, res){
-                if (err) return done(err);
+                if (err) return done('ERROR' + err);
                 done()
             });
     })
