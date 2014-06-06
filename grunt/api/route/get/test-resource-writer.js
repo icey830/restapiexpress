@@ -53,7 +53,7 @@ TestGetResourceWriter.prototype.generateJson = function(json,doc, allData) {
 
 }
 
-TestGetResourceWriter.prototype.getInstanceTestContent = function(testfileContent, doc, role, appJsPath, allData) {
+TestGetResourceWriter.prototype.getInstanceTestContent = function(testfileContent, doc, role, appJsPath, allData, removeFromJson) {
     var grunt = this.grunt;
 
     var http200 = grunt.file.read('./grunt/api/route/get/get-instance-test.template');
@@ -61,6 +61,36 @@ TestGetResourceWriter.prototype.getInstanceTestContent = function(testfileConten
 
     var json = {};
     this.generateJson(json,doc, allData);
+
+    if(removeFromJson !== undefined) {
+        grunt.log.writeln("removeFromJSON " + JSON.stringify(removeFromJson));
+        var allReferenceFileds = removeFromJson.reference.split(",");
+        allReferenceFileds.forEach(function(field) {
+
+            if(field.endsWith("[]")) field = field.substr(0,field.length-2);
+
+            grunt.log.writeln("filed " + field);
+            grunt.log.writeln("filedvalue " + json[field]);
+
+            if(json[field] instanceof Array){
+                var fieldArray = json[field];
+                grunt.log.writeln("search array for value " + removeFromJson.value + " and remove it. Arraylength " + fieldArray.length);
+
+                for (var i =0; i < fieldArray.length; i++) {
+                    //grunt.log.writeln("value = " + fieldArray[i] + " compare to " + removeFromJson.value);
+
+                    if (JSON.stringify(fieldArray[i]) === JSON.stringify(removeFromJson.value)) {
+                        fieldArray.splice(i,1);
+                        grunt.log.writeln("found at position " + i);
+
+                    }
+                }
+            } else {
+                grunt.log.writeln("noArray");
+                json[field] = null;
+            }
+        });
+    }
 
     var path = '/v'+doc.version + '/' + doc.filetitle + '/' + doc.json._testId;
     var modifiedContent =  testfileContent.replaceAll('{{{path}}}',path);

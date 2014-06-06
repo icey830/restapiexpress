@@ -109,8 +109,59 @@ IntegrationTestWriter.prototype.write = function (doc, docs) {
                     }
                 }
             });
+
             //Delete self
             test = that.getDeleteEntityContent(doc.json._testId, doc.json.type.split("/")[1], test)
+
+            //Check if referenceRule applied
+            Object.keys(fullModel).forEach(function(model) {
+
+                if(fullModel[model].reference) {
+                    that.grunt.log.writeln("rule:" +  fullModel[model].referenceRule);
+                    if(fullModel[model].referenceRule === "nullify") {
+
+                        var type = doc.json.model[model].type.split("/")[1];
+                        that.grunt.log.writeln("type:" +  type);
+
+                        if(type.endsWith("[]")) {
+                            type = type.replace("[]","");
+                            var ids =  doc.json.model[model].test;
+                            ids.forEach(function(id) {
+                                that.grunt.log.writeln("id: " + id)
+                                test = that.getReadEntityContent(id,type,test, true, {"reference" : fullModel[model].reference, "value" : doc.json._testId});
+                            });
+                        } else {
+                            var id = doc.json.model[model].test;
+                            test = that.getReadEntityContent(id,type, test, true, {"reference" : fullModel[model].reference, "value" : doc.json._testId});
+                        }
+                    }
+
+                }
+            });
+
+            //Delete created Reference
+            /*Object.keys(fullModel).forEach(function(model) {
+
+                if(fullModel[model].mandatory === false) return;
+
+                if(fullModel[model].reference) {
+                    that.grunt.log.writeln("read mandatory reference");
+                    var type = doc.json.model[model].type.split("/")[1];
+                    that.grunt.log.writeln("type:" +  type);
+
+                    if(type.endsWith("[]")) {
+                        type = type.replace("[]","");
+                        var ids =  doc.json.model[model].test;
+                        ids.forEach(function(id) {
+                            that.grunt.log.writeln("id: " + id)
+                            test = that.getDeleteEntityContent(id,type,test);
+                        });
+                    } else {
+                        var id = doc.json.model[model].test;
+                        test = that.getDeleteEntityContent(id,type, test);
+                    }
+                }
+            });*/
         }
     });
 
@@ -143,12 +194,12 @@ IntegrationTestWriter.prototype.getDeleteEntityContent = function(id, type, test
 
 }
 
-IntegrationTestWriter.prototype.getReadEntityContent = function(id, type, test, allData) {
+IntegrationTestWriter.prototype.getReadEntityContent = function(id, type, test, allData, removeFromJson) {
     if(!this.docs) {
         this.grunt.log.writeln("Docs not set");
         return;
     }
     var doc = this.docs.docMap[type];
-    return this.testApiRouteWriter.testGetResourceWriter.getInstanceTestContent(test,doc,"test",'../../../app.js', allData);
+    return this.testApiRouteWriter.testGetResourceWriter.getInstanceTestContent(test,doc,"test",'../../../app.js', allData, removeFromJson);
 
 }
