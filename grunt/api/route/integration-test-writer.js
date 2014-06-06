@@ -144,7 +144,7 @@ IntegrationTestWriter.prototype.write = function (doc, docs) {
             Object.keys(fullModel).forEach(function(model) {
 
                 if(fullModel[model].mandatory === false) return;
-                
+
                 if(fullModel[model].reference) {
                     that.grunt.log.writeln("read mandatory reference");
                     var type = doc.json.model[model].type.split("/")[1];

@@ -15,10 +15,13 @@ describe('GET {{{path}}} --{{{role}}}', function(){
             for(var key in json){
                 if (!(key in testedPart)) return "{{{COMMENT}}} \nmissing "+key+" key" + JSON.stringify(res.body);
 
-               /* if(json[key] === null ||testedPart[key] === null) {
-                    return "{{{COMMENT}}} \nmissing item key... json is " + JSON.stringify(json) + "\n"+ JSON.stringify(res.body);
 
-                }*/
+                if(testedPart[key] === null || json[key] === null) {
+                    if(json[key]!==testedPart[key]) return "{{{COMMENT}}} \nwrong value for key " + key + "\n expect " + json[key] + "\n was    " + testedPart[key]
+                        + "\n is \n" + JSON.stringify(res.body, 2, null)
+                        + "\n should \n"  + JSON.stringify(json, 2, null);
+                    return;
+                }
                 if(json[key] instanceof Array) {
                     var array = json[key];
                     if(array.length != testedPart[key].length)  return "{{{COMMENT}}} \nwrong value for key " + key + "\n expect " + json[key] + "\n was    " + testedPart[key]
