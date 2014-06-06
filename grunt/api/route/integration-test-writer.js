@@ -7,6 +7,13 @@
  */
 module.exports = IntegrationTestWriter;
 
+/**
+ *
+ * @param grunt
+ * @param rootdir
+ * @param testApiRouteWriter
+ * @constructor
+ */
 function IntegrationTestWriter(grunt, rootdir, testApiRouteWriter) {
     this.grunt = grunt;
     this.rootdir = rootdir;
@@ -16,11 +23,17 @@ function IntegrationTestWriter(grunt, rootdir, testApiRouteWriter) {
     }
 }
 
+/**
+ * write a integrationtest for given apidoc
+ *
+ * @param doc
+ * @param docs
+ */
 IntegrationTestWriter.prototype.write = function (doc, docs) {
     this.docs = docs;
     this.grunt.log.writeln("TEST " + doc.filename);
 
-    if(doc.filename !== "news.json") {
+    if(doc.filename !== "newsimages.json") {
         return;
     }
     var allSupportedMethods = doc.apidescription.supportedMethods;
@@ -45,8 +58,11 @@ IntegrationTestWriter.prototype.write = function (doc, docs) {
 
             //Create mandatory references
             Object.keys(fullModel).forEach(function(model) {
+
                 if(fullModel[model].mandatory === false) return;
+
                 if(fullModel[model].reference) {
+                    that.grunt.log.writeln("create mandatory reference");
                     var type = doc.json.model[model].type.split("/")[1];
                     that.grunt.log.writeln("type:" +  type);
 
@@ -70,6 +86,29 @@ IntegrationTestWriter.prototype.write = function (doc, docs) {
             //Read self
             test = that.getReadEntityContent(doc.json._testId, doc.json.type.split("/")[1], test);
 
+            //Read reference
+            Object.keys(fullModel).forEach(function(model) {
+
+                if(fullModel[model].mandatory === false) return;
+
+                if(fullModel[model].reference) {
+                    that.grunt.log.writeln("read mandatory reference");
+                    var type = doc.json.model[model].type.split("/")[1];
+                    that.grunt.log.writeln("type:" +  type);
+
+                    if(type.endsWith("[]")) {
+                        type = type.replace("[]","");
+                        var ids =  doc.json.model[model].test;
+                        ids.forEach(function(id) {
+                            that.grunt.log.writeln("id: " + id)
+                            test = that.getReadEntityContent(id,type,test, true);
+                        });
+                    } else {
+                        var id = doc.json.model[model].test;
+                        test = that.getReadEntityContent(id,type, test, true);
+                    }
+                }
+            });
             //Delete self
             test = that.getDeleteEntityContent(doc.json._testId, doc.json.type.split("/")[1], test)
         }
@@ -104,12 +143,12 @@ IntegrationTestWriter.prototype.getDeleteEntityContent = function(id, type, test
 
 }
 
-IntegrationTestWriter.prototype.getReadEntityContent = function(id, type, test) {
+IntegrationTestWriter.prototype.getReadEntityContent = function(id, type, test, allData) {
     if(!this.docs) {
         this.grunt.log.writeln("Docs not set");
         return;
     }
     var doc = this.docs.docMap[type];
-    return this.testApiRouteWriter.testGetResourceWriter.getInstanceTestContent(test,doc,"test",'../../../app.js');
+    return this.testApiRouteWriter.testGetResourceWriter.getInstanceTestContent(test,doc,"test",'../../../app.js', allData);
 
 }

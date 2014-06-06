@@ -31,12 +31,12 @@ TestGetResourceWriter.prototype.write = function(doc, permission, method, collec
 
 }
 
-TestGetResourceWriter.prototype.generateJson = function(json,doc) {
+TestGetResourceWriter.prototype.generateJson = function(json,doc, allData) {
 
     for (var property in doc.json.model) {
 
         var path = doc.json.model[property];
-        if(path.mandatory) {
+        if(path.mandatory || allData) {
             if(path.hasOwnProperty("test")) {
                 json[property] = path.test;
             } else {
@@ -53,14 +53,14 @@ TestGetResourceWriter.prototype.generateJson = function(json,doc) {
 
 }
 
-TestGetResourceWriter.prototype.getInstanceTestContent = function(testfileContent, doc, role, appJsPath) {
+TestGetResourceWriter.prototype.getInstanceTestContent = function(testfileContent, doc, role, appJsPath, allData) {
     var grunt = this.grunt;
 
     var http200 = grunt.file.read('./grunt/api/route/get/get-instance-test.template');
     testfileContent = testfileContent + '\n' + http200;
 
     var json = {};
-    this.generateJson(json,doc);
+    this.generateJson(json,doc, allData);
 
     var path = '/v'+doc.version + '/' + doc.filetitle + '/' + doc.json._testId;
     var modifiedContent =  testfileContent.replaceAll('{{{path}}}',path);

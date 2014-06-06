@@ -55,7 +55,7 @@
             "mandatory": true,
             "default" :  "Date.now",
             "type": "date",
-            "test" : "2011-07-14T19:43:37+0100"
+            "test" : "2011-07-14T18:43:37.000Z"
         }
     },
     "cache-control": {

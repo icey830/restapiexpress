@@ -10,7 +10,25 @@ describe('GET {{{path}}} --{{{role}}}', function(){
 
             for(var key in json){
                 if (!(key in testedPart)) return "missing "+key+" key" + JSON.stringify(res.body);
-                if(!json[key]===testedPart[key]) return "wrong value" + json[value] + "/" + testedPart[key];
+
+                if(json[key] instanceof Array) {
+                    var array = json[key];
+                    if(array.length != testedPart[key].length)  return "wrong value for key " + key + "\n" + json[key] + "\n" + testedPart[key]
+                        + "\n" + JSON.stringify(res.body, 2, null)
+                        + "\n" + JSON.stringify(json, 2, null);
+                    for (index = 0; index < array.length; ++index) {
+                        var value = array[index];
+                        if(testedPart[key][index] !== value) return "wrong value for key " + key + "\n" + json[key] + "\n" + testedPart[key]
+                            + "\n" + JSON.stringify(res.body, 2, null)
+                            + "\n" + JSON.stringify(json, 2, null);
+                    }
+                } else {
+                    if(json[key]!==testedPart[key]) return "wrong value for key " + key + "\n" + json[key] + "\n" + testedPart[key]
+                        + "\n" + JSON.stringify(res.body, 2, null)
+                        + "\n" + JSON.stringify(json, 2, null);
+                }
+
+
             }
         };
 
