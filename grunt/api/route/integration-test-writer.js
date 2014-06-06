@@ -185,13 +185,13 @@ IntegrationTestWriter.prototype.getCreateEntityContent = function(id, type, test
 
 }
 
-IntegrationTestWriter.prototype.getDeleteEntityContent = function(id, type, test) {
+IntegrationTestWriter.prototype.getDeleteEntityContent = function(id, type, test, comment) {
     if(!this.docs) {
         this.grunt.log.writeln("Docs not set");
         return;
     }
     var doc = this.docs.docMap[type];
-    return this.testApiRouteWriter.testDeleteResourceWriter.getInstanceTestContent(test,doc,"test",'../../../app.js', true);
+    return this.testApiRouteWriter.testDeleteResourceWriter.getInstanceTestContent(test,doc,"test",'../../../app.js', true, comment);
 
 }
 

@@ -41,7 +41,7 @@ TestDeleteResourceWriter.prototype.write = function(doc, permission, method, col
 
 }
 
-TestDeleteResourceWriter.prototype.getInstanceTestContent = function(testfileContent, doc, role, appJsPath, success) {
+TestDeleteResourceWriter.prototype.getInstanceTestContent = function(testfileContent, doc, role, appJsPath, success, comment) {
     var grunt = this.grunt;
 
     if(success === true) {
@@ -65,6 +65,7 @@ TestDeleteResourceWriter.prototype.getInstanceTestContent = function(testfileCon
 
     modifiedContent =  modifiedContent.replaceAll('{{{role}}}',role);
     modifiedContent =  modifiedContent.replace('{{{appjs}}}',appJsPath);
+    modifiedContent =  modifiedContent.replaceAll('{{{COMMENT}}}',comment);
 
     return modifiedContent;
 

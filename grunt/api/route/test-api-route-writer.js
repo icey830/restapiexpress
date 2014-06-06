@@ -23,7 +23,7 @@ var TestPatchResourceWriter = require('./patch/test-resource-writer.js');
 var TestDeleteResourceWriter = require('./delete/test-resource-writer.js');
 var TestOptionsResourceWriter = require('./options/test-resource-writer.js');
 var IntegrationTestWriter = require('./integration-test-writer.js');
-
+var PrePostConditionTestWriter = require('./pre-post-condition-test-writer.js');
 
 
 /**
@@ -43,6 +43,7 @@ function TestApiRouteWriter(grunt, rootdir) {
     this.testDeleteResourceWriter = new TestDeleteResourceWriter(grunt, rootdir);
     this.testOptionsResourceWriter = new TestOptionsResourceWriter(grunt, rootdir);
     this.integrationTestWriter = new IntegrationTestWriter(grunt, rootdir, this);
+    this.prePostConditionTestWriter = new PrePostConditionTestWriter(grunt, rootdir, this.integrationTestWriter);
 }
 
 TestApiRouteWriter.prototype.write = function(doc, docs)  {
@@ -96,6 +97,7 @@ TestApiRouteWriter.prototype.writeRouteForTestingAllMethods = function(doc, docs
     });
 
     this.integrationTestWriter.write(doc,docs);
+    this.prePostConditionTestWriter.write(doc,docs);
 
 }
 
