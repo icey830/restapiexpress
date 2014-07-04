@@ -29,13 +29,6 @@
             "default": "user",
             "type": "string",
             "test" : "user"
-        },
-        "apitoken": {
-            "name": "apitoken",
-            "description": "API-TOKEN",
-            "mandatory": false,
-            "type": "string",
-            "test" : "TOKEN-1234567890"
         }
     },
     "cache-control": {
