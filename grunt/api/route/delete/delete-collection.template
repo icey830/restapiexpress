@@ -1,9 +1,12 @@
 exports.send = function(req, res, resource) {
 
-    //TODO DELETE instance
     //Update or create instance
     var dbprovider = req.app.get("db").provider;
     var documentation = resource.documentationJson;
+
+    /*
+     TODO now we know, the role has access to this resource, but we don't know if the logged in user has access to the date so prove access rights to data (read, write, execute)
+     */
 
     var errorCallback = function(err) {
         console.log(err);
