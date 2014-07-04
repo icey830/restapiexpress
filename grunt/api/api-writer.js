@@ -43,10 +43,12 @@ ApiWriter.prototype.delete = function(docs) {
     }
 }
 
+
 ApiWriter.prototype.write = function(docs)  {
 
     var grunt = this.grunt;
 
+    this.apidescwriter.setDocuments(docs);
     for(var i=0;i<docs.docs.length;i++) {
         var doc = docs.docs[i];
 
@@ -58,7 +60,7 @@ ApiWriter.prototype.write = function(docs)  {
 
         } else if(doc.json.type.endsWith('.abstract')) {
 
-            //TODO dont write Route
+            //dont write Route
         } else {
 
             grunt.log.debug("start createing doc");

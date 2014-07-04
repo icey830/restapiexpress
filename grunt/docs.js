@@ -205,3 +205,22 @@ Docs.prototype.pathToAppJsFromFolder = function(folder) {
     for(var i=0;i<=level-2;i++) pathToAppJS = "../" + pathToAppJS;
     return pathToAppJS;
 }
+
+/**
+ * Gets all Resource for HATEOS for role
+ *
+ * @param role
+ */
+Docs.prototype.getResourcesDocForRole = function(role) {
+    var links = [];
+    this.docs.forEach(function(doc) {
+
+        doc.getPermissions().forEach(function(permission) {
+            if(permission.role === role) {
+                links.push(doc)
+            }
+        });
+
+    });
+    return links;
+};

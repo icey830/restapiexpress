@@ -5,7 +5,7 @@
  *
  * http://localhost:3000/v1/
  *
- * for given version (1 => v1) and for GET/HEAD/OPTIONS and POST
+ * for given version (1 => v1) and for GET/HEAD/OPTIONS
  *
  * @type {ApiDescriptionWriter}
  */
@@ -15,6 +15,10 @@ function ApiDescriptionWriter(grunt, rootdir) {
     this.grunt = grunt;
     this.rootdir = rootdir;
 }
+
+ApiDescriptionWriter.prototype.setDocuments = function (docs) {
+    this.docs = docs;
+};
 
 ApiDescriptionWriter.prototype.write = function(doc)  {
 
@@ -35,15 +39,17 @@ ApiDescriptionWriter.prototype.writeJSON = function(doc,permission,method, conte
     var links = [];
 
     var grunt = this.grunt;
+    var baseUrl = "";
     var isAllowed = false;
     if(permission.methods.contains(method.toUpperCase())) {
 
+        baseUrl = "http://localhost:3000/v" + doc.version + "/";
         var dynLink =
         {
             "type":"application/com.github.restapiexpress.api",
             "rel": "self",
             "method": method,
-            "href": "http://localhost:3000/v" + doc.version + "/"
+            "href": baseUrl
         };
 
         links.push(dynLink);
@@ -52,6 +58,7 @@ ApiDescriptionWriter.prototype.writeJSON = function(doc,permission,method, conte
     }
 
     if(isAllowed) {
+
         permission.permanentLinks.forEach(function(permanentLink) {
             //if(permanentLink.method === method.toUpperCase()) {
             links.push(permanentLink);
@@ -59,6 +66,19 @@ ApiDescriptionWriter.prototype.writeJSON = function(doc,permission,method, conte
             //}
         });
 
+        var resources = this.docs.getResourcesDocForRole(permission.role)
+        resources.forEach(function(resourceDoc) {
+
+            //TODO get a rel from api.json for the method
+            var newLink = {
+                "type":resourceDoc.json.type,
+                "rel": resourceDoc.json.title,
+                "method": method,
+                "href": baseUrl + resourceDoc.json.title.toLowerCase()
+            };
+
+            links.push(newLink);
+        })
         var modifiedContent =  content.replace('{{{links}}}',JSON.stringify(links));
         grunt.file.write(doc.folder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase()+'/instance.json', modifiedContent);
     }
