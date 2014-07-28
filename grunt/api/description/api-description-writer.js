@@ -16,6 +16,13 @@ function ApiDescriptionWriter(grunt, rootdir) {
     this.rootdir = rootdir;
 }
 
+if (typeof String.prototype.endsWith != 'function') {
+    // see below for better implementation!
+    String.prototype.endsWith = function (str){
+        return this.indexOf(str) == this.length - str.length;
+    };
+}
+
 ApiDescriptionWriter.prototype.setDocuments = function (docs) {
     this.docs = docs;
 };
@@ -35,8 +42,27 @@ ApiDescriptionWriter.prototype.write = function(doc)  {
 
 }
 
+function writeServiceMap(resources, method, baseUrl, serviceMap) {
+    resources.forEach(function (resourceDoc) {
+
+        if(!resourceDoc.json.type.endsWith(".abstract") && !resourceDoc.json.type.endsWith(".apidescription") ) {
+            //TODO get a rel from api.json for the method
+            var newLink = {
+                "type": resourceDoc.json.type,
+                "rel": resourceDoc.json.title,
+                "method": method,
+                "href": baseUrl + resourceDoc.json.title.toLowerCase()
+            };
+
+            serviceMap[resourceDoc.json.title] = newLink;
+        }
+
+    })
+}
+
 ApiDescriptionWriter.prototype.writeJSON = function(doc,permission,method, content) {
     var links = [];
+    var servicemap = {};
 
     var grunt = this.grunt;
     var baseUrl = "";
@@ -67,19 +93,9 @@ ApiDescriptionWriter.prototype.writeJSON = function(doc,permission,method, conte
         });
 
         var resources = this.docs.getResourcesDocForRole(permission.role)
-        resources.forEach(function(resourceDoc) {
-
-            //TODO get a rel from api.json for the method
-            var newLink = {
-                "type":resourceDoc.json.type,
-                "rel": resourceDoc.json.title,
-                "method": method,
-                "href": baseUrl + resourceDoc.json.title.toLowerCase()
-            };
-
-            links.push(newLink);
-        })
+        writeServiceMap(resources, method, baseUrl, servicemap);
         var modifiedContent =  content.replace('{{{links}}}',JSON.stringify(links));
+        modifiedContent =  modifiedContent.replace('{{{servicelinks}}}',JSON.stringify(servicemap));
         grunt.file.write(doc.folder + '/' + method.toLowerCase()+'/'+permission.role.toLowerCase()+'/instance.json', modifiedContent);
     }
 

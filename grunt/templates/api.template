@@ -1,6 +1,7 @@
 {
     "title": "api",
     "links":  {{{links}}},
+    "services":  {{{servicelinks}}},
     "mimetype": {
         "json": {
             "name": "json",
