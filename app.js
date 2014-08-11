@@ -15,6 +15,16 @@ var app = express();
 // all environments
 app.set('port', process.env.PORT || 3000);
 
+var allowCrossDomain = function(req, res, next) {
+    //res.header('Access-Control-Allow-Origin', config.allowedDomains);
+    res.header('Access-Control-Allow-Origin', "*");
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+    next();
+}
+
+
 
 // development only
 app.configure('development', function(){
@@ -26,6 +36,7 @@ app.use(express.compress());
 app.use(express.favicon());
 app.use(express.json());
 app.use(express.methodOverride());
+app.use(allowCrossDomain);
 app.use(express.urlencoded());
 app.use(express.cookieParser("SEKR37"));
 app.use(express.session({

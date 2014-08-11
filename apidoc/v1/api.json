@@ -82,8 +82,11 @@
                     "rel": "list versions of api",
                     "method": "GET",
                     "href": "http://localhost:3000/"
-                },
-                {
+                }
+            ],
+            "permanentServices" : {
+
+                "login" : {
                     "type":"application/com.github.restapiexpress.api",
                     "rel": "login to api",
                     "method": "POST",
@@ -91,7 +94,7 @@
                     "parameter": [{"name" : "username", "type" : "String"},
                         {"name" : "password", "type":"String"}]
                 },
-                {
+                "signup" : {
                     "type":"application/com.github.restapiexpress.api",
                     "rel": "signup to api",
                     "method": "POST",
@@ -99,7 +102,8 @@
                     "parameter": [{"name" : "username", "type" : "String"},
                         {"name" : "password", "type":"String"}]
                 }
-            ]
+            }
+
         },
         {
             "role": "User",

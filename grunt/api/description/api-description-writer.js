@@ -91,6 +91,11 @@ ApiDescriptionWriter.prototype.writeJSON = function(doc,permission,method, conte
 
             //}
         });
+this.grunt.log.write(JSON.stringify(permission.permanentServices));
+        for (var i in permission.permanentServices) {
+            servicemap[i] = permission.permanentServices[i];
+        }
+
 
         var resources = this.docs.getResourcesDocForRole(permission.role)
         writeServiceMap(resources, method, baseUrl, servicemap);
