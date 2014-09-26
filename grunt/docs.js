@@ -76,7 +76,7 @@ Docs.prototype.findDocs = function(grunt) {
             var key = doc.json.type.split("/")[1];
             if(key.endsWith(".apidescription")) {
                 that.apidescription[that.versions[that.versions.length-1]] = doc.json;
-                that.grunt.log.write("doc for version: " + that.versions[that.versions.length-1])
+                //that.grunt.log.write("doc for version: " + that.versions[that.versions.length-1])
             }
 
             that.docMap[key] = doc;
@@ -98,11 +98,11 @@ Docs.prototype.findDocs = function(grunt) {
     for(var i=0;i<this.docs.length;i++) {
         var doc = this.docs[i];
 
-        grunt.log.debug("Base: " + doc.base);
+        //grunt.log.debug("Base: " + doc.base);
         if(doc.base && doc.base != "none") {
 
             doc.baseDoc = this.docMap[doc.base.split("/")[1]];
-            grunt.log.debug("basedoc:" + doc.baseDoc.filename);
+            //grunt.log.debug("basedoc:" + doc.baseDoc.filename);
         }
 
         doc.apidescription = this.apidescription[doc.version];
@@ -135,7 +135,7 @@ Docs.prototype.genereateDocFiles = function() {
         var firstDoc = this.docs[0];
         var rootfolder =  firstDoc.generatedDocsFolder.split("/")[0];
 
-        grunt.log.debug("delete files in folder:" + rootfolder);
+        //grunt.log.debug("delete files in folder:" + rootfolder);
         grunt.file.delete(rootfolder);
     } else {
         return;
@@ -144,7 +144,7 @@ Docs.prototype.genereateDocFiles = function() {
     for(var i=0;i<this.docs.length;i++) {
         var doc = this.docs[i];
         if(!doc.json.type.endsWith(".abstract")) {
-            grunt.log.debug("filename: " + doc.generatedDocsFolder + doc.filename);
+            //grunt.log.debug("filename: " + doc.generatedDocsFolder + doc.filename);
 
             var deepJsonCopy = JSON.parse(JSON.stringify(doc.json));
             deepJsonCopy.permission.forEach(function(permission) {
@@ -172,7 +172,7 @@ Docs.prototype.genereateDocFiles = function() {
  */
 Docs.prototype.createVersionTest = function(version, folder) {
 
-    this.grunt.log.debug("folder:" + folder);
+    //this.grunt.log.debug("folder:" + folder);
     var that = this;
     var grunt = this.grunt;
     var test = grunt.file.read('./grunt/templates/test.template');
