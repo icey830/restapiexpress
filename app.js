@@ -1,20 +1,30 @@
 /**
  * Node Js App initializer
  */
-
 var express = require('express');
+
+//Express Middleware
+var compression = require('compression');
+var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
+var favicon = require('serve-favicon');
+var methodOverride = require('method-override');
+var session = require('express-session');
+var errorHandler = require('errorhandler');
+
 var http = require('http');
 var path = require('path');
 var apirouter = require('./lib/apirouter');
 var Database = require('./lib/database/database');
-var MongoStore = require('connect-mongo')(express);
+var MongoStore = require('connect-mongo')(session);
 var posix = require('posix');
 posix.setrlimit('nofile', { soft: 10000 });
 var app = express();
 
 // all environments
 app.set('port', process.env.PORT || 3000);
-
+app.set('json spaces', 2);
 var allowCrossDomain = function(req, res, next) {
     //res.header('Access-Control-Allow-Origin', config.allowedDomains);
     res.header('Access-Control-Allow-Origin', "http://club.app");
@@ -26,21 +36,15 @@ var allowCrossDomain = function(req, res, next) {
 }
 
 
-
-// development only
-app.configure('development', function(){
-    //app.set('db', db);
-})
-app.use(express.logger('dev'));
-
-app.use(express.compress());
-app.use(express.favicon());
-app.use(express.json());
-app.use(express.methodOverride());
+app.use(logger('dev'));
+app.use(compression());
+//app.use(favicon());
+app.use(bodyParser.json());
+app.use(methodOverride());
 app.use(allowCrossDomain);
-app.use(express.urlencoded());
-app.use(express.cookieParser("SEKR37"));
-app.use(express.session({
+app.use(bodyParser.urlencoded());
+app.use(cookieParser("SEKR37"));
+app.use(session({
     store: new MongoStore({
     url: 'mongodb://localhost:27017/restapiexpressSessions'
     }),
@@ -48,17 +52,21 @@ app.use(express.session({
     key: 'restapiexpress.sid',
     cookie:{ httpOnly: true, maxAge: 1500000 }
 }));
+
 // secure: true, if https is active
 var database = new Database();
+
+
 // development only
-app.configure('development', function(){
-
-    app.use(express.errorHandler());
-})
+if ('development' == app.get('env')) {
+    app.use(errorHandler());
+    //app.set('db', db);
+}
 // production only
-app.configure('production', function(){
+if ('production' == app.get('env')) {
 
-})
+}
+
 
 
 //RestAPIExpress specific routes
@@ -73,7 +81,7 @@ app.get(/\/doc\/v(\d+)\/(\w+)[\/\Z]?$/, apirouter.docs);
 app.post(/\/doc\/v(\d+)\/(\w+)[\/\Z]?$/, apirouter.docs);
 app.all('*', apirouter.route);
 
-http.createServer(app).listen(app.get('port'), function () {
+app.listen(app.get('port'), function () {
     console.log('Express server listening on port ' + app.get('port') + ' in ' +app.get('env') + ' mode');
 });
 

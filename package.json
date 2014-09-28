@@ -28,9 +28,17 @@
         "HYPERMEDIA"
     ],
     "dependencies": {
-        "express": "*",
         "connect-mongo" : "*",
-        "posix":"*"
+        "posix":"*",
+        "express": "4.9.5",
+        "compression" : "1.1.0",
+        "body-parser" : "1.9.0",
+        "cookie-parser" : "1.3.3",
+        "morgan" : "1.3.1",
+        "serve-favicon" : "2.1.5",
+        "method-override" : "2.2.0",
+        "express-session" : "1.8.2",
+        "errorhandler" : "1.2.0"
     },
     "devDependencies": {
         "grunt": "~0.4.2",
