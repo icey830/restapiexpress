@@ -59,7 +59,7 @@ module.exports = function(grunt){
 
         var done = this.async();
 
-        require('child_process').exec('make test', function (err, stdout) {
+        require('child_process').exec('make test', {maxBuffer: 1024 * 500}, function (err, stdout) {
             grunt.log.write(stdout);
             if(err) {
                 grunt.log.errorlns(err);
