@@ -149,6 +149,7 @@ describe('GET /v1/news/5347cf038499f5f507a62ca7 --admin', function(){
 
 describe('DELETE /v1/news/5347cf038499f5f507a62ca7 --admin', function(){
     it('respond with json', function(done){
+        this.timeout(1000);
         request(app)
             .del('/v1/news/5347cf038499f5f507a62ca7')
             .set('Accept', 'application/*')
@@ -230,12 +231,14 @@ describe('DELETE /v1/news/5347cf038499f5f507a62ca8 --admin', function(){
 
 describe('DELETE /v1/news/5347cf038499f5f507a62ca7 --admin', function(){
     it('respond with json', function(done){
+
         request(app)
             .del('/v1/news/5347cf038499f5f507a62ca7')
             .set('Accept', 'application/*')
             .set('DEV-ROLE', 'admin')
             .expect('Content-Type', /json/)
             .send()
+            .timeout(10000)
             .expect(400)
             .end(function(err, res){
                 if (err) return done(err);

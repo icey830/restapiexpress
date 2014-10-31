@@ -2,7 +2,7 @@
  * Created by samschmid on 11.04.14.
  */
 var request = require('supertest')
-    , app     = require('../../app.js')
+    , app     = require('../app.js')
     , assert  = require("assert");
 
 process.env.NODE_ENV = 'test';
