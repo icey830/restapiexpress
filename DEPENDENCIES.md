@@ -38,10 +38,9 @@ The missing POSIX system calls
 Fast, unopinionated, minimalist web framework
 TODO Update to 4.13.3
 
-### compression 1.1.0
+### compression 1.6.0
 
 Node.js compression middleware
-TODO Update to 1.6.0
 
 ### body-parser 1.9.0
 
