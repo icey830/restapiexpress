@@ -104,7 +104,7 @@ TODO Update to specific version
 test framework agnostic BDD-style assertions
 TODO Update to specific version
 
-### assert *
+### assert 1.3.0
 
 commonjs assert - node.js api compatible
 TODO Update to specific version
