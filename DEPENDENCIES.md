@@ -41,10 +41,9 @@ Fast, unopinionated, minimalist web framework
 
 Node.js compression middleware
 
-### body-parser 1.9.0
+### body-parser 1.14.2
 
 Node.js body parsing middleware
-TODO Update to 1.14.2
 
 ### cookie-parser 1.4.0
 
