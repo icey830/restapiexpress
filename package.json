@@ -46,7 +46,7 @@
         "mocha" :"*",
         "should" :"*",
         "assert" :"*",
-        "chai" :"*"
+        "chai" :"3.1.4"
     },
     "license": "MIT",
     "engines": {

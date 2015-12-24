@@ -7,7 +7,7 @@ Currently only MongoDB is supported with a integration.
 
 ### MongoDB
 
-#### mongodb 2.1.2
+#### mongodb 2.0.53
 
 MongoDB legacy driver emulation layer on top of mongodb-core
 
@@ -109,7 +109,7 @@ TODO Update to specific version
 commonjs assert - node.js api compatible
 TODO Update to specific version
 
-### chai *
+### chai 3.1.4
 
 BDD/TDD assertion library for node.js and the browser. Test framework agnostic.
 TODO Update to specific version
