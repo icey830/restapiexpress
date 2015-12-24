@@ -7,6 +7,7 @@ var request = require('supertest')
 
 process.env.NODE_ENV = 'test';
 
+//Create a news object without image 1 (5347cf038499f5f507a62ca7)
 describe('PUT /v1/news/5347cf038499f5f507a62ca7 --admin', function(){
     it('respond with json', function(done){
         var json = {"title":"Starving?","content":"Hans is hungry","timestamp":"2011-07-14T19:43:37+0100"};
@@ -40,6 +41,8 @@ describe('PUT /v1/news/5347cf038499f5f507a62ca7 --admin', function(){
             });
     })
 })
+
+//Create a news object without image 2 (5347cf038499f5f507a62ca8)
 describe('PUT /v1/news/5347cf038499f5f507a62ca8 --admin', function(){
     it('respond with json', function(done){
         var json = {"title":"Starving?","content":"Hans is hungry","timestamp":"2011-07-14T19:43:37+0100"};
@@ -74,6 +77,7 @@ describe('PUT /v1/news/5347cf038499f5f507a62ca8 --admin', function(){
     })
 })
 
+//Create a newsimage  add to news 1 (5347cf038499f5f507a62ca7)
 describe('PUT /v1/newsimages/5347cf038499f5f507a62000 --admin', function(){
     it('respond with json', function(done){
         var json = {"news":"5347cf038499f5f507a62ca7","url":"https://scontent-b-fra.xx.fbcdn.net/hphotos-prn2/t1.0-9/1458448_10202078525385199_2069574105_n.jpg","isPublic":false,"lastChanged":"2011-07-14T19:43:37+0100","timestamp":"2011-07-14T19:43:37+0100"};
@@ -108,6 +112,7 @@ describe('PUT /v1/newsimages/5347cf038499f5f507a62000 --admin', function(){
     })
 })
 
+//Check if newsimages is attached to news 1 (5347cf038499f5f507a62ca7)
 describe('GET /v1/news/5347cf038499f5f507a62ca7 --admin', function(){
     it('respond with json', function(done){
         request(app)
@@ -148,6 +153,7 @@ describe('GET /v1/news/5347cf038499f5f507a62ca7 --admin', function(){
     })
 })
 
+//change newsimage to attach to news 2 (5347cf038499f5f507a62ca8)
 describe('POST /v1/newsimages/5347cf038499f5f507a62000 --admin', function(){
     it('respond with json', function(done){
         var json = {"news" : "5347cf038499f5f507a62ca8"}
@@ -165,7 +171,8 @@ describe('POST /v1/newsimages/5347cf038499f5f507a62000 --admin', function(){
     })
 })
 
-describe('GET after patch IMAGE /v1/news/5347cf038499f5f507a62ca7 --admin', function(){
+//Check if news image is attached to news 1 (5347cf038499f5f507a62ca7) ->No
+describe('News image should not be attached to news 1 /v1/news/5347cf038499f5f507a62ca7 --admin', function(){
     it('respond with json', function(done){
         request(app)
             .get('/v1/news/5347cf038499f5f507a62ca7?fields=images,latestImage')
@@ -205,7 +212,7 @@ describe('GET after patch IMAGE /v1/news/5347cf038499f5f507a62ca7 --admin', func
     })
 })
 
-describe('GET after PATCH image /v1/news/5347cf038499f5f507a62ca8 --admin', function(){
+describe('News image should be attached to news 2 /v1/news/5347cf038499f5f507a62ca8 --admin', function(){
     it('respond with json', function(done){
         request(app)
             .get('/v1/news/5347cf038499f5f507a62ca8?fields=images,latestImage')
@@ -245,7 +252,7 @@ describe('GET after PATCH image /v1/news/5347cf038499f5f507a62ca8 --admin', func
     })
 })
 
-describe('GET after PATCH image /v1/newsimages/5347cf038499f5f507a62000 --admin', function(){
+describe('News image should be referenced to news 2 GET /v1/newsimages/5347cf038499f5f507a62000 --admin', function(){
     it('respond with json', function(done){
         request(app)
             .get('/v1/newsimages/5347cf038499f5f507a62000?fields=news')
@@ -282,7 +289,7 @@ describe('GET after PATCH image /v1/newsimages/5347cf038499f5f507a62000 --admin'
     })
 })
 
-describe('POST /v1/newsimages/5347cf038499f5f507a62000 --admin', function(){
+describe('Attached Newsimage to News 1 (5347cf038499f5f507a62ca7) POST /v1/newsimages/5347cf038499f5f507a62000 --admin', function(){
     it('respond with json', function(done){
         var json = {"news" : "5347cf038499f5f507a62ca7"}
         request(app)
@@ -299,7 +306,7 @@ describe('POST /v1/newsimages/5347cf038499f5f507a62000 --admin', function(){
     })
 })
 
-describe('GET after patch IMAGE /v1/news/5347cf038499f5f507a62ca7 --admin', function(){
+describe('Newsimage should be attached to News 1 GET after patch IMAGE 4 /v1/news/5347cf038499f5f507a62ca7 --admin', function(){
     it('respond with json', function(done){
         request(app)
             .get('/v1/news/5347cf038499f5f507a62ca7?fields=images,latestImage')
@@ -339,7 +346,7 @@ describe('GET after patch IMAGE /v1/news/5347cf038499f5f507a62ca7 --admin', func
     })
 })
 
-describe('GET after PATCH image 2 /v1/news/5347cf038499f5f507a62ca8 --admin', function(){
+describe('News image should not be attached to news 2 (5347cf038499f5f507a62ca8) /v1/news/5347cf038499f5f507a62ca8 --admin', function(){
     it('respond with json', function(done){
         request(app)
             .get('/v1/news/5347cf038499f5f507a62ca8?fields=images,latestImage')
@@ -378,7 +385,7 @@ describe('GET after PATCH image 2 /v1/news/5347cf038499f5f507a62ca8 --admin', fu
     })
 })
 
-describe('GET after PATCH image 2 /v1/newsimages/5347cf038499f5f507a62000 --admin', function(){
+describe('GET after PATCH image 6 /v1/newsimages/5347cf038499f5f507a62000 --admin', function(){
     it('respond with json', function(done){
         request(app)
             .get('/v1/newsimages/5347cf038499f5f507a62000?fields=news')
