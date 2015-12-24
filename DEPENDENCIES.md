@@ -17,11 +17,9 @@ Mongoose MongoDB ODM
 Mongoose is a MongoDB object modeling tool designed to work in an asynchronous environment.
 TODO Update to 4.3.4
 
-#### mongoose-schema-extend 0.1.7
+#### mongoose-schema-extend 0.2.0
 
 mongoose schema inheritance and discriminator key extension
-TODO Update to 0.2.0
-
 
 ## Webserver (package.json)
 
