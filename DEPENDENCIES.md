@@ -84,10 +84,9 @@ TODO Update to 1.4.2
 
 ## Development (package.json)
 
-### grunt 0.4.2
+### grunt 0.4.5
 
 JavaScript Task Runner
-TODO Update to 0.4.5
 
 ### supertest 1.1.0
 
