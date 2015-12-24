@@ -45,8 +45,6 @@ Node.js compression middleware
 
 Node.js body parsing middleware
 TODO Update to 1.14.2
-TODO Replace because it's deprecated
-body-parser deprecated undefined extended: provide extended option
 
 ### cookie-parser 1.4.0
 
@@ -68,8 +66,6 @@ Override HTTP verbs
 
 Simple session middleware for Express
 TODO Update to 1.12.1
-express-session deprecated undefined resave option; provide resave option app.js:47:9
-express-session deprecated undefined saveUninitialized option; provide saveUninitialized option app.js:47:9
 
 ### errorhandler 1.4.2
 

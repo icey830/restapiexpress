@@ -42,7 +42,7 @@ app.use(compression());
 app.use(bodyParser.json());
 app.use(methodOverride());
 app.use(allowCrossDomain);
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser("SEKR37"));
 app.use(session({
     store: new MongoStore({
@@ -50,7 +50,9 @@ app.use(session({
     }),
     secret: 'SEKR37',
     key: 'restapiexpress.sid',
-    cookie:{ httpOnly: true, maxAge: 1500000 }
+    cookie:{ httpOnly: true, maxAge: 1500000 },
+    resave: true,
+    saveUninitialized: true
 }));
 
 // secure: true, if https is active
