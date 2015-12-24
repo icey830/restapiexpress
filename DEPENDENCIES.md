@@ -65,10 +65,9 @@ TODO Update to 1.6.1
 favicon serving middleware with caching
 TODO Update to 2.3.0
 
-### method-override 2.2.0
+### method-override 2.3.5
 
 Override HTTP verbs
-TODO Update to 2.3.5
 
 ### express-session 1.8.2
 
