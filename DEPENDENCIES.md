@@ -11,7 +11,7 @@ Currently only MongoDB is supported with a integration.
 
 MongoDB legacy driver emulation layer on top of mongodb-core
 
-#### mongoose 3.8.16
+#### mongoose 3.8.34
 
 Mongoose MongoDB ODM
 Mongoose is a MongoDB object modeling tool designed to work in an asynchronous environment.

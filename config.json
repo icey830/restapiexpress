@@ -11,7 +11,7 @@
         "testlocation" : "localhost:27017/restapiexpresstest",
         "dependencies": {
             "mongodb": "2.0.53",
-            "mongoose": "3.8.16",
+            "mongoose": "3.8.34",
             "mongoose-schema-extend": "0.2.0"
         },
         "license": "MIT",
