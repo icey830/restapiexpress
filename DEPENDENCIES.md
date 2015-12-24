@@ -62,10 +62,9 @@ favicon serving middleware with caching
 
 Override HTTP verbs
 
-### express-session 1.8.2
+### express-session 1.12.1
 
 Simple session middleware for Express
-TODO Update to 1.12.1
 
 ### errorhandler 1.4.2
 
