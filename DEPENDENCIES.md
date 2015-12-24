@@ -55,10 +55,9 @@ body-parser deprecated undefined extended: provide extended option
 cookie parsing with signatures
 TODO Update to 1.4.0
 
-### morgan 1.3.1
+### morgan 1.6.1
 
 HTTP request logger middleware for node.js
-TODO Update to 1.6.1
 
 ### serve-favicon 2.3.0
 
