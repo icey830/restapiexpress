@@ -33,10 +33,9 @@ MongoDB session store for Express and Connect
 
 The missing POSIX system calls
 
-### express 4.9.5
+### express 4.13.3
 
 Fast, unopinionated, minimalist web framework
-TODO Update to 4.13.3
 
 ### compression 1.6.0
 
