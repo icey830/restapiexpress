@@ -50,10 +50,9 @@ TODO Update to 1.14.2
 TODO Replace because it's deprecated
 body-parser deprecated undefined extended: provide extended option
 
-### cookie-parser 1.3.3
+### cookie-parser 1.4.0
 
 cookie parsing with signatures
-TODO Update to 1.4.0
 
 ### morgan 1.6.1
 
