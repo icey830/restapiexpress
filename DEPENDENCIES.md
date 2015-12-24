@@ -77,10 +77,9 @@ TODO Update to 1.12.1
 express-session deprecated undefined resave option; provide resave option app.js:47:9
 express-session deprecated undefined saveUninitialized option; provide saveUninitialized option app.js:47:9
 
-### errorhandler 1.2.0
+### errorhandler 1.4.2
 
 Development-only error handler middleware
-TODO Update to 1.4.2
 
 ## Development (package.json)
 
@@ -104,6 +103,6 @@ test framework agnostic BDD-style assertions
 
 commonjs assert - node.js api compatible
 
-### chai 3.1.4
+### chai 3.4.1
 
 BDD/TDD assertion library for node.js and the browser. Test framework agnostic.
