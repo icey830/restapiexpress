@@ -60,10 +60,9 @@ TODO Update to 1.4.0
 HTTP request logger middleware for node.js
 TODO Update to 1.6.1
 
-### serve-favicon 2.1.5
+### serve-favicon 2.3.0
 
 favicon serving middleware with caching
-TODO Update to 2.3.0
 
 ### method-override 2.3.5
 
