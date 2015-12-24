@@ -94,10 +94,9 @@ TODO Update to 0.4.5
 Super-agent driven library for testing HTTP servers
 TODO Update to 1.1.0
 
-### mocha *
+### mocha 2.3.4
 
 simple, flexible, fun test framework
-TODO Update to specific version
 
 ### should 8.0.2
 
