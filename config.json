@@ -10,7 +10,7 @@
         "location" : "localhost:27017/restapiexpress",
         "testlocation" : "localhost:27017/restapiexpresstest",
         "dependencies": {
-            "mongodb": "*",
+            "mongodb": "2.1.2",
             "mongoose": "3.8.16",
             "mongoose-schema-extend": "0.1.7"
         },
