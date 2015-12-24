@@ -99,17 +99,14 @@ TODO Update to 1.1.0
 simple, flexible, fun test framework
 TODO Update to specific version
 
-### should *
+### should 8.0.2
 
 test framework agnostic BDD-style assertions
-TODO Update to specific version
 
 ### assert 1.3.0
 
 commonjs assert - node.js api compatible
-TODO Update to specific version
 
 ### chai 3.1.4
 
 BDD/TDD assertion library for node.js and the browser. Test framework agnostic.
-TODO Update to specific version
