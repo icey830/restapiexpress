@@ -89,10 +89,9 @@ TODO Update to 1.4.2
 JavaScript Task Runner
 TODO Update to 0.4.5
 
-### supertest 0.13.0
+### supertest 1.1.0
 
 Super-agent driven library for testing HTTP servers
-TODO Update to 1.1.0
 
 ### mocha 2.3.4
 
