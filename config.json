@@ -6,13 +6,13 @@
     "description": "config for restapiexpress",
     "db" : {
         "name" : "mongodb",
-        "provider" : "mongoose",
+        "provider" : "postgres",
         "location" : "localhost:27017/restapiexpress",
         "testlocation" : "localhost:27017/restapiexpresstest",
         "dependencies": {
-            "mongodb": "2.0.53",
-            "mongoose": "4.3.4",
-            "mongoose-schema-extend": "0.2.0"
+            "pg": "4.4.3",
+            "knex": "0.9.0",
+            "bookshelf": "0.9.1"
         },
         "license": "MIT",
         "engines": {

@@ -1,0 +1,9 @@
+{
+    "location" : "localhost:27017/restapiexpress",
+    "testlocation" : "localhost:27017/restapiexpresstest",
+    "dependencies": {
+        "mongodb": "2.0.53",
+        "mongoose": "4.3.4",
+        "mongoose-schema-extend": "0.2.0"
+    }
+}
