@@ -85,13 +85,14 @@ So far you have the a running System with default resource:
 > * http://localhost:3000/v1/contacts
 > * http://localhost:3000/v1/contacts/123.json
 > * Documentation of resource: http://localhost:3000/doc/v1/contacts
+>
 > If you want to write some data then you have to set a Header "DEV-ROLE" = "admin"
 > POST to http://localhost:3000/v1/contacts
 > Example
 > post:
 > ```bash
-curl -X POST -H "Content-Type: application/json" -H "DEV-ROLE: admin" -d '{"id": "Barrack","name": "Obama","email": "Bob@bob.com","importance": "5"}' http://localhost:3000/v1/contacts
-```
+> curl -X POST -H "Content-Type: application/json" -H "DEV-ROLE: admin" -d '{"id": "Barrack","name": "Obama","email": "Bob@bob.com","importance": "5"}' http://localhost:3000/v1/contacts
+> ```
 > GET all entries
 > ```bash
 > curl -X GET -H "DEV-ROLE: admin" http://localhost:3000/v1/contacts
@@ -385,8 +386,8 @@ If a image will be deleted, the news will still stay alive.
 # Become a contributer
 We are looking for contributers. Please contact samuelschmid75@gmail.com.
 
-#Grunt Options
+# Grunt Options
 [Grunt Options](Grunt.md)
 
-#License
+# License
 [License ](LICENSE.md)
